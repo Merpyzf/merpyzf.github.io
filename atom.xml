@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://merpyzf.github.io</id>
     <title>Gridea</title>
-    <updated>2020-03-05T09:40:55.227Z</updated>
+    <updated>2020-03-05T09:49:01.524Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://merpyzf.github.io"/>
     <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
+    <subtitle>真正的光芒，需要一点点时间</subtitle>
     <logo>https://merpyzf.github.io/images/avatar.png</logo>
     <icon>https://merpyzf.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
