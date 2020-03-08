@@ -1,20 +1,13 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>初识 Ionic Framework | It&#39;s my life</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1583676096317">
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1583676167988">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
-
-
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link rel="alternate" type="application/atom+xml" title="初识 Ionic Framework | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
@@ -23,84 +16,88 @@
 Ionic Framework是一个开源UI工具包，通过使用Web技术（HTML，CSS和JavaScript）构建高性能，高质量的移动和桌面应用程序。
 Ionic Framework专注于前端用户体验或应用程序的..." />
     <meta name="keywords" content="Ionic" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://merpyzf.github.io">
-        <img src="https://merpyzf.github.io/images/avatar.png?v=1583676096317" class="site-logo">
-        <h1 class="site-title">It&#39;s my life</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
-    </div>
-    <div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://merpyzf.github.io">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1583676167988" alt="">
+  </a>
+  <h1 class="site-title">
+    It&#39;s my life
+  </h1>
+  <p class="site-description">
+    真正的光芒，需要一点点时间
+  </p>
+  <div class="menu-container">
+    
       
-        
-          <a href="/" class="site-nav">
-            首页
-          </a>
-        
+        <a href="/" class="menu">
+          首页
+        </a>
       
-        
-          <a href="/archives" class="site-nav">
-            归档
-          </a>
-        
+    
       
-        
-          <a href="/tags" class="site-nav">
-            标签
-          </a>
-        
+        <a href="/archives" class="menu">
+          归档
+        </a>
       
-        
-          <a href="/post/about" class="site-nav">
-            关于
-          </a>
-        
+    
       
-    </div>
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
+  <div class="social-container">
+    
       
-        
+    
       
-        
+    
       
-        
+    
       
-        
+    
       
-        
-      
-    </div>
-    <div class="site-description">
-      真正的光芒，需要一点点时间
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://merpyzf.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
+    
   </div>
 </div>
 
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">初识 Ionic Framework</h2>
-            <div class="post-date">2020-03-05</div>
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              初识 Ionic Framework
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-05
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://merpyzf.github.io/tag/e0j3NgcuS/" class="post-tag">
+                  # Ionic
+                </a>
+              
+            </div>
             
-              <div class="feature-container" style="background-image: url('https://merpyzf.github.io/post-images/zhe-shi-yi-pian-ce-shi-de-wen-zhang.jpeg')">
-              </div>
+              <img class="post-feature-image" src="https://merpyzf.github.io/post-images/zhe-shi-yi-pian-ce-shi-de-wen-zhang.jpeg" alt="">
             
-            <div class="post-content" v-pre>
-              <h3 id="ionic框架">Ionic框架</h3>
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="ionic框架">Ionic框架</h3>
 <h4 id="是什么">是什么？</h4>
 <p>Ionic Framework是一个开源UI工具包，通过使用Web技术（HTML，CSS和JavaScript）构建高性能，高质量的移动和桌面应用程序。</p>
 <p>Ionic Framework专注于前端用户体验或应用程序的UI交互（控件，交互，手势，动画）。并且可以与Angular等其他库或框架做到很好地集成，或者可以在没有前端框架的情况下独立使用。</p>
@@ -128,49 +125,84 @@ Ionic Framework专注于前端用户体验或应用程序的..." />
 <li><strong>主题</strong>：Ionic Framework的核心是使用CSS构建的，它使我们能够利用CSS属性（变量）提供的灵活性。这使得在遵循Web标准的同时设计美观的应用程序变得异常容易。我们提供了一组颜色，以便开发人员可以有一些很棒的默认设置，但是我们建议您覆盖它们以创建与品牌，公司或所需调色板匹配的设计。从应用程序的背景颜色到文本颜色的所有内容都是完全可定制的。有关应用程序主题的更多信息，请参见主题。</li>
 </ul>
 
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://merpyzf.github.io/tag/e0j3NgcuS/" class="tag">
-                    Ionic
-                  </a>
-                
               </div>
-            
-            
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#ionic%E6%A1%86%E6%9E%B6">Ionic框架</a>
+<ul>
+<li><a href="#%E6%98%AF%E4%BB%80%E4%B9%88">是什么？</a></li>
+<li><a href="#%E7%9B%AE%E6%A0%87">目标</a></li>
+<li><a href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5">核心概念</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-            
-
-          </div>
-
+              </div>
+            </div>
+          </article>
         </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://merpyzf.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
       </div>
     </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script type="application/javascript">
+    <script>
+      hljs.initHighlightingOnLoad()
 
-AOS.init();
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
 
-</script>
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
 
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
 
-  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad()
-  </script>
-
-
-
-
-
+    </script>
   </body>
 </html>
