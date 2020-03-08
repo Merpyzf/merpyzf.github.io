@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" >
 
-<title>这是一篇测试的文章 | It&#39;s my life</title>
+<title>初识 Ionic Framework | It&#39;s my life</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1583596971839">
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1583675931158">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
 
 
@@ -18,9 +18,11 @@
 
 
 
-    <meta name="description" content="这是内容
-" />
-    <meta name="keywords" content="Angular" />
+    <meta name="description" content="Ionic框架
+是什么？
+Ionic Framework是一个开源UI工具包，通过使用Web技术（HTML，CSS和JavaScript）构建高性能，高质量的移动和桌面应用程序。
+Ionic Framework专注于前端用户体验或应用程序的..." />
+    <meta name="keywords" content="Ionic" />
   </head>
   <body>
     <div id="app" class="main">
@@ -29,7 +31,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://merpyzf.github.io">
-        <img src="https://merpyzf.github.io/images/avatar.png?v=1583596971839" class="site-logo">
+        <img src="https://merpyzf.github.io/images/avatar.png?v=1583675931158" class="site-logo">
         <h1 class="site-title">It&#39;s my life</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -91,21 +93,47 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">这是一篇测试的文章</h2>
+            <h2 class="post-title">初识 Ionic Framework</h2>
             <div class="post-date">2020-03-05</div>
             
-              <div class="feature-container" style="background-image: url('https://merpyzf.github.io/post-images/zhe-shi-yi-pian-ce-shi-de-wen-zhang.png')">
+              <div class="feature-container" style="background-image: url('https://merpyzf.github.io/post-images/zhe-shi-yi-pian-ce-shi-de-wen-zhang.jpeg')">
               </div>
             
             <div class="post-content" v-pre>
-              <p>这是内容</p>
+              <h3 id="ionic框架">Ionic框架</h3>
+<h4 id="是什么">是什么？</h4>
+<p>Ionic Framework是一个开源UI工具包，通过使用Web技术（HTML，CSS和JavaScript）构建高性能，高质量的移动和桌面应用程序。</p>
+<p>Ionic Framework专注于前端用户体验或应用程序的UI交互（控件，交互，手势，动画）。并且可以与Angular等其他库或框架做到很好地集成，或者可以在没有前端框架的情况下独立使用。</p>
+<h4 id="目标">目标</h4>
+<ul>
+<li>
+<p><strong>跨平台</strong>：构建并部署可在多个平台（例如本机iOS，Android，桌面和网络）上运行的应用程序，作为渐进式Web应用程序-只需一个代码库即可。编写一次，即可在任何地方运行。</p>
+</li>
+<li>
+<p><strong>基于Web标准</strong>：Ionic Framework使用可靠的标准化Web技术（HTML，CSS和JavaScript）构建，并使用自定义元素和Shadow DOM等现代Web API。因此，Ionic组件具有稳定的API，并且不受单个平台供应商的追捧。</p>
+</li>
+<li>
+<p><strong>精美的设计</strong>：干净，简单且实用。 Ionic Framework旨在在所有平台上开箱即用地精美显示。从预先设计的组件，版式，交互式范例和华丽的（但仍可扩展的）基本主题开始。</p>
+</li>
+<li>
+<p><strong>简单</strong>：Ionic Framework的构建考虑到了简单性，因此创建Ionic应用程序非常有趣，易于学习，并且几乎所有具有Web开发技能的人都可以使用。</p>
+</li>
+</ul>
+<h4 id="核心概念">核心概念</h4>
+<ul>
+<li><strong>UI组件</strong>：<strong>Ionic Framework是UI组件的库</strong>，UI组件是可重用的元素，它们充当应用程序的构建块。尽管这些组件是预先构建的，但它们的设计是完全可定制的，因此应用程序可以将每个组件制作为自己的组件，允许每个应用都有自己的外观。更具体地说，可以轻松地将Ionic组件设置为主题，以在整个应用程序中全局更改外观。</li>
+<li><strong>自适应样式</strong>：自适应样式是Ionic Framework的内置功能，它允许应用程序开发人员将相同的代码库用于多个平台。每个Ionic组件都会根据其运行该应用程序的平台调整其外观。例如，Apple设备（例如iPhone和iPad）使用Apple自己的iOS设计语言。例如，Apple设备（例如iPhone和iPad）使用Apple自己的iOS设计语言。同样，Android设备使用Google的称为Material Design的设计语言。通过在平台之间进行细微的设计更改，可以为用户提供熟悉的应用程序体验。从Apple的App Store下载的Ionic应用程序将获得iOS主题，而从Android的Play Store下载的Ionic应用程序将获得Material Design主题。对于从浏览器中视为渐进式Web应用程序（PWA）的应用程序，Ionic将默认使用Material Design主题。此外，决定在某些情况下使用哪个平台是完全可配置的。有关自适应样式的更多信息，请参见主题。</li>
+<li><strong>导航</strong>：传统的Web应用程序使用线性历史记录，这意味着用户可以向前导航到页面，并且可以单击“后退”按钮来向后导航。一个示例是在Wikipedia上单击，用户在浏览器的线性历史记录堆栈上来回移动。相反，移动应用程序通常利用并行的“非线性”导航。例如，选项卡式界面可以为每个选项卡具有单独的导航堆栈，以确保用户在导航和在选项卡之间切换时不会丢失自己的位置。Ionic应用程序采用了这种移动导航方法，不仅支持嵌套的并行导航历史记录，而且还保留了Web开发人员熟悉的浏览器式导航概念。对于使用Angular和@ ionic / angular构建的应用程序，我们建议为每个新的Ionic 4 Angular应用程序使用开箱即用的Angular Router。</li>
+<li><strong>本机访问</strong>：使用Web技术构建的应用程序（例如Ionic应用程序！）的一个惊人功能是，它几乎可以在任何平台上运行：台式计算机，电话，平板电脑，汽车，冰箱等！Ionic应用程序的相同代码库可以在许多平台上工作，因为它基于Web标准和在这些平台之间共享的通用API。Ionic的最常见用例之一是构建可从App Store和Play Store下载的应用程序。iOS和Android软件开发套件（SDK）均提供可呈现任何Ionic应用程序的Web视图，同时仍允许完整的Native SDK访问。通常使用诸如Capacitor和Cordova之类的项目为Ionic应用程序提供对Native SDK的访问权限。这意味着开发人员可以使用通用的Web开发工具快速构建应用程序，并且仍然可以访问设备的加速计，摄像头，GPS等本机功能。</li>
+<li><strong>主题</strong>：Ionic Framework的核心是使用CSS构建的，它使我们能够利用CSS属性（变量）提供的灵活性。这使得在遵循Web标准的同时设计美观的应用程序变得异常容易。我们提供了一组颜色，以便开发人员可以有一些很棒的默认设置，但是我们建议您覆盖它们以创建与品牌，公司或所需调色板匹配的设计。从应用程序的背景颜色到文本颜色的所有内容都是完全可定制的。有关应用程序主题的更多信息，请参见主题。</li>
+</ul>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://merpyzf.github.io/tag/QStWO6S3H/" class="tag">
-                    Angular
+                  <a href="https://merpyzf.github.io/tag/e0j3NgcuS/" class="tag">
+                    Ionic
                   </a>
                 
               </div>
