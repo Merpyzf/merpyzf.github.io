@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cordova插件开发指南 | It&#39;s my life</title>
-<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1583911781060">
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1583912089016">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Cordova插件开发指南 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://merpyzf.github.io">
-  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1583911781060" alt="">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1583912089016" alt="">
   </a>
   <h1 class="site-title">
     It&#39;s my life
@@ -185,7 +185,7 @@ Android层的实现（因为本人只熟悉Android平台的开发）。</p>
         ...
 &lt;/platform&gt;
 </code></pre>
-<p>service_name与JavaScript exec调用中使用的名称相匹配。该值为实现了插件功能的Java类（即扩展了CordovaPlugin类）的全路径。如果配置有误，该插件虽然可能会通过编译，但Cordova仍无法完成插件调用。</p>
+<p>service_name与JavaScript exec调用中使用的名称相匹配。value的值是Java类的标准名称空间标识符。如果配置有误，该插件虽然可能会通过编译，但Cordova仍无法完成插件调用。</p>
 <h5 id="插件初始化和生命周期">插件初始化和生命周期</h5>
 <p>在每个WebView的生存期内，都会创建一个插件对象的实例。但是默认情况下，插件不会跟随WebView一同创建，而是直到JavaScript调用首次引用插件时，才会实例化插件。除非在config.xml中将具有onload name属性的<param>设置为“ true”。例如，</p>
 <pre><code>&lt;!-- 设置跟随WebView初始化插件 --&gt;
@@ -250,10 +250,9 @@ public boolean execute(String action, JSONArray args, final CallbackContext call
 </code></pre>
 <h5 id="添加依赖库">添加依赖库</h5>
 <p>如果您的Android插件具有额外的依赖，则必须通过以下两种方式之一在plugin.xml中列出它们。</p>
-<ol>
-<li>使用 framework标记，<strong>以这种方式指定库允许通过Gradle的依赖管理逻辑对其进行解析。这允许多个插件使用通用库（例如gson，android-support-v4和google-play-services）而不会发生冲突。</strong></li>
-</ol>
-<p>下面为通过framework标记引入依赖库的示例：</p>
+<h6 id="方法1">方法1:</h6>
+<p>使用 framework标记，<strong>以这种方式指定库允许通过Gradle的依赖管理逻辑对其进行解析。这允许多个插件使用通用库（例如gson，android-support-v4和google-play-services）而不会发生冲突。</strong><br>
+下面为通过framework标记引入依赖库的示例：</p>
 <pre><code>&lt;!-- Depend on latest version of GCM from play services --&gt;
 &lt;framework src=&quot;com.google.android.gms:play-services-gcm:+&quot; /&gt;
 &lt;!-- Depend on v21 of appcompat-v7 support library --&gt;
@@ -263,9 +262,8 @@ public boolean execute(String action, JSONArray args, final CallbackContext call
 </code></pre>
 <p>Framework也可以用于将自定义.gradle文件包含在插件主项目的build.gradle文件中:</p>
 <figure data-type="image" tabindex="2"><img src="https://merpyzf.github.io/post-images/1583899538203.png" alt="" loading="lazy"></figure>
-<ol start="2">
-<li>使用lib-file标记指定jar文件的位置,仅当您确定没有其他插件引用该库时才应使用此方法。（如果有多个插件通过lib-file标记引用了相同的jar，将会导致冲突发生）。否则，如果另一个插件添加相同的库，则可能会给插件的用户造成构建错误。</li>
-</ol>
+<h6 id="方法2">方法2:</h6>
+<p>使用lib-file标记指定jar文件的位置,仅当您确定没有其他插件引用该库时才应使用此方法。（如果有多个插件通过lib-file标记引用了相同的jar，将会导致冲突发生）。否则，如果另一个插件添加相同的库，则可能会给插件的用户造成构建错误。</p>
 <h5 id="android整合">Android整合</h5>
 <p>Android具有Intent系统，该系统允许进程相互通信。插件可以访问CordovaInterface对象，该对象可以访问运行该应用程序的Android 。 CordovaInterface允许插件允许启动一个可以返回结果的Activity。从Cordova 2.0开始，插件不再可以直接访问Context，并且已弃用旧版ctx成员。所有ctx方法都存在于Context上，因此通过getContext（）和getActivity（）都可以返回所需的对象。</p>
 <h5 id="android静态权限">Android静态权限</h5>
@@ -374,7 +372,12 @@ Cordova 6.1.0添加了对指定插件的Cordova相关依赖项的支持，作为
 <li><a href="#%E6%8F%92%E4%BB%B6%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">插件初始化和生命周期</a></li>
 <li><a href="#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAandroid%E6%8F%92%E4%BB%B6">编写一个Android插件</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B">线程</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%BA%93">添加依赖库</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%BA%93">添加依赖库</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%951">方法1:</a></li>
+<li><a href="#%E6%96%B9%E6%B3%952">方法2:</a></li>
+</ul>
+</li>
 <li><a href="#android%E6%95%B4%E5%90%88">Android整合</a></li>
 <li><a href="#android%E9%9D%99%E6%80%81%E6%9D%83%E9%99%90">Android静态权限</a></li>
 <li><a href="#android%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9D%83%E9%99%90">Android运行时权限</a></li>
