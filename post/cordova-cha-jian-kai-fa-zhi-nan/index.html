@@ -1,22 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://merpyzf.github.io</id>
-    <title>It&apos;s my life</title>
-    <updated>2020-03-11T07:29:43.280Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://merpyzf.github.io"/>
-    <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
-    <subtitle>真正的光芒，需要一点点时间</subtitle>
-    <logo>https://merpyzf.github.io/images/avatar.png</logo>
-    <icon>https://merpyzf.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, It&apos;s my life</rights>
-    <entry>
-        <title type="html"><![CDATA[Cordova插件开发指南]]></title>
-        <id>https://merpyzf.github.io/post/cordova-cha-jian-kai-fa-zhi-nan/</id>
-        <link href="https://merpyzf.github.io/post/cordova-cha-jian-kai-fa-zhi-nan/">
-        </link>
-        <updated>2020-03-11T01:53:20.000Z</updated>
-        <content type="html"><![CDATA[<p>下文为对<a href="https://cordova.apache.org/docs/en/9.x/guide/hybrid/plugins">Cordova官网插件开发</a>的翻译。</p>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cordova插件开发指南 | It&#39;s my life</title>
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1583911781060">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Cordova插件开发指南 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="下文为对Cordova官网插件开发的翻译。
+简介
+插件是注入的代码包，可让Cordova Web视图在该视图中渲染应用程序并与其运行所在的本机平台进行通信。插件提供对通常基于Web的应用程序不可用的设备和平台功能的访问。 Cordova A..." />
+    <meta name="keywords" content="Cordova" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://merpyzf.github.io">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1583911781060" alt="">
+  </a>
+  <h1 class="site-title">
+    It&#39;s my life
+  </h1>
+  <p class="site-description">
+    真正的光芒，需要一点点时间
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Cordova插件开发指南
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-11
+              </span>
+              <span>
+                14 min read
+              </span>
+              
+                <a href="https://merpyzf.github.io/tag/oNOI8yLSr/" class="post-tag">
+                  # Cordova
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://merpyzf.github.io/post-images/cordova-cha-jian-kai-fa-zhi-nan.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>下文为对<a href="https://cordova.apache.org/docs/en/9.x/guide/hybrid/plugins">Cordova官网插件开发</a>的翻译。</p>
 <h3 id="简介">简介</h3>
 <p>插件是注入的代码包，可让Cordova Web视图在该视图中渲染应用程序并与其运行所在的本机平台进行通信。插件提供对通常基于Web的应用程序不可用的设备和平台功能的访问。 Cordova API的所有主要功能均作为插件实现，还有许多其他功能可启用诸如条形码扫描仪，NFC通信或定制日历界面等功能。</p>
 <p>插件包含一个JavaScript接口(插件www目录下的js文件)，以及每个受支持平台的相应本机代码库。本质上，这将各种本机代码实现隐藏在通用JavaScript接口的后面，您可以将其用作模型来构建更复杂的功能。本节讨论基本的插件结构和面向外部的JavaScript接口。</p>
@@ -274,87 +354,109 @@ else
 </ol>
 <!-- ### 指定Cordova依赖项
 Cordova 6.1.0添加了对指定插件的Cordova相关依赖项的支持，作为插件的package.json文件的一部分。插件可能会列出多个发行版的依赖关系，以在Cordova CLI选择要从npm获取的插件版本时向其提供指导。CLI将选择与本地项目的已安装平台和插件以及本地Cordova CLI版本兼容的最新版本的插件。如果没有兼容的插件版本，则CLI将警告用户有关失败的要求，并退回获取最新版本的旧行为。 -->
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[关于CallbackContext中的sendPluginResult方法的作用]]></title>
-        <id>https://merpyzf.github.io/post/guan-yu-callbackcontext-zhong-de-sendpluginresult-fang-fa-de-zuo-yong/</id>
-        <link href="https://merpyzf.github.io/post/guan-yu-callbackcontext-zhong-de-sendpluginresult-fang-fa-de-zuo-yong/">
-        </link>
-        <updated>2020-03-09T08:36:12.000Z</updated>
-        <content type="html"><![CDATA[<p>一般情况下我们编写的插件方法只需要返回一次结果值，比如对蓝牙可用性的判断：</p>
-<pre><code>  private void bluetoothEnable() {
-        if (bleAdapter.isEnabled()) {
-            callbackContext.success(&quot;蓝牙可用&quot;);
-        } else {
-            callbackContext.error(&quot;蓝牙不可用&quot;);
-        }
-    }
-</code></pre>
-<p>但是有一种情况需要注意，比如在做一个搜索附近蓝牙的插件，由于结果不是一次性给出的，可能每隔一会儿才能搜索到一个可用的蓝牙设备，需要把每一次搜索到的蓝牙设备悲喜传递给JS层，如果通过callbackContext.success()方法进行重复调用则会引发错误且无法完成结果的传递，通过查看源码可以发现：</p>
-<pre><code>  public void sendPluginResult(PluginResult pluginResult) {
-        synchronized (this) {
-            if (finished) {
-                LOG.w(LOG_TAG, &quot;Attempted to send a second callback for ID: &quot; + callbackId + &quot;\nResult was: &quot; + pluginResult.getMessage());
-                return;
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E5%90%91%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%8F%92%E4%BB%B6">向项目中添加插件</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8plugman%E9%AA%8C%E8%AF%81%E6%8F%92%E4%BB%B6">使用Plugman验证插件</a></li>
+<li><a href="#javascript%E6%8E%A5%E5%8F%A3">JavaScript接口</a></li>
+<li><a href="#native%E5%B1%82%E5%AE%9E%E7%8E%B0">Native层实现</a>
+<ul>
+<li><a href="#android%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E">Android插件开发说明</a>
+<ul>
+<li><a href="#%E6%8F%92%E4%BB%B6%E7%B1%BB%E6%98%A0%E5%B0%84">插件类映射</a></li>
+<li><a href="#%E6%8F%92%E4%BB%B6%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">插件初始化和生命周期</a></li>
+<li><a href="#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAandroid%E6%8F%92%E4%BB%B6">编写一个Android插件</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B">线程</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%BA%93">添加依赖库</a></li>
+<li><a href="#android%E6%95%B4%E5%90%88">Android整合</a></li>
+<li><a href="#android%E9%9D%99%E6%80%81%E6%9D%83%E9%99%90">Android静态权限</a></li>
+<li><a href="#android%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9D%83%E9%99%90">Android运行时权限</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%85%B6%E4%BB%96%E6%B4%BB%E5%8A%A8">启动其他活动</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%8F%91%E5%B8%83%E6%8F%92%E4%BB%B6">发布插件</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://merpyzf.github.io/post/guan-yu-callbackcontext-zhong-de-sendpluginresult-fang-fa-de-zuo-yong/">
+              <h3 class="post-title">
+                关于CallbackContext中的sendPluginResult方法的作用
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://merpyzf.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
             } else {
-                finished = !pluginResult.getKeepCallback();
+              link.classList.add("current");
             }
-        }
-        webView.sendPluginResult(pluginResult, callbackId);
-    }
-</code></pre>
-<p>当我们直接调用success或error方法返回结果给JS层时，最终调用的方法为sendPluginResult，pluginResult.getKeepCallback()方法获取的是keepCallback的值，它的默认值为false，因此通过以上方法只能实现一次结果的返回，当第二次调用的时keepCallback的值就已经被设置为true，继而会在控制台打印如下警告：Attempted to send a second callback for ID...并直接return。</p>
-<p>因此如果我们想要向JS层多次返回结果时就需要将keepCallback的值手动设置为true，通过以下方法可完成结果的多次返回操作：</p>
-<pre><code>PluginResult pluginResult = new PluginResult(PluginResult.Status.OK,&quot;message&quot;);
-pluginResult.setKeepCallback(true);
-callbackContext.sendPluginResult(pluginResult);
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[初识 Ionic Framework]]></title>
-        <id>https://merpyzf.github.io/post/zhe-shi-yi-pian-ce-shi-de-wen-zhang/</id>
-        <link href="https://merpyzf.github.io/post/zhe-shi-yi-pian-ce-shi-de-wen-zhang/">
-        </link>
-        <updated>2020-03-05T10:11:36.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="ionic框架">Ionic框架</h3>
-<h4 id="是什么">是什么？</h4>
-<p>Ionic Framework是一个开源UI工具包，通过使用Web技术（HTML，CSS和JavaScript）构建高性能，高质量的移动和桌面应用程序。</p>
-<p>Ionic Framework专注于前端用户体验或应用程序的UI交互（控件，交互，手势，动画）。并且可以与Angular等其他库或框架做到很好地集成，或者可以在没有前端框架的情况下独立使用。</p>
-<h4 id="目标">目标</h4>
-<ul>
-<li>
-<p><strong>跨平台</strong>：构建并部署可在多个平台（例如本机iOS，Android，桌面和网络）上运行的应用程序，作为渐进式Web应用程序-只需一个代码库即可。编写一次，即可在任何地方运行。</p>
-</li>
-<li>
-<p><strong>基于Web标准</strong>：Ionic Framework使用可靠的标准化Web技术（HTML，CSS和JavaScript）构建，并使用自定义元素和Shadow DOM等现代Web API。因此，Ionic组件具有稳定的API，并且不受单个平台供应商的追捧。</p>
-</li>
-<li>
-<p><strong>精美的设计</strong>：干净，简单且实用。 Ionic Framework旨在在所有平台上开箱即用地精美显示。从预先设计的组件，版式，交互式范例和华丽的（但仍可扩展的）基本主题开始。</p>
-</li>
-<li>
-<p><strong>简单</strong>：Ionic Framework的构建考虑到了简单性，因此创建Ionic应用程序非常有趣，易于学习，并且几乎所有具有Web开发技能的人都可以使用。</p>
-</li>
-</ul>
-<h4 id="核心概念">核心概念</h4>
-<ul>
-<li>
-<p><strong>UI组件</strong>：<strong>Ionic Framework是UI组件的库</strong>，UI组件是可重用的元素，它们充当应用程序的构建块。尽管这些组件是预先构建的，但它们的设计是完全可定制的，因此应用程序可以将每个组件制作为自己的组件，允许每个应用都有自己的外观。更具体地说，可以轻松地将Ionic组件设置为主题，以在整个应用程序中全局更改外观。</p>
-</li>
-<li>
-<p><strong>自适应样式</strong>：自适应样式是Ionic Framework的内置功能，它允许应用程序开发人员将相同的代码库用于多个平台。每个Ionic组件都会根据其运行该应用程序的平台调整其外观。例如，Apple设备（例如iPhone和iPad）使用Apple自己的iOS设计语言。例如，Apple设备（例如iPhone和iPad）使用Apple自己的iOS设计语言。同样，Android设备使用Google的称为Material Design的设计语言。通过在平台之间进行细微的设计更改，可以为用户提供熟悉的应用程序体验。从Apple的App Store下载的Ionic应用程序将获得iOS主题，而从Android的Play Store下载的Ionic应用程序将获得Material Design主题。对于从浏览器中视为渐进式Web应用程序（PWA）的应用程序，Ionic将默认使用Material Design主题。此外，决定在某些情况下使用哪个平台是完全可配置的。有关自适应样式的更多信息，请参见主题。</p>
-</li>
-<li>
-<p><strong>导航</strong>：传统的Web应用程序使用线性历史记录，这意味着用户可以向前导航到页面，并且可以单击“后退”按钮来向后导航。一个示例是在Wikipedia上单击，用户在浏览器的线性历史记录堆栈上来回移动。相反，移动应用程序通常利用并行的“非线性”导航。例如，选项卡式界面可以为每个选项卡具有单独的导航堆栈，以确保用户在导航和在选项卡之间切换时不会丢失自己的位置。Ionic应用程序采用了这种移动导航方法，不仅支持嵌套的并行导航历史记录，而且还保留了Web开发人员熟悉的浏览器式导航概念。对于使用Angular和@ ionic / angular构建的应用程序，我们建议为每个新的Ionic 4 Angular应用程序使用开箱即用的Angular Router。</p>
-</li>
-<li>
-<p><strong>本机访问</strong>：使用Web技术构建的应用程序（例如Ionic应用程序！）的一个惊人功能是，它几乎可以在任何平台上运行：台式计算机，电话，平板电脑，汽车，冰箱等！Ionic应用程序的相同代码库可以在许多平台上工作，因为它基于Web标准和在这些平台之间共享的通用API。Ionic的最常见用例之一是构建可从App Store和Play Store下载的应用程序。iOS和Android软件开发套件（SDK）均提供可呈现任何Ionic应用程序的Web视图，同时仍允许完整的Native SDK访问。通常使用诸如Capacitor和Cordova之类的项目为Ionic应用程序提供对Native SDK的访问权限。这意味着开发人员可以使用通用的Web开发工具快速构建应用程序，并且仍然可以访问设备的加速计，摄像头，GPS等本机功能。</p>
-</li>
-<li>
-<p><strong>主题</strong>：Ionic Framework的核心是使用CSS构建的，它使我们能够利用CSS属性（变量）提供的灵活性。这使得在遵循Web标准的同时设计美观的应用程序变得异常容易。我们提供了一组颜色，以便开发人员可以有一些很棒的默认设置，但是我们建议您覆盖它们以创建与品牌，公司或所需调色板匹配的设计。从应用程序的背景颜色到文本颜色的所有内容都是完全可定制的。有关应用程序主题的更多信息，请参见主题。</p>
-</li>
-</ul>
-]]></content>
-    </entry>
-</feed>
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
