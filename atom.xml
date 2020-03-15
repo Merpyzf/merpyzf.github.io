@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://merpyzf.github.io</id>
     <title>It&apos;s my life</title>
-    <updated>2020-03-11T13:12:37.517Z</updated>
+    <updated>2020-03-15T08:01:59.718Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://merpyzf.github.io"/>
     <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
@@ -10,6 +10,55 @@
     <logo>https://merpyzf.github.io/images/avatar.png</logo>
     <icon>https://merpyzf.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, It&apos;s my life</rights>
+    <entry>
+        <title type="html"><![CDATA[基于Cordova创建Ionic插件]]></title>
+        <id>https://merpyzf.github.io/post/ji-yu-cordova-chuang-jian-ionic-cha-jian/</id>
+        <link href="https://merpyzf.github.io/post/ji-yu-cordova-chuang-jian-ionic-cha-jian/">
+        </link>
+        <updated>2020-03-13T10:16:43.000Z</updated>
+        <content type="html"><![CDATA[<ol>
+<li>
+<p>克隆Github中的Ionic-Native的项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。</p>
+</li>
+<li>
+<p>进入ionic-native的根目录</p>
+</li>
+<li>
+<p>创建插件包</p>
+<pre><code>// 调用此命令，并将`PluginName`替换为希望添加的插件名称
+// 第一个字母一定要大写，使用大驼峰命名
+gulp plugin:create -n PluginName
+</code></pre>
+<p>执行完以上命令将会在src/@ionic-native/plugins目录下创建一个名称为PluginName的插件目录，里面有一个index.ts文件，后面Ionic插件的编写就是需要在这个文件中进行的。</p>
+</li>
+<li>
+<p>编写index.ts</p>
+<pre><code>@Plugin({
+pluginName: 'ZijinUtilPlugin',
+plugin: 'cordova-plugin-x-zijinutil', // npm package name, example: cordova-plugin-camera
+pluginRef: 'cordova.plugins.ZijinUtil', // the variable reference to call the plugin, example: navigator.geolocation
+platforms: ['Android'] // Array of platforms supported, example: ['Android', 'iOS']
+})
+@Injectable()
+export class ZijinUtilPlugin extends IonicNativePlugin {
+}
+</code></pre>
+</li>
+</ol>
+<p>这里需要重点指出的是 @Plugin装饰器中参数的添加：</p>
+<ol>
+<li>
+<p>pluginRef：指的是底层Cordova插件的应用方式，这个值和cordova插件中的plugin.xml下的clobbers节点值相同。</p>
+</li>
+<li>
+<p>plugin：值的是npm包的名称</p>
+</li>
+<li>
+<p>通过调用 npm run build <pluginName> 来完成对插件的编辑，最后编译的结果会生成到ionic-native/dist/@ionic-native/plugins目录。如果是使用的是MacOS系统进行的编译还有可能会出现如下的错误：<code>Error: ENOENT: no such file or directory, open '/Users/wangke/Workspace/CompanyProjects/ionic-native/dist/@ionic-native/plugins/.DS_Store/index.js'</code>。通过执行 find . -name '.DS_Store' -type f -delete 命令后即可解决上述问题。</p>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Cordova插件开发指南]]></title>
         <id>https://merpyzf.github.io/post/cordova-cha-jian-kai-fa-zhi-nan/</id>
@@ -105,7 +154,7 @@ Android层的实现（因为本人只熟悉Android平台的开发）。</p>
         ...
 &lt;/platform&gt;
 </code></pre>
-<p>service_name与JavaScript exec调用中使用的名称相匹配。value的值是Java类的标准名称空间标识符。如果配置有误，该插件虽然可能会通过编译，但Cordova仍无法完成插件调用。</p>
+<p>__service_name与JavaScript exec调用中使用的名称相匹配。value的值是继承了CordovaPlugin类的全路径。__如果配置有误，该插件虽然可能会通过编译，但Cordova仍无法完成插件调用。</p>
 <h5 id="插件初始化和生命周期">插件初始化和生命周期</h5>
 <p>在每个WebView的生存期内，都会创建一个插件对象的实例。但是默认情况下，插件不会跟随WebView一同创建，而是直到JavaScript调用首次引用插件时，才会实例化插件。除非在config.xml中将具有onload name属性的<param>设置为“ true”。例如，</p>
 <pre><code>&lt;!-- 设置跟随WebView初始化插件 --&gt;

@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cordova插件开发指南 | It&#39;s my life</title>
-<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1583912089016">
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584259316550">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Cordova插件开发指南 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://merpyzf.github.io">
-  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1583912089016" alt="">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1584259316550" alt="">
   </a>
   <h1 class="site-title">
     It&#39;s my life
@@ -185,7 +185,7 @@ Android层的实现（因为本人只熟悉Android平台的开发）。</p>
         ...
 &lt;/platform&gt;
 </code></pre>
-<p>service_name与JavaScript exec调用中使用的名称相匹配。value的值是Java类的标准名称空间标识符。如果配置有误，该插件虽然可能会通过编译，但Cordova仍无法完成插件调用。</p>
+<p>__service_name与JavaScript exec调用中使用的名称相匹配。value的值是继承了CordovaPlugin类的全路径。__如果配置有误，该插件虽然可能会通过编译，但Cordova仍无法完成插件调用。</p>
 <h5 id="插件初始化和生命周期">插件初始化和生命周期</h5>
 <p>在每个WebView的生存期内，都会创建一个插件对象的实例。但是默认情况下，插件不会跟随WebView一同创建，而是直到JavaScript调用首次引用插件时，才会实例化插件。除非在config.xml中将具有onload name属性的<param>设置为“ true”。例如，</p>
 <pre><code>&lt;!-- 设置跟随WebView初始化插件 --&gt;

@@ -2,24 +2,26 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | It&#39;s my life</title>
+<title>基于Cordova创建Ionic插件 | It&#39;s my life</title>
 <link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584259316550">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="基于Cordova创建Ionic插件 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
     <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
 
-🏠 关于本站
-👨‍💻 博主是谁
-⛹ 兴趣爱好
-📬 联系我呀
-..." />
-    <meta name="keywords" content="生活" />
+克隆Github中的Ionic-Native的项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。
+
+
+进入ionic-native的根目录
+
+
+创建插件包
+// 调用此命令，并将`PluginName`替换为希望添加的插件名..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,50 +83,81 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              基于Cordova创建Ionic插件
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-03-13
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
-              
-                <a href="https://merpyzf.github.io/tag/xmqTS15sN/" class="post-tag">
-                  # 生活
-                </a>
               
             </div>
             
+              <img class="post-feature-image" src="https://merpyzf.github.io/post-images/ji-yu-cordova-chuang-jian-ionic-cha-jian.jpg" alt="">
+            
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <ol>
+<li>
+<p>克隆Github中的Ionic-Native的项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。</p>
+</li>
+<li>
+<p>进入ionic-native的根目录</p>
+</li>
+<li>
+<p>创建插件包</p>
+<pre><code>// 调用此命令，并将`PluginName`替换为希望添加的插件名称
+// 第一个字母一定要大写，使用大驼峰命名
+gulp plugin:create -n PluginName
+</code></pre>
+<p>执行完以上命令将会在src/@ionic-native/plugins目录下创建一个名称为PluginName的插件目录，里面有一个index.ts文件，后面Ionic插件的编写就是需要在这个文件中进行的。</p>
+</li>
+<li>
+<p>编写index.ts</p>
+<pre><code>@Plugin({
+pluginName: 'ZijinUtilPlugin',
+plugin: 'cordova-plugin-x-zijinutil', // npm package name, example: cordova-plugin-camera
+pluginRef: 'cordova.plugins.ZijinUtil', // the variable reference to call the plugin, example: navigator.geolocation
+platforms: ['Android'] // Array of platforms supported, example: ['Android', 'iOS']
+})
+@Injectable()
+export class ZijinUtilPlugin extends IonicNativePlugin {
+}
+</code></pre>
+</li>
+</ol>
+<p>这里需要重点指出的是 @Plugin装饰器中参数的添加：</p>
+<ol>
+<li>
+<p>pluginRef：指的是底层Cordova插件的应用方式，这个值和cordova插件中的plugin.xml下的clobbers节点值相同。</p>
+</li>
+<li>
+<p>plugin：值的是npm包的名称</p>
+</li>
+<li>
+<p>通过调用 npm run build <pluginName> 来完成对插件的编辑，最后编译的结果会生成到ionic-native/dist/@ionic-native/plugins目录。如果是使用的是MacOS系统进行的编译还有可能会出现如下的错误：<code>Error: ENOENT: no such file or directory, open '/Users/wangke/Workspace/CompanyProjects/ionic-native/dist/@ionic-native/plugins/.DS_Store/index.js'</code>。通过执行 find . -name '.DS_Store' -type f -delete 命令后即可解决上述问题。</p>
+</li>
+</ol>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://merpyzf.github.io/post/cordova-cha-jian-kai-fa-zhi-nan/">
+              <h3 class="post-title">
+                Cordova插件开发指南
+              </h3>
+            </a>
+          </div>
         
 
         
