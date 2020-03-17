@@ -2,19 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | It&#39;s my life</title>
+<title>adb error: more than one device | It&#39;s my life</title>
 <link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584455724889">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="adb error: more than one device | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="月が綺麗ですね/今夜は月が綺麗ですね
+    <meta name="description" content="You can run every command of adb by selecting the device by deviceID. run command to get Device Id:
+adb devices
 
-..." />
-    <meta name="keywords" content="生活" />
+you wil..." />
+    <meta name="keywords" content="Android" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -76,26 +77,41 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              adb error: more than one device
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-03-16
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="https://merpyzf.github.io/tag/xmqTS15sN/" class="post-tag">
-                  # 生活
+                <a href="https://merpyzf.github.io/tag/_IBpUjQAP/" class="post-tag">
+                  # Android
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <center>月が綺麗ですね/今夜は月が綺麗ですね</center>
-<figure data-type="image" tabindex="1"><img src="https://merpyzf.github.io/post-images/1584365726491.JPG" alt="" loading="lazy"></figure>
+                <p>You can run every command of adb by selecting the device by deviceID. run command to get Device Id:</p>
+<pre><code>adb devices
+</code></pre>
+<p>you will get the list of all available devices something like this:</p>
+<pre><code>&lt;device ID&gt; device
+emulator-5554 offline
+</code></pre>
+<p>the copy the device id run commad like this:</p>
+<pre><code>adb -s &lt;device ID&gt; &lt;your command&gt;
+</code></pre>
+<p>example:</p>
+<pre><code>adb -s &lt;device ID&gt; tcpip 5555
+</code></pre>
+<p>OR</p>
+<pre><code>adb -s &lt;device ID&gt; forward tcp:59900 tcp:59900
+</code></pre>
+<p>this will not get the error like &quot;more than one device/emulator&quot;</p>
 
               </div>
               <div class="toc-container">
@@ -105,6 +121,15 @@
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://merpyzf.github.io/post/yi-dong-duan-kai-fa-ji-zhu-gong-si-nei-bu-fen-xiang-huo-dong/">
+              <h3 class="post-title">
+                移动端开发技术公司内部分享活动
+              </h3>
+            </a>
+          </div>
         
 
         
