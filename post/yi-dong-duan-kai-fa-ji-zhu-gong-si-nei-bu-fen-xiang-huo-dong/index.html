@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>移动端开发技术公司内部分享活动 | It&#39;s my life</title>
-<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584455724889">
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584549587344">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="移动端开发技术公司内部分享活动 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
@@ -11,15 +11,9 @@
 
 
 
-    <meta name="description" content="浏览器与移动端设备的调试方法
-当项目运行在浏览器时的调试方法
-1. 通过打印日志的方式调试
-```
-console.log('message') // 提示信息
-console.log(var) // 变量值
-```
-
-这将会在浏览器的开发..." />
+    <meta name="description" content="一、第三方和自定义Cordova插件的使用方法
+为什么需要使用插件？
+我们基于Ionic开发的项目最后通过Cordova打包运行在移动设备上时，实际上是运行在移动设备内置的浏览器中的。当开发的功能涉及到对设备底层功能的调用比如拍照、监听系统..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -29,7 +23,7 @@ console.log(var) // 变量值
       <div class="main-content">
         <div class="site-header">
   <a href="https://merpyzf.github.io">
-  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1584455724889" alt="">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1584549587344" alt="">
   </a>
   <h1 class="site-title">
     It&#39;s my life
@@ -89,14 +83,86 @@ console.log(var) // 变量值
                 2020-03-16
               </span>
               <span>
-                4 min read
+                7 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="浏览器与移动端设备的调试方法">浏览器与移动端设备的调试方法</h1>
+                <h1 id="一-第三方和自定义cordova插件的使用方法">一、第三方和自定义Cordova插件的使用方法</h1>
+<h2 id="为什么需要使用插件">为什么需要使用插件？</h2>
+<p>我们基于Ionic开发的项目最后通过Cordova打包运行在移动设备上时，实际上是运行在移动设备内置的浏览器中的。当开发的功能涉及到对设备底层功能的调用比如拍照、监听系统剪贴板变化这类的功能时就需要借助Cordova插件来提供一个桥梁供WebApp与能够调用设备底层功能的原生代码进行通信。</p>
+<h2 id="ionicnative-和-cordova-plugin-之间的关系">IonicNative 和 Cordova Plugin 之间的关系？</h2>
+<p>IonicNative调用设备底层功能的实现依托于Cordova插件，其本质是Cordova插件的TypeScript包装。通过使用IonicNative去调用Cordova插件可以帮助使用者来获取库的类型提示，方便用户使用。</p>
+<h2 id="插件使用">插件使用</h2>
+<p>获取插件：https://ionicframework.com/docs/native/</p>
+<h4 id="1-为项目集成cordova">1. 为项目集成Cordova：</h4>
+<pre><code>    ```
+    ionic integrations enable cordova --add  
+    ```
+</code></pre>
+<h4 id="2-安装cordova插件">2. 安装Cordova插件：</h4>
+<pre><code>    ```
+    // 安装已经发布到线上的插件只需要输入发布插件的名称
+    ionic cordova plugin add &lt;cordova-plugin-name&gt;
+    // ionic cordova plugin add cordova-plugin-x-toast
+
+    //安装公司内部自定义的插件（本地插件，未发布）
+    ionic cordova plugin add &lt;cordova-plugin-path&gt;
+    //ionic cordova plugin add /Users/wangle/Downloads/cordova-ble
+    ```
+</code></pre>
+<h4 id="3-安装cordova插件对应的ionicnative包">3. 安装Cordova插件对应的IonicNative包：</h4>
+<pre><code>    ```
+    npm install &lt;ionic-native-name&gt;
+    // npm install @ionic-native/toast
+    ```
+</code></pre>
+<h4 id="4-实例化插件并使用">4. 实例化插件，并使用</h4>
+<pre><code>    ```
+    // 首先需要到AppModule中的@NgModule注解中将要注入的插件对象的类配置到providers中。
+    import { Toast } from '@ionic-native/toast/ngx';
+
+    constructor(private toast: Toast) { }
+
+    ...
+
+    this.toast.show(`I'm a toast`, '5000', 'center').subscribe(
+    toast =&gt; {
+        console.log(toast);
+    }
+    );
+    ```
+</code></pre>
+<h4 id="5-查看当前项目中已安装的所有插件">5. 查看当前项目中已安装的所有插件</h4>
+<pre><code>```
+    ionic cordova plugin ls
+```
+![](https://merpyzf.github.io/post-images/1584547318777.png)
+</code></pre>
+<h4 id="6-移除插件">6. 移除插件</h4>
+<pre><code>```
+    ionic cordova plugin rm &lt;插件id&gt;
+```
+</code></pre>
+<h2 id="使用插件提供的调用native层方法时需要注意点">使用插件提供的调用Native层方法时需要注意点：</h2>
+<ol>
+<li>
+<p>Promise: 插件方法只返回一个结果值</p>
+</li>
+<li>
+<p>Observable： 插件方法将返回多个结果值<br>
+比如当我们调用扫描附近蓝牙的插件方法时，由于扫描的结果不是一次给出的，需要在扫描到一个可用蓝牙设备时才可以将结果返回。<strong>我们在使用这类返回结果的插件方法时应当在完成所需功能后及时取消订阅或者调用插件提供的方法停止结果的返回。</strong></p>
+</li>
+</ol>
+<h2 id="关于cordova插件需要明确的几个点">关于Cordova插件需要明确的几个点：</h2>
+<ol>
+<li>Cordova插件能够在任何基于Cordova 的工程中使用，和使用的什么前端框架（如Ionic）无关。</li>
+<li>IonicNative只是为了方便我们使用Cordova插件，它不是必须的。即使安装了插件对应的IonicNatvie包也还是需要使用去添加插件。<code>cordova plugin add &lt;cordova-plugin-name&gt;</code></li>
+</ol>
+<h1 id="二-新增功能与组件库的使用">二、新增功能与组件库的使用</h1>
+<h1 id="三-浏览器与移动端设备的调试方法">三、浏览器与移动端设备的调试方法</h1>
 <h2 id="当项目运行在浏览器时的调试方法">当项目运行在浏览器时的调试方法</h2>
 <h3 id="1-通过打印日志的方式调试">1. 通过打印日志的方式调试</h3>
 <pre><code>```
@@ -122,7 +188,7 @@ console.log(var) // 变量值
 <ol>
 <li>Pause/Resume script execution：暂停或恢复代码的执行（代码将执行到下一个断点处停止）。</li>
 <li>Step over next function call：执行到下一处的函数调用（执行当前断点所在的行，跳到下一行后暂停，不会进入函数内部）。</li>
-<li>Step into next function call：进入当前函数，并在函数内部的第一行代码出暂停。</li>
+<li>Step into next function call：进入当前函数，并在函数内部的第一行代码处暂停。</li>
 <li>Step out of current function：跳出当前执行的函数。</li>
 <li>Deactive/Active all breakpoints：关闭/开启所有断点。</li>
 <li>Pause on exceptions：代码自动暂停到发生异常的地方。</li>
@@ -131,7 +197,7 @@ console.log(var) // 变量值
 </ol>
 <p>详细教程：<a href="https://developers.google.com/web/tools/chrome-devtools/javascript?hl=zh-cn">在 Chrome DevTools 中调试 JavaScript </a></p>
 <h2 id="当项目运行在移动端设备时的调试方法">当项目运行在移动端设备时的调试方法</h2>
-<p>虽然浏览器的设备模拟功能很强大，但是我们在Chrome中模拟的移动端的网页在移动端运行的时候可能会遇到一些样式错乱的问题，或者当我们需要对插件的功能进行开发的时候就需要将程序运行到真机上进行调试。</p>
+<p>虽然浏览器的设备模拟功能很强大，但是我们在Chrome中模拟的移动端的网页最终在移动端环境下运行的时候可能会遇到一些样式错乱的问题，或者当我们需要对插件的功能进行开发的时候就需要将程序运行到真机上进行调试。</p>
 <h3 id="真机调试前的准备环境">真机调试前的准备环境</h3>
 <h4 id="1-为电脑安装adb工具">1. 为电脑安装ADB工具</h4>
 <p>可以直接通过<a href="https://developer.android.com/studio?hl=zh-cn">安装AndroidStuido</a>来获取ADB命令，同时IDE中会提供一个查看Logcat日志的图形界面。或者(单独安装ADB工具包）[https://juejin.im/post/5baaf0f95188255c5442af1e]</p>
@@ -149,7 +215,8 @@ console.log(var) // 变量值
 </ol>
 <h3 id="2-通过chrome的远程调试功能">2. 通过Chrome的远程调试功能</h3>
 <p><strong>使用Chrome远程调试模式的前提是需要通过添加--debug参数来将程序运行到真机，避免TypeScript代码被编译成JavaScript。通过如下命令：</strong></p>
-<pre><code>ionic cordova run &lt;ios or android&gt; --device -l --debug
+<pre><code>// -l （live-reload实时重载）
+ionic cordova run &lt;ios or android&gt; --device -l --debug
 </code></pre>
 <ol>
 <li>在电脑端的Chrome的地址栏输入chrome://inspect。进入后确认Discover USB devices 已经勾选了：<br>
@@ -165,7 +232,27 @@ console.log(var) // 变量值
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%AE%BE%E5%A4%87%E7%9A%84%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95">浏览器与移动端设备的调试方法</a>
+<li><a href="#%E4%B8%80-%E7%AC%AC%E4%B8%89%E6%96%B9%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89cordova%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">一、第三方和自定义Cordova插件的使用方法</a>
+<ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6">为什么需要使用插件？</a></li>
+<li><a href="#ionicnative-%E5%92%8C-cordova-plugin-%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB">IonicNative 和 Cordova Plugin 之间的关系？</a></li>
+<li><a href="#%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8">插件使用</a><br>
+*
+<ul>
+<li><a href="#1-%E4%B8%BA%E9%A1%B9%E7%9B%AE%E9%9B%86%E6%88%90cordova">1. 为项目集成Cordova：</a></li>
+<li><a href="#2-%E5%AE%89%E8%A3%85cordova%E6%8F%92%E4%BB%B6">2. 安装Cordova插件：</a></li>
+<li><a href="#3-%E5%AE%89%E8%A3%85cordova%E6%8F%92%E4%BB%B6%E5%AF%B9%E5%BA%94%E7%9A%84ionicnative%E5%8C%85">3. 安装Cordova插件对应的IonicNative包：</a></li>
+<li><a href="#4-%E5%AE%9E%E4%BE%8B%E5%8C%96%E6%8F%92%E4%BB%B6%E5%B9%B6%E4%BD%BF%E7%94%A8">4. 实例化插件，并使用</a></li>
+<li><a href="#5-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%B7%B2%E5%AE%89%E8%A3%85%E7%9A%84%E6%89%80%E6%9C%89%E6%8F%92%E4%BB%B6">5. 查看当前项目中已安装的所有插件</a></li>
+<li><a href="#6-%E7%A7%BB%E9%99%A4%E6%8F%92%E4%BB%B6">6. 移除插件</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E6%8F%90%E4%BE%9B%E7%9A%84%E8%B0%83%E7%94%A8native%E5%B1%82%E6%96%B9%E6%B3%95%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%82%B9">使用插件提供的调用Native层方法时需要注意点：</a></li>
+<li><a href="#%E5%85%B3%E4%BA%8Ecordova%E6%8F%92%E4%BB%B6%E9%9C%80%E8%A6%81%E6%98%8E%E7%A1%AE%E7%9A%84%E5%87%A0%E4%B8%AA%E7%82%B9">关于Cordova插件需要明确的几个点：</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E6%96%B0%E5%A2%9E%E5%8A%9F%E8%83%BD%E4%B8%8E%E7%BB%84%E4%BB%B6%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8">二、新增功能与组件库的使用</a></li>
+<li><a href="#%E4%B8%89-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%AE%BE%E5%A4%87%E7%9A%84%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95">三、浏览器与移动端设备的调试方法</a>
 <ul>
 <li><a href="#%E5%BD%93%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%97%B6%E7%9A%84%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95">当项目运行在浏览器时的调试方法</a>
 <ul>
