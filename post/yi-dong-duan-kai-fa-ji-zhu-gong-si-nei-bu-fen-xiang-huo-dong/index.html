@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>移动端开发技术公司内部分享活动 | It&#39;s my life</title>
-<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584549587344">
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584769511514">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="移动端开发技术公司内部分享活动 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
@@ -13,7 +13,7 @@
 
     <meta name="description" content="一、第三方和自定义Cordova插件的使用方法
 为什么需要使用插件？
-我们基于Ionic开发的项目最后通过Cordova打包运行在移动设备上时，实际上是运行在移动设备内置的浏览器中的。当开发的功能涉及到对设备底层功能的调用比如拍照、监听系统..." />
+我们基于Ionic开发的项目最终是需要通过Cordova打包才可以发布到应用市场。其本质是一个运行在移动端浏览器上的 Web App，它不具备访问设备底层的能力。当开发的..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://merpyzf.github.io">
-  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1584549587344" alt="">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1584769511514" alt="">
   </a>
   <h1 class="site-title">
     It&#39;s my life
@@ -83,7 +83,7 @@
                 2020-03-16
               </span>
               <span>
-                7 min read
+                8 min read
               </span>
               
             </div>
@@ -92,9 +92,9 @@
               <div class="post-content">
                 <h1 id="一-第三方和自定义cordova插件的使用方法">一、第三方和自定义Cordova插件的使用方法</h1>
 <h2 id="为什么需要使用插件">为什么需要使用插件？</h2>
-<p>我们基于Ionic开发的项目最后通过Cordova打包运行在移动设备上时，实际上是运行在移动设备内置的浏览器中的。当开发的功能涉及到对设备底层功能的调用比如拍照、监听系统剪贴板变化这类的功能时就需要借助Cordova插件来提供一个桥梁供WebApp与能够调用设备底层功能的原生代码进行通信。</p>
-<h2 id="ionicnative-和-cordova-plugin-之间的关系">IonicNative 和 Cordova Plugin 之间的关系？</h2>
-<p>IonicNative调用设备底层功能的实现依托于Cordova插件，其本质是Cordova插件的TypeScript包装。通过使用IonicNative去调用Cordova插件可以帮助使用者来获取库的类型提示，方便用户使用。</p>
+<p>我们基于Ionic开发的项目最终是需要通过Cordova打包才可以发布到应用市场。其本质是一个运行在移动端浏览器上的 Web App，它不具备访问设备底层的能力。当开发的功能涉及到对设备底层功能的调用时，比如拍照、保存文件到本地存储这些涉及原生调用功能时候就需要借助Cordova插件来搭建一个桥梁，供Web App与能够调用设备底层功能的原生代码进行通信。</p>
+<h2 id="ionic-native-和-cordova-plugin-之间的关系">Ionic Native 和 Cordova Plugin 之间的关系？</h2>
+<p>Ionic Native是一个为Cordova打造的一款TypeScript打包器。它的作用在于可以在你ionic移动端应用上添加任何你想要的原生app的功能。Ionic Native调用设备底层功能的实现依托于Cordova插件，其本质是Cordova插件的TypeScript包装。Ionic Native 默认为插件实现了Promise或Observable回调，为所有插件和本地事件变化监听提供了通用的接口。它会给所有的插件方法提供一个完整的类型说明，帮助使用者来获取库的类型提示，方便使用。</p>
 <h2 id="插件使用">插件使用</h2>
 <p>获取插件：https://ionicframework.com/docs/native/</p>
 <h4 id="1-为项目集成cordova">1. 为项目集成Cordova：</h4>
@@ -146,7 +146,7 @@
     ionic cordova plugin rm &lt;插件id&gt;
 ```
 </code></pre>
-<h2 id="使用插件提供的调用native层方法时需要注意点">使用插件提供的调用Native层方法时需要注意点：</h2>
+<h2 id="调用插件方法时需要的地方">调用插件方法时需要的地方：</h2>
 <ol>
 <li>
 <p>Promise: 插件方法只返回一个结果值</p>
@@ -162,6 +162,32 @@
 <li>IonicNative只是为了方便我们使用Cordova插件，它不是必须的。即使安装了插件对应的IonicNatvie包也还是需要使用去添加插件。<code>cordova plugin add &lt;cordova-plugin-name&gt;</code></li>
 </ol>
 <h1 id="二-新增功能与组件库的使用">二、新增功能与组件库的使用</h1>
+<h2 id="新增功能时的常用命令">新增功能时的常用命令</h2>
+<ol>
+<li>
+<p>创建页面: <code>ionic g page &lt;YourPageName&gt;</code></p>
+</li>
+<li>
+<p>创建组件: <code>ionic g component &lt;YourComponentName&gt;</code></p>
+</li>
+<li>
+<p>创建服务: <code>ionic g provider &lt;YourProviderName&gt;</code></p>
+</li>
+<li>
+<p>创建指令: <code>ionic g directive &lt;YourDirectiveName&gt;</code></p>
+</li>
+<li>
+<p>创建过滤器 <code>ionic g pipe &lt;YourPipeName&gt;</code></p>
+</li>
+<li>
+<p>创建路由守卫 <code>ionic g guard guard &lt;YourGuardName&gt;</code></p>
+</li>
+</ol>
+<h2 id="组件库的使用">组件库的使用</h2>
+<pre><code>访问Ionic提供的官方文档去查阅组件的使用方法：
+
+https://ionicframework.com/docs/components
+</code></pre>
 <h1 id="三-浏览器与移动端设备的调试方法">三、浏览器与移动端设备的调试方法</h1>
 <h2 id="当项目运行在浏览器时的调试方法">当项目运行在浏览器时的调试方法</h2>
 <h3 id="1-通过打印日志的方式调试">1. 通过打印日志的方式调试</h3>
@@ -198,7 +224,7 @@ console.log(var) // 变量值
 <p>详细教程：<a href="https://developers.google.com/web/tools/chrome-devtools/javascript?hl=zh-cn">在 Chrome DevTools 中调试 JavaScript </a></p>
 <h2 id="当项目运行在移动端设备时的调试方法">当项目运行在移动端设备时的调试方法</h2>
 <p>虽然浏览器的设备模拟功能很强大，但是我们在Chrome中模拟的移动端的网页最终在移动端环境下运行的时候可能会遇到一些样式错乱的问题，或者当我们需要对插件的功能进行开发的时候就需要将程序运行到真机上进行调试。</p>
-<h3 id="真机调试前的准备环境">真机调试前的准备环境</h3>
+<h3 id="真机调试前的环境准备">真机调试前的环境准备</h3>
 <h4 id="1-为电脑安装adb工具">1. 为电脑安装ADB工具</h4>
 <p>可以直接通过<a href="https://developer.android.com/studio?hl=zh-cn">安装AndroidStuido</a>来获取ADB命令，同时IDE中会提供一个查看Logcat日志的图形界面。或者(单独安装ADB工具包）[https://juejin.im/post/5baaf0f95188255c5442af1e]</p>
 <h4 id="2-在android设备的开发者选项中开启调试并将设备通过数据线连接到电脑">2. 在Android设备的开发者选项中开启调试，并将设备通过数据线连接到电脑</h4>
@@ -235,7 +261,7 @@ ionic cordova run &lt;ios or android&gt; --device -l --debug
 <li><a href="#%E4%B8%80-%E7%AC%AC%E4%B8%89%E6%96%B9%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89cordova%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">一、第三方和自定义Cordova插件的使用方法</a>
 <ul>
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6">为什么需要使用插件？</a></li>
-<li><a href="#ionicnative-%E5%92%8C-cordova-plugin-%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB">IonicNative 和 Cordova Plugin 之间的关系？</a></li>
+<li><a href="#ionic-native-%E5%92%8C-cordova-plugin-%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB">Ionic Native 和 Cordova Plugin 之间的关系？</a></li>
 <li><a href="#%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8">插件使用</a><br>
 *
 <ul>
@@ -247,11 +273,16 @@ ionic cordova run &lt;ios or android&gt; --device -l --debug
 <li><a href="#6-%E7%A7%BB%E9%99%A4%E6%8F%92%E4%BB%B6">6. 移除插件</a></li>
 </ul>
 </li>
-<li><a href="#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E6%8F%90%E4%BE%9B%E7%9A%84%E8%B0%83%E7%94%A8native%E5%B1%82%E6%96%B9%E6%B3%95%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%82%B9">使用插件提供的调用Native层方法时需要注意点：</a></li>
+<li><a href="#%E8%B0%83%E7%94%A8%E6%8F%92%E4%BB%B6%E6%96%B9%E6%B3%95%E6%97%B6%E9%9C%80%E8%A6%81%E7%9A%84%E5%9C%B0%E6%96%B9">调用插件方法时需要的地方：</a></li>
 <li><a href="#%E5%85%B3%E4%BA%8Ecordova%E6%8F%92%E4%BB%B6%E9%9C%80%E8%A6%81%E6%98%8E%E7%A1%AE%E7%9A%84%E5%87%A0%E4%B8%AA%E7%82%B9">关于Cordova插件需要明确的几个点：</a></li>
 </ul>
 </li>
-<li><a href="#%E4%BA%8C-%E6%96%B0%E5%A2%9E%E5%8A%9F%E8%83%BD%E4%B8%8E%E7%BB%84%E4%BB%B6%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8">二、新增功能与组件库的使用</a></li>
+<li><a href="#%E4%BA%8C-%E6%96%B0%E5%A2%9E%E5%8A%9F%E8%83%BD%E4%B8%8E%E7%BB%84%E4%BB%B6%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8">二、新增功能与组件库的使用</a>
+<ul>
+<li><a href="#%E6%96%B0%E5%A2%9E%E5%8A%9F%E8%83%BD%E6%97%B6%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">新增功能时的常用命令</a></li>
+<li><a href="#%E7%BB%84%E4%BB%B6%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8">组件库的使用</a></li>
+</ul>
+</li>
 <li><a href="#%E4%B8%89-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%AE%BE%E5%A4%87%E7%9A%84%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95">三、浏览器与移动端设备的调试方法</a>
 <ul>
 <li><a href="#%E5%BD%93%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%97%B6%E7%9A%84%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95">当项目运行在浏览器时的调试方法</a>
@@ -262,7 +293,7 @@ ionic cordova run &lt;ios or android&gt; --device -l --debug
 </li>
 <li><a href="#%E5%BD%93%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E5%9C%A8%E7%A7%BB%E5%8A%A8%E7%AB%AF%E8%AE%BE%E5%A4%87%E6%97%B6%E7%9A%84%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95">当项目运行在移动端设备时的调试方法</a>
 <ul>
-<li><a href="#%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83">真机调试前的准备环境</a>
+<li><a href="#%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95%E5%89%8D%E7%9A%84%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">真机调试前的环境准备</a>
 <ul>
 <li><a href="#1-%E4%B8%BA%E7%94%B5%E8%84%91%E5%AE%89%E8%A3%85adb%E5%B7%A5%E5%85%B7">1. 为电脑安装ADB工具</a></li>
 <li><a href="#2-%E5%9C%A8android%E8%AE%BE%E5%A4%87%E7%9A%84%E5%BC%80%E5%8F%91%E8%80%85%E9%80%89%E9%A1%B9%E4%B8%AD%E5%BC%80%E5%90%AF%E8%B0%83%E8%AF%95%E5%B9%B6%E5%B0%86%E8%AE%BE%E5%A4%87%E9%80%9A%E8%BF%87%E6%95%B0%E6%8D%AE%E7%BA%BF%E8%BF%9E%E6%8E%A5%E5%88%B0%E7%94%B5%E8%84%91">2. 在Android设备的开发者选项中开启调试，并将设备通过数据线连接到电脑</a></li>

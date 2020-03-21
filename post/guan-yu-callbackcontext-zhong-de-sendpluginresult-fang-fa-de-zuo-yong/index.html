@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>关于CallbackContext中的sendPluginResult方法的作用 | It&#39;s my life</title>
-<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584549587344">
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1584769511514">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="关于CallbackContext中的sendPluginResult方法的作用 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
@@ -24,7 +24,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://merpyzf.github.io">
-  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1584549587344" alt="">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1584769511514" alt="">
   </a>
   <h1 class="site-title">
     It&#39;s my life
@@ -106,7 +106,7 @@
         }
     }
 </code></pre>
-<p>但是有一种情况需要注意，比如在做一个搜索附近蓝牙的插件，由于结果不是一次性给出的，可能每隔一会儿才能搜索到一个可用的蓝牙设备，需要把每一次搜索到的蓝牙设备悲喜传递给JS层，如果通过callbackContext.success()方法进行重复调用则会引发错误且无法完成结果的传递，通过查看源码可以发现：</p>
+<p>但是有一种情况需要注意，比如在做一个搜索附近蓝牙的插件，由于结果不是一次性给出的，可能每隔一会儿才能搜索到一个可用的蓝牙设备，需要把每一次搜索到的蓝牙设备信息传递给JS层，如果通过callbackContext.success()方法进行重复调用则会引发错误且无法完成结果的传递，通过查看源码可以发现：</p>
 <pre><code>  public void sendPluginResult(PluginResult pluginResult) {
         synchronized (this) {
             if (finished) {
