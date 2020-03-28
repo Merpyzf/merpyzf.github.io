@@ -2,26 +2,21 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>基于Cordova创建Ionic插件 | It&#39;s my life</title>
+<title>《JavaScript高级程序设计》读书笔记 | It&#39;s my life</title>
 <link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1585413525244">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基于Cordova创建Ionic插件 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="《JavaScript高级程序设计》读书笔记 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-
-克隆Github中的Ionic-Native的项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。
-
-
-进入ionic-native的根目录
-
-
-创建插件包
-// 调用此命令，并将`PluginName`替换为希望添加的插件名..." />
-    <meta name="keywords" content="Ionic" />
+    <meta name="description" content="第三章
+with语句
+with语句的作用就是将代码的作用域设置到一个特定的对象中。
+定义with语句的主要目的主要是为了简化多次编写同一个对象的工作，如👇所示：
+var qs = location.search.substring(1);..." />
+    <meta name="keywords" content="JavaScript" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -83,71 +78,52 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              基于Cordova创建Ionic插件
+              《JavaScript高级程序设计》读书笔记
             </h2>
             <div class="post-info">
               <span>
-                2020-03-13
+                2020-03-29
               </span>
               <span>
                 2 min read
               </span>
               
-                <a href="https://merpyzf.github.io/tag/e0j3NgcuS/" class="post-tag">
-                  # Ionic
+                <a href="https://merpyzf.github.io/tag/NotNXqW1Y/" class="post-tag">
+                  # JavaScript
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://merpyzf.github.io/post-images/ji-yu-cordova-chuang-jian-ionic-cha-jian.jpg" alt="">
-            
             <div class="post-content-wrapper">
               <div class="post-content">
-                <ol>
-<li>
-<p>克隆Github中的Ionic-Native的项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。</p>
-</li>
-<li>
-<p>进入ionic-native的根目录</p>
-</li>
-<li>
-<p>创建插件包</p>
-<pre><code>// 调用此命令，并将`PluginName`替换为希望添加的插件名称
-// 第一个字母一定要大写，使用大驼峰命名
-gulp plugin:create -n PluginName
+                <h1 id="第三章">第三章</h1>
+<h2 id="with语句">with语句</h2>
+<p>with语句的作用就是将代码的作用域设置到一个特定的对象中。<br>
+定义with语句的主要目的主要是为了简化多次编写同一个对象的工作，如👇所示：</p>
+<pre><code>var qs = location.search.substring(1);
+var hostname = location.hostname;
+var url = location.href;
 </code></pre>
-<p>执行完以上命令将会在src/@ionic-native/plugins目录下创建一个名称为PluginName的插件目录，里面有一个index.ts文件，后面Ionic插件的编写就是需要在这个文件中进行的。</p>
-</li>
-<li>
-<p>编写index.ts</p>
-<pre><code>@Plugin({
-pluginName: 'ZijinUtilPlugin',
-plugin: 'cordova-plugin-x-zijinutil', // npm package name, example: cordova-plugin-camera
-pluginRef: 'cordova.plugins.ZijinUtil', // the variable reference to call the plugin, example: navigator.geolocation
-platforms: ['Android'] // Array of platforms supported, example: ['Android', 'iOS']
-})
-@Injectable()
-export class ZijinUtilPlugin extends IonicNativePlugin {
+<p>以上几行代码都涉及到对location对象的操作，如果使用with语句，可以把上面的代码改成如下所示：</p>
+<pre><code>with(location){
+    var qs = search.substring(1);
+    var hostname = hostname;
+    var url = href;
 }
 </code></pre>
-</li>
-</ol>
-<p>这里需要重点指出的是 @Plugin装饰器中参数的添加：</p>
-<ol>
-<li>
-<p>pluginRef：指的是底层Cordova插件的应用方式，这个值和cordova插件中的plugin.xml下的clobbers节点值相同。</p>
-</li>
-<li>
-<p>plugin：值的是npm包的名称</p>
-</li>
-<li>
-<p>通过调用 npm run build <pluginName> 来完成对插件的编辑，最后编译的结果会生成到ionic-native/dist/@ionic-native/plugins目录。如果是使用的是MacOS系统进行的编译还有可能会出现如下的错误：<code>Error: ENOENT: no such file or directory, open '/Users/wangke/Workspace/CompanyProjects/ionic-native/dist/@ionic-native/plugins/.DS_Store/index.js'</code>。通过执行 find . -name '.DS_Store' -type f -delete 命令后即可解决上述问题。</p>
-</li>
-</ol>
+<p>在这个重写的例子中，使用with语句关联了location对象。这意味着在with语句中的代码块内部，每个变量首先会被认为是一个局部变量，而如果在局部环境中找不到该变量的定义，就会查找location对象中是否有同名的属性。如果发现了同名的属性，则以location对象的值作为变量中值。</p>
+<p>__ 严格模式下不允许使用with语句，否则将被视为语法错误🙅（大量的使用with语句会导致性能下降，也会给调试代码造成困难） __</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#%E7%AC%AC%E4%B8%89%E7%AB%A0">第三章</a>
+<ul>
+<li><a href="#with%E8%AF%AD%E5%8F%A5">with语句</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -156,9 +132,9 @@ export class ZijinUtilPlugin extends IonicNativePlugin {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://merpyzf.github.io/post/cordova-cha-jian-kai-fa-zhi-nan/">
+            <a href="https://merpyzf.github.io/post/guan-yu-cordovaandionicnative-cha-jian-kai-fa-yu-dao-de-yi-xie-keng/">
               <h3 class="post-title">
-                Cordova插件开发指南
+                关于Cordova&amp;IonicNative插件开发遇到的一些坑
               </h3>
             </a>
           </div>

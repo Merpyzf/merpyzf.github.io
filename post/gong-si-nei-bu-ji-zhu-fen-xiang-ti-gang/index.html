@@ -1,0 +1,234 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>公司内部技术分享提纲 | It&#39;s my life</title>
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1585413525244">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="公司内部技术分享提纲 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="各位同事大家下午好！ 今天由我来给大家分享一些Ionic移动端开发的一些技巧方法，希望本次的分享能够给大家带来帮助。
+本次的分享包含以下四个部分的内容，我会着重的和大家讲解第一部分和第三部分关于插件的使用方法和移动端程序调试这一块的内容。关..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://merpyzf.github.io">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1585413525244" alt="">
+  </a>
+  <h1 class="site-title">
+    It&#39;s my life
+  </h1>
+  <p class="site-description">
+    真正的光芒，需要一点点时间
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              公司内部技术分享提纲
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-20
+              </span>
+              <span>
+                14 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>各位同事大家下午好！ 今天由我来给大家分享一些Ionic移动端开发的一些技巧方法，希望本次的分享能够给大家带来帮助。</p>
+<p>本次的分享包含以下四个部分的内容，我会着重的和大家讲解第一部分和第三部分关于插件的使用方法和移动端程序调试这一块的内容。关于第二部分的内容我可能不会分享太多的东西，大家应该了解Ionic框架的实现是基于Angular来实现的，因此Ionic在开发的时候使用到的技术栈也都是Angular中的内容，第二部分的内容我们组前面一位同事已经讲的很详细了。那我们现在开始今天的分享。</p>
+<p>我们基于Ionic开发的项目最终需要通过Cordova打包之后才可以发布安装到设备上去，其本质是一个运行在设备浏览器上的Web 应用程序，它不具备直接访问访问设备底层功能的能力，比如拍照，保存文件等操作。右图是一个基于Cordova的应用程序的架构图，可以看到我们的应用是没有办法直接访问到设备的底层功能的，Android也为我们提供了Js调用Java代码的能力，但是编写起来较为复杂，Cordova平台对于JS对原生代码调用这一块的内容进行了封装，我们只需要通过按照Cordova的规则就可以非常快速的实现一个可以访问设备底层的插件。由于这些年的积累。目前网上现存的插件几乎可以满足绝大部分应用的开发需求。只有对于一些比较小众化的功能或者需要对一些特定的机型进行适配的时候才需要我们自己手动的进行插件的编写。</p>
+<p>下面我们来了解一下Ionic Native和 Cordova Plugin 之间的关系，Ionic Native能够实现对设备底层功能的调用其实还是依靠于Cordova 插件，IonicNative其实是对Cordova插件的TypeScript包装。因为Cordova插件是使用JavaScript编写的，而基于Ionic项目的开发使用的是TypeScript语言，也是为了能够给开发者带来统一的开发体验。比如IonicNative为插件实现了通过Promise或Observable来返回结果。最后我们应该清楚的就是IonicNative的作用是为了方便我们开发者在TypeScript的语言环境下方便的去调用Cordova插件，能够帮助开发者来获取库的代码提示，不用去翻看文档就可以了解到每个方法的所需的参数类型是什么以及最后插件的返回结果的内容。因此即便是安装了插件的IonicNative包也还是需要去添加Cordova插件才能最终实现功能的。</p>
+<p>下面我们来介绍以下如何在项目中使用插件，以下的这些命令是在已了一个Ionic项目的基础上进行的，首先在安装插件之前我们需要通过  ionic integrations enable cordova 命令来为我们的项目添加对Cordova的集成，接着就是要去安装开发中所需的插件，这里插件准在两种形式的来源，一种是我们要安装的插件已经发布到了网上，另一种就是在我们本地的插件。对于已发布到网上的插件可以直接通过在以下命令的add后面输入插件发布的名称就可以完成Cordova插件的安装了。对于插件的获取我们可以到Ionic Native的官网中去获取（切到浏览器Ionic Native的官网）。而对于本地目录的安装add后面要通过输入能够定位到Cordova插件的路径地址来进行安装。为了方便我们对插件的调用我们还需要去安装插件对应的Ionic Native包，Ionic Native平台下包含的插件都是有对应的Ionic Native的，但是对于一些没有Ionic Native的插件我们也可以自己去编写。这里ionic native包的安装也是分成了两种方式，一种是直接安装已经发布在线上的，另外一种就是安装本地未发布的ionic native。第一种方式我们直接通过npm install的方式就可以完成安装。第二种方式，在使用本地提供的ionic native包的时候，为了方便代码的管理，我们可以直接将ionic native包拷贝到项目中的合适位置就可以了。右图是引入本地ionic native的项目的包结构，zijin-util就是一个ionic-native的包，可以看到这里把它放到了app的core下面。这里你只需要根据项目的规范放到合适的目录中就可以了。最后一步就是实例化插件，使用插件功能。</p>
+<p>下面我们通过一个实际的例子来演示以下如何在一个Ionic的项目中引入插件。由于时间关系，我已经提前创建好了一个名叫IonicDemo的一个项目，接着我们按照幻灯片上讲到的步骤完成一个实现打印Toast提醒的功能。</p>
+<p>首先 我们先输入 ionic integrations enable cordova 命令来为我们的项目添加对cordova的集成<br>
+接着我们去IonicNative的官网上去查找我们要添加的那个插件的，官方文档中会包含对于插件的安装和API的介绍。（切浏览器，找到Ionic Native的官网）。1. 安装cordova插件 2. 安装ionic native插件。</p>
+<p>接着我们在页面中添加一个按钮，然后当点击按钮的时候我们输出一个消息提示。首先我们先要在界面上添加一个按钮（弹出toast消息提示）。<br>
+html页面：</p>
+<pre><code>  &lt;div id=&quot;container&quot;&gt;
+    &lt;ion-button (click)=&quot;showToast()&quot;&gt;弹出Toast消息提示&lt;/ion-button&gt;
+  &lt;/div&gt;
+</code></pre>
+<p>ts控制器：<br>
+如果是通过构造器注入的方式实例化对象，我们还需要将服务类注册到注入器当中，通过在AppModule模块的@NgModule元数据中的providers属性中添加这个类就可以了。</p>
+<pre><code>import {Component} from '@angular/core';
+import {Toast} from '@ionic-native/toast/ngx';
+
+@Component({
+    selector: 'app-home',
+    templateUrl: 'home.page.html',
+    styleUrls: ['home.page.scss'],
+})
+export class HomePage {
+
+    constructor(private toast: Toast) {
+    }
+
+    showToast() {
+        this.toast.show('你好！', 'long', 'bottom')
+            .subscribe(result =&gt; {
+                console.log(result);
+            }, error =&gt; {
+                console.log(error);
+            });
+    }
+}
+
+</code></pre>
+<p>由于现在电脑打开的应用比较多，编译运行这个程序到手机上将会花很长时间，这里我提前编译了一个与这个功能一致的程序到手机上，大家可以从这个上面看到执行效果。</p>
+<p>接着我们再来演示以下本地插件的安装，在我的Download文件夹下又一个zijin-util的插件，下面我们来安装这个插, 然后安装对应的ionic native。  之后调用一个打印的方法用来演示本地插件的使用。&lt;切换回幻灯片，介绍插件的移除&gt;。</p>
+<p>下面我们来看一下如何移除一个已经安装的插件，插件的移除需要我们知道插件的id，我们可以通过cordova plugin ls 来去查看当前项目中已安装的插件。 左边是插件Id、中间是插件版本号、右边是插件的名称。移除的时候我们只需从以上列出的插件中拷贝我们要删除的那个插件的Id到下面的命令中就可以了。下面我来实际演示下移除插件的操作，&lt;切到vscode&gt;</p>
+<p>在使用插件的时候，我们可以通过插件方法的返回来判断当前的插件结果返回的次数，如果返回的是一个Promise对象，则表示插件调用后只会返回一次结果值，如果返回的是一个Observable对象时，我们就要知道这个调用的插件方法的结果值将会返回多次。比如刚才调用的打印Toast消息的方法其返回就是一个Observable对象，它会在调用时返回一次调用成功的提示，同时会在消息隐藏的时候返回一个消息已隐藏的事件提醒。还有就是比如当我们调用扫描附近蓝牙的插件方法时，由于扫描的结果不是一次给出的，可能每隔一会儿才能搜索到一个可用的蓝牙设备后才能返回。当我们在使用这类插件方法时应当在完成功能，或退出时应当及时取消订阅或者调用插件提供的方法终止操以避免产生内存泄露。</p>
+<p>下面我们来看第二部分 新增功能与组件库的使用。<br>
+下面我给大家列举了在开发中我们经常用到的创建一些功能时的命令，由于前面的同事已经做过了使用上的讲解过了Angular中关于服务，路由相关的使用方法，我这里就不为大家介绍了。</p>
+<p>下面时Ionic中组件库的使用，Ionic基于Angular封装了许多适用于移动端开发的组件，大家可以访问ionic官网去查看具体每个组件的使用说明。在官方文档上我们可以看到每一个组件在不同平台上的运行后的显示样式。以及组件的使用方法的代码样例，和对每个属性的详细使用说明。&lt;切回PPT&gt;</p>
+<p>下面为大家介绍浏览器和移动端设备的调试方法：<br>
+首先我们先来看一下项目在浏览器中运行时的调试方法。也就是采用断点调试的方式。通过设置断点来对代码进行单步调试能够快速的定位Bug产生的源头和认清代码的执行流程。还方便我们查看程序的运行状态，可以在你认为可能出错的位置设置断点，也可以在传参和一些判断语句或是返回值处设置，这样可以查看程序的运行是否和你的预期相同。</p>
+<p>下面我们通过Chrome浏览器来介绍Chrome调试相关的技巧,下面我来通过提前编好的一段代码示例来介绍调试相关功能的使用。&lt;切回代码编辑器，运行项目&gt;。</p>
+<p>我们通过test方法中的代码来介绍下浏览器下的调试工具的使用。 然后我们在浏览器中输入项目的地址进行访问。下面我们开启Chorome的调试模式。</p>
+<ol>
+<li>介绍每一部分窗体的作用</li>
+<li>介绍调试按钮的作用
+<ol>
+<li>Pause/Resume script execution：暂停或恢复代码的执行（比较常用的一个场景就是让我们的程序继续执行到下一个断点处停止）。</li>
+<li>Step over next function call：执行到下一处的函数调用（它会去执行当前断点所在的行然后跳到下一行后暂停，它不会进入到函数内部）。</li>
+<li>Step into next function call：进入函数，并在函数内部的第一行代码处暂停。</li>
+<li>Step out of current function：从当前执行的函数中跳出。</li>
+<li>Deactive/Active all breakpoints：关闭/开启所有断点。（关闭后就不会使得程序执行的时候再触发断点，当需要的时候再开启）</li>
+<li>Pause on exceptions：代码自动暂停到发生程序异常的地方。</li>
+</ol>
+</li>
+</ol>
+<p>下面通过这一段实例来演示以下具体的使用：<br>
+0. 首先在第25行和28行设置一个断点</p>
+<p>然后这边就大致的为大家介绍了以下chrome的调试工具的使用。后面我们在调试移动端的应用时，也还会继续使用到。&lt;切换ppt&gt;。</p>
+<p>然后下面我们来看一下当项目运行在移动端时候的调试方法, 由于在项目是运行在移动端设备上的，因此我们需要通过移动端平台提供的方式来进行日志的浏览。通过查看程序运行时的日志输出情况，可以让我们更加快速的发现错误并且基于错误的提示信息查找分析出出错代码所在的大致位置。方便我们后期的调试。</p>
+<p>在开始移动端项目的调试前，我们首先需要进行环境上的准备工作。</p>
+<p>第一步，就是在电脑上安装ADB工具，通过ADB工具可以连接并管理你手上的Android设备，通过它提供的命令可以完成很多操作，比如通过模拟手指点击来完成自动化的测试工作，进行软件的安装，文件的发送等。然后是对日志信息内容的查看，就是我们说需要的这一块。我们可以直接通过安装AndroidStuido开发工具来获取ADB工具，或者是进行单独的安装。但是这里不推荐单独安装的方式，因为后期项目打包的时候还需要用到Gralde构建工具，那么这个时候后面还得需要单独的安装配置，比较麻烦。</p>
+<p>第二步，就是将设备连接到电脑，通过adb  devices；这个命令查看是否连接成功</p>
+<p>然后下面介绍了两种调试的方式：</p>
+<p>第一种：就是通过日志打印的方式来进行程序的调试，通过查看日志的输出信息，来了解程序的执行是否符合我们的预期。然后继而找到程序出现问题的位置。通过查看Logcat的日志输出我们既可以查看Android底层的日志输出也可以查看我们的Web应用中的日志输出。通过查看Android底层的日志输出可以帮助我们判断插件的执行是否正确。</p>
+<p>如果你电脑上已经安装了AndroidStuido那么就是当前调试的环境已经具备了，就不需要在额外的去安装一些工具了。</p>
+<p>下面就是第二种方式：</p>
+<p>通过Chrome的远程调试功能</p>
+<p>如果不涉及到对插件的调试的话，我们在开发中可以使用Chrome的远程调试功能，通过它我们可以直接对我们运行在移动端设备中的项目进行调试。</p>
+<p>谢谢大家，我今天的分享就到这里了！</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://merpyzf.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
