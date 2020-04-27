@@ -1,0 +1,609 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Flask-SQLAlchemy使用 | It&#39;s my life</title>
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1587958414258">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Flask-SQLAlchemy使用 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="简介
+扩展Flask-SQLAlchemy集成了SQLAlchemy，它简化了连接数据库服务器、管理数据库会话等各类工作，同时也是一个ORM框架。
+安装
+pip install flask-sqlalchemy
+
+在Flask环境下使用
+f..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://merpyzf.github.io">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1587958414258" alt="">
+  </a>
+  <h1 class="site-title">
+    It&#39;s my life
+  </h1>
+  <p class="site-description">
+    真正的光芒，需要一点点时间
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Flask-SQLAlchemy使用
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-04-25
+              </span>
+              <span>
+                13 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="简介">简介</h3>
+<p>扩展Flask-SQLAlchemy集成了SQLAlchemy，它简化了连接数据库服务器、管理数据库会话等各类工作，同时也是一个ORM框架。</p>
+<h3 id="安装">安装</h3>
+<pre><code>pip install flask-sqlalchemy
+</code></pre>
+<h3 id="在flask环境下使用">在Flask环境下使用</h3>
+<pre><code>from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+db = SQLAlchemy()
+db.init_app(app)
+</code></pre>
+<p>如果未配置SQLALCHEMY_DATABASE_URI，则程序无法连接到数据库服务器，直接执行则会出错。</p>
+<h3 id="连接数据库服务器">连接数据库服务器</h3>
+<p>DBMS通常会提供一个数据库服务器在操作系统上。要连接数据库服务器。首先要为我们的程序制定一个URI。数据库URI是一个包含了各种属性的字符串。</p>
+<h4 id="常用的数据库连接uri">常用的数据库连接URI</h4>
+<ul>
+<li>PostgreSQL : postgresql+&lt;数据库驱动&gt;://username:password@host:port/databasename</li>
+<li>MySQL : mysql+&lt;数据库驱动&gt;://username:password@host:port/databasename</li>
+<li>Oracle : oracle+&lt;数据库驱动&gt;://username:password@host:port/databasename</li>
+<li>SQLite(UNIX) : sqlite:////dir/sqlite.db</li>
+<li>SQLite(Windows) : r'sqlite:///dir\sqlite.db'</li>
+</ul>
+<p>在Flask-SQLAlchemy中数据库连接uri通过SQLALCHEMY_DATABASE_URI进行配置。</p>
+<p>向Flask框架中添加配置:</p>
+<pre><code># app.config.update({'SQLALCHEMY_DATABASE_URI': 'mysql://root:wangke0310@127.0.0.1:3306/test'})
+or
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:wangke0310@127.0.0.1:3306/test'
+</code></pre>
+<h3 id="配置警告sqlalchemy_track_modifications">配置警告:SQLALCHEMY_TRACK_MODIFICATIONS</h3>
+<p>SQLALCHEMY_TRACK_MODIFICATIONS配置变量决定是否追踪对象的修改，这用于Flask-SQLAlchemy的事件通知系统。这个配置键的值默认为None,如果没有特殊要求，可以将其设置为False以关闭警告信息：</p>
+<pre><code>app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+</code></pre>
+<h3 id="定义模型类">定义模型类</h3>
+<p>用来映射到数据表的Python类通常被称为一个数据库模型（Model）一个数据库模型类对应数据库中的一张表。</p>
+<h4 id="使用sqlalchemy定义模型类">使用SQLAlchemy定义模型类</h4>
+<pre><code>Base = declarative_base()
+class User(Base):
+    __tablename__ = 'tab_users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(20))
+    fullname = Column(String(20))
+    password = Column(String(20))
+</code></pre>
+<p>在使用SQLAlchemy定义模型类时我们需要去继承一个由declarative_base()方法创建的一个基类。</p>
+<h4 id="使用flask-sqlalchemy定义模型类">使用Flask-SQLAlchemy定义模型类</h4>
+<pre><code>db = SQLAlchemy(app)
+</code></pre>
+<p>当我们通过Flask-SQLAlchemy来定义模型类时则不再需要向上面一样手动去通过declarative_base()方法去获取一个基类。我们只需要创建一个SQLAlchemy的实例即可，其内部会自动帮助我们创建。</p>
+<p>SQLAlchemy类的构造方法：</p>
+<pre><code>   def __init__(self, app=None, use_native_unicode=True, session_options=None,
+                 metadata=None, query_class=BaseQuery, model_class=Model):
+
+        self.use_native_unicode = use_native_unicode
+        self.Query = query_class
+        self.session = self.create_scoped_session(session_options)
+        self.Model = self.make_declarative_base(model_class, metadata)
+        self._engine_lock = Lock()
+        self.app = app
+        _include_sqlalchemy(self, query_class)
+
+        if app is not None:
+            self.init_app(app)
+
+</code></pre>
+<p><br>
+因此模型类直接继承db.Model即可：</p>
+<pre><code>from app import db
+
+Base = declarative_base()
+class User(db.model):
+    __tablename__ = 'tab_users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(20))
+    fullname = Column(String(20))
+    password = Column(String(20))
+</code></pre>
+<h3 id="类名到表名的生成规则">类名到表名的生成规则</h3>
+<p>类名到表名的转换关系如下：</p>
+<p>Message -&gt; message [单个单词转换为小写]</p>
+<p>ProposalCategory -&gt; proposal_category [多个单词转换为小写并使用下划线分割每一个单词]</p>
+<p>也可以通过{%raw%} <strong>tablename</strong>{%endraw%}  属性来自定义类所对应数据库中表的表名。</p>
+<pre><code>class Campus(Base):
+    __tablename__ = 'haha'
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    name = Column(String(24), nullable=False)
+    address = Column(String(254), nullable=True)
+
+</code></pre>
+<h3 id="常用字段类型">常用字段类型</h3>
+<ul>
+<li>Integer 整数</li>
+<li>String 字符串，指定length来设置所存放字符的最大长度</li>
+<li>Text 较长的Unicode文本</li>
+<li>Date 日期，存储Python的datetime.date对象</li>
+<li>Time 时间，存储Python的datetime.time对象</li>
+<li>DateTime 日期时间，存储Python的datetime对象</li>
+<li>Interval 时间间隔，存储Python的datetime.timedelta</li>
+<li>Float 浮点数</li>
+<li>Boolean 布尔值</li>
+<li>PickleType 存储Pickle序列化的Python对象</li>
+<li>LargeBinary 存储任意二进制文件</li>
+</ul>
+<h3 id="常用字段参数">常用字段参数</h3>
+<p>下面为实例化字段类时常用的字段参数：</p>
+<ul>
+<li>primary_key : 布尔类型，如果设为True则该字段为主键</li>
+<li>unique : 布尔类型，如果设为True则该字段不允许出现重复值</li>
+<li>index : 布尔类型，如果设为True则为该字字段创建索引，以提高查询效率</li>
+<li>nullable : 布尔类型，确定该字段是否可为空，默认为True</li>
+<li>default : 为当前字段设置一个默认值</li>
+</ul>
+<h3 id="类属性名到数据库表字段名生成规则">类属性名到数据库表字段名生成规则</h3>
+<p>字段名默认为类属性名，也可以通过字段类构造方法的第一个参数指定，或者使用关键字name。</p>
+<p>通过字段类构造方法第一个参数指定：</p>
+<pre><code>   name = Column('name', String(24), nullable=False)
+</code></pre>
+<p>通过使用关关键字name指定：</p>
+<pre><code>name = Column(String(24), nullable=False, name='new_name')
+</code></pre>
+<h3 id="创建表">创建表</h3>
+<p>可以通过调用db.create_all()来把已经定义好的模型类生成数据库中的表。</p>
+<p>需要注意有一下几点：</p>
+<ol>
+<li>
+<p>如果模型类是单独定义在别的模块中的，在调用db.create_all()前要导入相应的模块。确保其被加载到了内存。</p>
+</li>
+<li>
+<p>执行db.create_all()需要上下文环境，可以通过下面的方式创建一个上下文环境：</p>
+</li>
+</ol>
+<pre><code>with app.app_context():
+    db.create_all()
+</code></pre>
+<ol start="3">
+<li>使用db.create_all()只会创建和模型类相对应的表，而不会创建数据库。因此在调用此方法前需要确保要操作的数据库已经被创建。</li>
+</ol>
+<p>数据库和表一旦被创建模型类的改动就不会自动作用到实际的表中。比如在模型类中添加或删除了一个字段，修改字段的名称和类型。这时再次调用create_all()也不会更新表结构。如果想要数据库中的表结构能够生效则需要先调用db.drop_all()删除数据库中的所有表，再调用db.create_all()才会生效。</p>
+<p>在开发时，以删除表再重建的方式更新数据库简单直接，但是明显的缺陷就会丢掉已的数据。在生产环境中肯定是不以这样的。我们可以通过flask-migrate来帮我们实现数据库的迁移，数据库迁移工具可以在不破坏数据的情况下更新数据库表结构。</p>
+<h3 id="flask-migrate">flask-migrate</h3>
+<p><a href="https://alembic.sqlalchemy.org/en/latest/">Alembic文档</a></p>
+<p>扩展flask-migrate集成了Alembic(和SQLAlchemy是同一个作者)它提供了一些flask命令来简化我们的工作。</p>
+<p>将flask-migrate集成到我们的项目非常简单:</p>
+<pre><code> migrate = Migrate(app, db)
+</code></pre>
+<p>实例化Migrate类并传递两个参数即可。</p>
+<ul>
+<li>参数1: Flask实例对象</li>
+<li>参数2: SQLAlchemy实例对象</li>
+</ul>
+<p>配置好之后就可以通过flask命令还来执行数据库迁移工作。在使用命令前要确保FLASK_APP配置正确，否则命令无法执行。</p>
+<h4 id="数据库迁移命令">数据库迁移命令</h4>
+<ul>
+<li>创建迁移环境 : flask db init</li>
+<li>生成迁移脚本 : flask db migrate -m &quot;add column remark&quot;</li>
+<li>更新数据库 : flask db upgrade</li>
+<li>回退到上一个数据库版本 : flask db downgrade</li>
+</ul>
+<h3 id="简单数据库操作">简单数据库操作</h3>
+<p>下面关于简单数据库操作使用Campus类进行演示:</p>
+<pre><code>class Campus(Base):
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    # 校区名
+    name = Column(String(24), nullable=False)
+    # 校区地址
+    address = Column(String(254), nullable=True)
+</code></pre>
+<h4 id="查询操作">查询操作</h4>
+<p>一个完整的查询应该遵循下面的模式：</p>
+<p>&lt;模型类&gt;.query.&lt;过滤方法&gt;.&lt;查询方法&gt;</p>
+<p>或者:</p>
+<p>query(&lt;模型类&gt;).&lt;过滤方法&gt;.&lt;查询方法&gt;</p>
+<h5 id="all-查询所有的地址列表">all() 查询所有的地址列表</h5>
+<pre><code>list = Campus.query.all()
+or
+list = db.session.query(Campus).query.all()
+</code></pre>
+<h5 id="first-查询地址id为1的行">first() 查询地址id为1的行</h5>
+<pre><code>campus = Campus.query.filter(Campus.id == 1).first()
+</code></pre>
+<h5 id="count-查询记录总数">count() 查询记录总数</h5>
+<pre><code>count = Campus.query.count()
+</code></pre>
+<h5 id="常用查询方法">常用查询方法:</h5>
+<ul>
+<li>all() 返回包含所有查询记录的列表</li>
+<li>first() 返回查询的第一条记录，如果未找到返回None</li>
+<li>first_or_404() 返回查询的第一条记录，如果未找到则返回404响应给客户端</li>
+<li>one() 返回查询到的第一条记录，且整个查询到的记录数只允许为1，否则抛出错误</li>
+<li>one_or_none() 返回查询到的第一条记录，如果查询到的记录数不为1，则返回None</li>
+<li>get(ident) 传入主键作为参数，返回指定主键所对应的记录，如果未找到则返回None</li>
+<li>get_or_404(ident) 传入主键作为参数，返回指定主键所对应的记录，如果未找到返回一个404响应给客户端</li>
+<li>count() 返回查询结果的数量</li>
+<li>paginate() 返回一个paginate对象，可以对记录进行分页处理</li>
+</ul>
+<h5 id="常用的过滤方法">常用的过滤方法</h5>
+<ul>
+<li>filter() 使用指定的规则过滤，返回新的查询对象</li>
+<li>filter_by() 使用指定的规则过滤（以关键字表达式的形式），返回新产生的查询对象</li>
+<li>order_by() 根据指定的规则对查询到的结果进行排序，返回新产生的查询对象</li>
+</ul>
+<pre><code>list = Campus.query.order_by(Campus.id.desc()).all()
+</code></pre>
+<ul>
+<li>limit(limit) 使用指定的值限制原查询记录返回的数量，返回新产生的查询对象</li>
+<li>group_by() 根据指定条件对记录进行分组，返回新产生的查询对象</li>
+<li>offset(offset) 使用指定的值偏移原查询结果，返回新产生的查询对象</li>
+</ul>
+<h5 id="聚合操作">聚合操作</h5>
+<p>需要从： from sqlalchemy.sql import func 引入</p>
+<ul>
+<li>func.max() 根据参数指定的列取所有记录中最大的那个</li>
+</ul>
+<pre><code>max_id = db.session.query(func.max(Campus.id)).first()
+</code></pre>
+<ul>
+<li>func.sum() 对指定的列执行累加操作</li>
+</ul>
+<pre><code>  sum_id = db.session.query(func.sum(Campus.id)).first()
+</code></pre>
+<ul>
+<li>func.min() 根据参数指定的列取所有记录中最小的那个</li>
+</ul>
+<pre><code>  min_id = db.session.query(func.min(Campus.id)).first()
+</code></pre>
+<h5 id="filter常用的过滤操作">filter()常用的过滤操作：</h5>
+<ul>
+<li>== :</li>
+</ul>
+<pre><code>filter(Campus.id == 1)
+</code></pre>
+<ul>
+<li>!= :</li>
+</ul>
+<pre><code>filter(Campus.id != 1)
+</code></pre>
+<ul>
+<li>LIKE :</li>
+</ul>
+<pre><code>filter(Campus.address.like('%汊河%'))
+</code></pre>
+<ul>
+<li>IN :</li>
+</ul>
+<pre><code>filter(Campus.name.in_(['mingjia', 'zhihu']))
+</code></pre>
+<ul>
+<li>NOT IN :</li>
+</ul>
+<pre><code> filter(~Campus.name.in_(['mingjia', 'zhihu']))
+</code></pre>
+<ul>
+<li>AND :</li>
+</ul>
+<pre><code># 1.使用and_ 
+filter(and_(Campus.id == 1, Campus.name == 'zhihu'))
+#2. 直接在filter中添加多个表达式使用逗号分隔 
+filter(Campus.id == 1, Campus.name == 'zhihu')
+#3. 叠加使用对个filter或filter_by方法 
+filter(Campus.id == 1).filter(Campus.name == 'zhihu') 
+</code></pre>
+<ul>
+<li>OR :</li>
+</ul>
+<pre><code>filter(or_(Campus.id == 1, Campus.name == 'mingjia' ))
+</code></pre>
+<p><a href="http://docs.sqlalchemy.org/en/latest/core/sqlelement.html#sqlalchemy.sql.operators.ColumnOperators">完整的操作符列表</a></p>
+<h5 id="filter与filter_by的区别">filter与filter_by的区别</h5>
+<p>通过filter_by可以直接使用 关键字表达式 来指定过滤规则，而filter只需要通多传递参数的形式来指定过滤规则。</p>
+<p>使用filter和filter_by实现同样的查询功能：</p>
+<p>filter:</p>
+<pre><code>campus = Campus.query.filter(Campus.id == 1).first()
+</code></pre>
+<p>filter_by:</p>
+<pre><code>campus = Campus.query.filter_by(id = 1).first()
+</code></pre>
+<h4 id="更新操作">更新操作</h4>
+<p>直接赋值给模型类的字段属性就可以完成更新的操作</p>
+<pre><code>campus = Campus.query.get(1)
+campus.name = '四望亭校区'
+db.session.commit()
+</code></pre>
+<p>注意： 只有要插入新的记录或者将现有的记录添加到会话中才需要使用add,单纯的更新记录时只需要为属性赋新值，并提交修改。</p>
+<h4 id="删除操作">删除操作</h4>
+<pre><code>campus = Campus.query.filter_by(id &gt; 2).delete()
+db.session.commit()
+
+</code></pre>
+<h3 id="高级数据库操作">高级数据库操作</h3>
+<h4 id="执行原生sql">执行原生SQL</h4>
+<pre><code># 查询
+cursor = db.session.execute('select *from student')
+print(cursor.fetchall())
+
+# 插入
+db.session.execute('insert into student(name) values(:value)', params={'value': 'wangk1e'})
+db.session.commit()
+</code></pre>
+<h4 id="join查询">join查询</h4>
+<pre><code>data = db.session.query(Student).join(Guardian, isouter = True).all()
+</code></pre>
+<p>由于Student模型和Guardian模型之间存在主外键关系，因此可以不用指定任何条件就可以实现连接查询。<br>
+join中的isouter参数用于指定两张连接时是采用外连接还是内连接。</p>
+<p>也可以手动指定两个模型之间的关联条件:</p>
+<pre><code> data = db.session.query(Student).join(Guardian, Student.guardian_id == Guardian.id, isouter = False).all()
+</code></pre>
+<h5 id="多个模型关联查询">多个模型关联查询</h5>
+<pre><code>  query = db.session.query(Student).join(Student.guardian, isouter=True) \
+            .join(Student.local_school, isouter=True) \
+            .join(Student.course, isouter=True) \
+            .join(Student.category, isouter=True) \
+            .order_by(sort)
+</code></pre>
+<h5 id="内连接和外链接的区别">内连接和外链接的区别</h5>
+<ol>
+<li>
+<p>内连接： 从左表中取出一条记录去和右表中的所有记录根据条件进行匹配，只有匹配得上才会保留内容。也就是两张表根据某个条件取交集。</p>
+</li>
+<li>
+<p>外连接： 从左表中取出一条记录去和右表中的所有记录根据条件进行匹配，无论是否匹配得上都会保留内容。不能匹配的其他表中的内容为null。</p>
+</li>
+</ol>
+<h5 id="示例1">示例1</h5>
+<pre><code>            q = session.query(Address).select_from(User).\
+                            join(User.addresses).\
+                            filter(User.name == 'ed')
+    
+        Which will produce SQL similar to::
+
+            SELECT address.* FROM user
+                JOIN address ON user.id=address.user_id
+                WHERE user.name = :name_1
+</code></pre>
+<h5 id="示例2">示例2</h5>
+<pre><code>            address_subq = session.query(Address).\
+                            filter(Address.email_address == 'ed@foo.com').\
+                            subquery()
+
+            q = session.query(User).join(address_subq, User.addresses)
+
+        Producing SQL similar to::
+
+            SELECT user.* FROM user
+                JOIN (
+                    SELECT address.id AS id,
+                            address.user_id AS user_id,
+                            address.email_address AS email_address
+                    FROM address
+                    WHERE address.email_address = :email_address_1
+                ) AS anon_1 ON user.id = anon_1.user_id
+
+</code></pre>
+<h5 id="示例3">示例3</h5>
+<pre><code>            a_alias = aliased(Address)
+
+            q = session.query(User).\
+                    join(User.addresses).\
+                    join(a_alias, User.addresses).\
+                    filter(Address.email_address=='ed@foo.com').\
+                    filter(a_alias.email_address=='ed@bar.com')
+
+        Where above, the generated SQL would be similar to::
+
+            SELECT user.* FROM user
+                JOIN address ON user.id = address.user_id
+                JOIN address AS address_1 ON user.id=address_1.user_id
+                WHERE address.email_address = :email_address_1
+                AND address_1.email_address = :email_address_2
+</code></pre>
+<h3 id="func的使用">func的使用</h3>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E5%9C%A8flask%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8">在Flask环境下使用</a></li>
+<li><a href="#%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8">连接数据库服务器</a>
+<ul>
+<li><a href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5uri">常用的数据库连接URI</a></li>
+</ul>
+</li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E8%AD%A6%E5%91%8Asqlalchemy_track_modifications">配置警告:SQLALCHEMY_TRACK_MODIFICATIONS</a></li>
+<li><a href="#%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B%E7%B1%BB">定义模型类</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8sqlalchemy%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B%E7%B1%BB">使用SQLAlchemy定义模型类</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8flask-sqlalchemy%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B%E7%B1%BB">使用Flask-SQLAlchemy定义模型类</a></li>
+</ul>
+</li>
+<li><a href="#%E7%B1%BB%E5%90%8D%E5%88%B0%E8%A1%A8%E5%90%8D%E7%9A%84%E7%94%9F%E6%88%90%E8%A7%84%E5%88%99">类名到表名的生成规则</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B">常用字段类型</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E5%AD%97%E6%AE%B5%E5%8F%82%E6%95%B0">常用字段参数</a></li>
+<li><a href="#%E7%B1%BB%E5%B1%9E%E6%80%A7%E5%90%8D%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E5%AD%97%E6%AE%B5%E5%90%8D%E7%94%9F%E6%88%90%E8%A7%84%E5%88%99">类属性名到数据库表字段名生成规则</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E8%A1%A8">创建表</a></li>
+<li><a href="#flask-migrate">flask-migrate</a>
+<ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB%E5%91%BD%E4%BB%A4">数据库迁移命令</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C">简单数据库操作</a>
+<ul>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%93%8D%E4%BD%9C">查询操作</a>
+<ul>
+<li><a href="#all-%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E7%9A%84%E5%9C%B0%E5%9D%80%E5%88%97%E8%A1%A8">all() 查询所有的地址列表</a></li>
+<li><a href="#first-%E6%9F%A5%E8%AF%A2%E5%9C%B0%E5%9D%80id%E4%B8%BA1%E7%9A%84%E8%A1%8C">first() 查询地址id为1的行</a></li>
+<li><a href="#count-%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95%E6%80%BB%E6%95%B0">count() 查询记录总数</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E6%96%B9%E6%B3%95">常用查询方法:</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E8%BF%87%E6%BB%A4%E6%96%B9%E6%B3%95">常用的过滤方法</a></li>
+<li><a href="#%E8%81%9A%E5%90%88%E6%93%8D%E4%BD%9C">聚合操作</a></li>
+<li><a href="#filter%E5%B8%B8%E7%94%A8%E7%9A%84%E8%BF%87%E6%BB%A4%E6%93%8D%E4%BD%9C">filter()常用的过滤操作：</a></li>
+<li><a href="#filter%E4%B8%8Efilter_by%E7%9A%84%E5%8C%BA%E5%88%AB">filter与filter_by的区别</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9B%B4%E6%96%B0%E6%93%8D%E4%BD%9C">更新操作</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C">删除操作</a></li>
+</ul>
+</li>
+<li><a href="#%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C">高级数据库操作</a>
+<ul>
+<li><a href="#%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%94%9Fsql">执行原生SQL</a></li>
+<li><a href="#join%E6%9F%A5%E8%AF%A2">join查询</a>
+<ul>
+<li><a href="#%E5%A4%9A%E4%B8%AA%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2">多个模型关联查询</a></li>
+<li><a href="#%E5%86%85%E8%BF%9E%E6%8E%A5%E5%92%8C%E5%A4%96%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">内连接和外链接的区别</a></li>
+<li><a href="#%E7%A4%BA%E4%BE%8B1">示例1</a></li>
+<li><a href="#%E7%A4%BA%E4%BE%8B2">示例2</a></li>
+<li><a href="#%E7%A4%BA%E4%BE%8B3">示例3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#func%E7%9A%84%E4%BD%BF%E7%94%A8">func的使用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://merpyzf.github.io/post/jie-jue-adb-an-zhuang-apk-chu-xian-failure-install_failed_test_only-cuo-wu/">
+              <h3 class="post-title">
+                解决 adb 安装 apk 出现 Failure [INSTALL_FAILED_TEST_ONLY] 错误
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://merpyzf.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

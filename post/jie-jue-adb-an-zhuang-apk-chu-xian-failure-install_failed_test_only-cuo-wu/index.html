@@ -2,20 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于CallbackContext中的sendPluginResult方法的作用 | It&#39;s my life</title>
+<title>解决 adb 安装 apk 出现 Failure [INSTALL_FAILED_TEST_ONLY] 错误 | It&#39;s my life</title>
 <link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1587958414258">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于CallbackContext中的sendPluginResult方法的作用 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="解决 adb 安装 apk 出现 Failure [INSTALL_FAILED_TEST_ONLY] 错误 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一般情况下我们编写的插件方法只需要返回一次结果值，比如对蓝牙可用性的判断：
-  private void bluetoothEnable() {
-        if (bleAdapter.isEnabled()) {
-         ..." />
-    <meta name="keywords" content="Cordova" />
+    <meta name="description" content="平台版本是android 7.0，在adb install *.apk 会提示下面的错误：
+Failure INSTALL_FAILED_TEST_ONLY
+方法1：
+修改AndroidManifest.xml 中android:testO..." />
+    <meta name="keywords" content="Android" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -77,58 +77,46 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于CallbackContext中的sendPluginResult方法的作用
+              解决 adb 安装 apk 出现 Failure [INSTALL_FAILED_TEST_ONLY] 错误
             </h2>
             <div class="post-info">
               <span>
-                2020-03-09
+                2020-04-02
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
-                <a href="https://merpyzf.github.io/tag/oNOI8yLSr/" class="post-tag">
-                  # Cordova
+                <a href="https://merpyzf.github.io/tag/_IBpUjQAP/" class="post-tag">
+                  # Android
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://merpyzf.github.io/post-images/guan-yu-callbackcontext-zhong-de-sendpluginresult-fang-fa-de-zuo-yong.jpg" alt="">
-            
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>一般情况下我们编写的插件方法只需要返回一次结果值，比如对蓝牙可用性的判断：</p>
-<pre><code>  private void bluetoothEnable() {
-        if (bleAdapter.isEnabled()) {
-            callbackContext.success(&quot;蓝牙可用&quot;);
-        } else {
-            callbackContext.error(&quot;蓝牙不可用&quot;);
-        }
-    }
-</code></pre>
-<p>但是有一种情况需要注意，比如在做一个搜索附近蓝牙的插件，由于结果不是一次性给出的，可能每隔一会儿才能搜索到一个可用的蓝牙设备，需要把每一次搜索到的蓝牙设备信息传递给JS层，如果通过callbackContext.success()方法进行重复调用则会引发错误且无法完成结果的传递，通过查看源码可以发现：</p>
-<pre><code>  public void sendPluginResult(PluginResult pluginResult) {
-        synchronized (this) {
-            if (finished) {
-                LOG.w(LOG_TAG, &quot;Attempted to send a second callback for ID: &quot; + callbackId + &quot;\nResult was: &quot; + pluginResult.getMessage());
-                return;
-            } else {
-                finished = !pluginResult.getKeepCallback();
-            }
-        }
-        webView.sendPluginResult(pluginResult, callbackId);
-    }
-</code></pre>
-<p>当我们直接调用success或error方法返回结果给JS层时，最终调用的方法为sendPluginResult，pluginResult.getKeepCallback()方法获取的是keepCallback的值，它的默认值为false，因此通过以上方法只能实现一次结果的返回，当第二次调用的时keepCallback的值就已经被设置为true，继而会在控制台打印如下警告：Attempted to send a second callback for ID...并直接return。</p>
-<p>因此如果我们想要向JS层多次返回结果时就需要将keepCallback的值手动设置为true，通过以下方法可完成结果的多次返回操作：</p>
-<pre><code>PluginResult pluginResult = new PluginResult(PluginResult.Status.OK,&quot;message&quot;);
-pluginResult.setKeepCallback(true);
-callbackContext.sendPluginResult(pluginResult);
-</code></pre>
+                <p>平台版本是android 7.0，在adb install *.apk 会提示下面的错误：<br>
+Failure INSTALL_FAILED_TEST_ONLY</p>
+<h2 id="方法1">方法1：</h2>
+<p>修改AndroidManifest.xml 中android:testOnly=&quot;true&quot; 改成 android:testOnly=&quot;false&quot;，或者直接去掉。</p>
+<h2 id="方法2">方法2：</h2>
+<p>adb push <em>.apk /tmp<br>
+adb shell pm install -t /tmp/</em>.apk</p>
+<h2 id="方法3">方法3：</h2>
+<p>adb install -t *.apk</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%951">方法1：</a></li>
+<li><a href="#%E6%96%B9%E6%B3%952">方法2：</a></li>
+<li><a href="#%E6%96%B9%E6%B3%953">方法3：</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -137,9 +125,9 @@ callbackContext.sendPluginResult(pluginResult);
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://merpyzf.github.io/post/zhe-shi-yi-pian-ce-shi-de-wen-zhang/">
+            <a href="https://merpyzf.github.io/post/lesslessjavascript-gao-ji-cheng-xu-she-ji-greatergreater-du-shu-bi-ji/">
               <h3 class="post-title">
-                初识 Ionic Framework
+                《JavaScript高级程序设计》读书笔记
               </h3>
             </a>
           </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://merpyzf.github.io</id>
     <title>It&apos;s my life</title>
-    <updated>2020-03-28T16:38:48.538Z</updated>
+    <updated>2020-04-27T03:33:37.550Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://merpyzf.github.io"/>
     <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
@@ -10,6 +10,616 @@
     <logo>https://merpyzf.github.io/images/avatar.png</logo>
     <icon>https://merpyzf.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, It&apos;s my life</rights>
+    <entry>
+        <title type="html"><![CDATA[Android Library 无法引用Libs目录下的jar包]]></title>
+        <id>https://merpyzf.github.io/post/android-library-wu-fa-yin-yong-libs-mu-lu-xia-de-jar-bao/</id>
+        <link href="https://merpyzf.github.io/post/android-library-wu-fa-yin-yong-libs-mu-lu-xia-de-jar-bao/">
+        </link>
+        <updated>2020-04-26T02:39:42.000Z</updated>
+        <content type="html"><![CDATA[<p>通过创建一个Android Library将设备厂商提供的杂乱不堪的代码封装成一个可直接调用的AAR的时候遇到了一个问题，当在 Library 中需要引用libs下的jar时却发现找不到。</p>
+<p>解决方法：修改Library库的build.gradle文件，将implementation改成compile<br>
+代码如下：</p>
+<pre><code>dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':core')
+}
+
+</code></pre>
+<p>修改后：</p>
+<pre><code>dependencies {
+    compile  fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':core')
+}
+</code></pre>
+<p>重新编译之后就可以引用到所需要的jar了。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Android中内存泄漏出现的场景&解决方案]]></title>
+        <id>https://merpyzf.github.io/post/android-zhong-nei-cun-xie-lou-chu-xian-de-chang-jing-andjie-jue-fang-an/</id>
+        <link href="https://merpyzf.github.io/post/android-zhong-nei-cun-xie-lou-chu-xian-de-chang-jing-andjie-jue-fang-an/">
+        </link>
+        <updated>2020-04-26T01:49:08.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="单例模式造成的内存泄漏">单例模式造成的内存泄漏</h2>
+<p>单例模式是非常常用的设计模式，使用单例模式的类，只会产生一个对象，这个对象看起来像是一直占用着内存，但这并不意味着就是浪费了内存，内存本来就是拿来装东西的，只要这个对象一直都被高效的利用就不能叫做泄露。<br>
+但是过多的单例会让内存占用过多，而且单例模式__由于其静态特性，其生命周期和应用程序的生命周期一致__，不正确地使用单例模式也会造成内存泄露。</p>
+<p>一个Android中的单例：</p>
+<pre><code>public class SingleInstanceTest {
+
+    private static SingleInstanceTest sInstance;
+    private Context mContext;
+
+    private SingleInstanceTest(Context context){
+        this.mContext = context;
+    }
+
+    public static SingleInstanceTest newInstance(Context context){
+        if(sInstance == null){
+            sInstance = new SingleInstanceTest(context);
+        }
+        return sInstance;
+    }
+}
+</code></pre>
+<p>上面是一个比较简单的单例模式用法，需要外部传入一个 Context 来获取该类的实例，如果此时传入的 Context 是 Activity 的话，此时单例就有持有该 Activity 的强引用（直到整个应用生命周期结束）。这样的话，即使该 Activity 退出，该 Activity 的内存也不会被回收，这样就造成了内存泄露，特别是一些比较大的 Activity，甚至还会导致 OOM（Out Of Memory）。</p>
+<p>解决方法：在单例模式中引用和应用程序生命周期一致的上下文（Application）</p>
+<pre><code>public class SingleInstanceTest {
+
+    private static SingleInstanceTest sInstance;
+    private Context mContext;
+
+    private SingleInstanceTest(Context context){
+        this.mContext = context.getApplicationContext();
+    }
+
+    public static SingleInstanceTest newInstance(Context context){
+        if(sInstance == null){
+            sInstance = new SingleInstanceTest(context);
+        }
+        return sInstance;
+    }
+}
+</code></pre>
+<p>可以看到在 SingleInstanceTest 的构造函数中，将 context.getApplicationContext() 赋值给 mContext，此时单例引用的对象是 Application，而 Application 的生命周期本来就跟应用程序是一样的，也就不存在内存泄露。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[嗨！HTML]]></title>
+        <id>https://merpyzf.github.io/post/hai-html/</id>
+        <link href="https://merpyzf.github.io/post/hai-html/">
+        </link>
+        <updated>2020-04-25T15:42:16.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="什么是html">什么是HTML？</h2>
+<p>HTML 全称为 HyperText Markup Language，译为超文本标记语言。<br>
+HTML 不是一种编程语言，是一种描述性的标记语言。<br>
+作用：HTML是负责描述文档语义的语言。</p>
+<h3 id="关于超文本的理解">关于超文本的理解：</h3>
+<ol>
+<li>HTML可以描述图片、音频、视频、动画、多媒体等内容，超出了只能显示文本内容的限制。</li>
+<li>不仅如此，它还可以从一个文件跳转到另一个文件，与世界各地主机的文件进行连接。即：超级链接文本。</li>
+</ol>
+<h3 id="标记语言">标记语言</h3>
+<p>HTML不是一种编程语言，是一种描述性的标记语言。这主要有两层含义：</p>
+<ol>
+<li>标记语言是一套标记标签。比如：标签<code>&lt;a&gt;</code>表示超链接、标签<code>&lt;img&gt;</code>表示图片、标签<code>&lt;h1&gt;</code>表示一级标题等等，它们都是属于 HTML 标签。</li>
+<li>编程语言是有编译过程的，而标记语言没有编译过程，HTML标签是直接由浏览器解析执行。</li>
+</ol>
+<h3 id="负责描述文档的语义">负责描述文档的语义：</h3>
+<p>HTML 格式的文件是一个纯本文文件（就是用txt文件改名而成），用一些标签来描述语义，这些标签在浏览器页面上是无法直观看到的，所以称之为“超文本标记语言”。<br>
+HTML 中的很多“标签对儿”，这些“标签对儿”能够给文本不同的语义。<br>
+比如<h1> 标签，它可以给文本增加标题的语义。</p>
+<h3 id="html的专有名词">HTML的专有名词</h3>
+<ul>
+<li>网页 ：由各种标记组成的一个页面就叫网页。</li>
+<li>主页(首页) : 一个网站的起始页面或者导航页面。</li>
+<li>标记： 比如<p>称为开始标记 ，</p>称为结束标记，也叫标签。每个标签都规定好了特殊的含义。</li>
+<li>元素：比如<p>内容</p>称为元素.</li>
+<li>属性：给每一个标签所做的辅助信息。</li>
+<li>XHTML：符合XML语法标准的HTML。</li>
+<li>DHTML：dynamic，动态的。javascript + css + html合起来的页面就是一个 DHTML。</li>
+<li>HTTP：超文本传输协议。用来规定客户端浏览器和服务端交互时数据的一个格式。SMTP：邮件传输协议，- FTP：文件传输协议。</li>
+</ul>
+<h3 id="一个html页面的骨架">一个Html页面的骨架：</h3>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="文档声明头">文档声明头</h3>
+<p>任何一个标准的HTML页面，第一行一定是一个以<!DOCTYPE ……>开头的语句。这一行，就是文档声明头，即 DocType Declaration，简称DTD。<br>
+DTD可告知浏览器文档使用哪种 HTML 或 XHTML 规范。</p>
+<h4 id="html401有哪些规范呢">HTML4.01有哪些规范呢？</h4>
+<p>HTML4.01这个版本是IE6开始兼容的。HTML5是IE9开始兼容的。如今，手机、移动端的网页，就可以使用HTML5了，因为其兼容性更高。<br>
+说个题外话，html1 至 html3 是美国军方以及高等研究所用的，并未对外公开。<br>
+HTML4.01里面有两大种规范，每大种规范里面又各有3种小规范。所以一共6种规范。<br>
+HTML4.01里面规定了普通和XHTML两大种规范。HTML觉得自己有一些规定不严谨，比如，标签是否可以用大写字母呢？<code>&lt;H1&gt;&lt;/H1&gt;</code>所以，HTML就觉得，把一些规范严格的标准，又制定了一个XHTML1.0。在XHTML中的字母X，表示“严格的”。<br>
+总结一下，HTML4.01一共有6种DTD。说白了，HTML的第一行语句一共有6种情况：<br>
+下面对上图中的三种小规范进行解释：</p>
+<ol>
+<li>strict：表示“严格的”，这种模式里面的要求更为严格。这种严格体现在哪里？有一些标签不能使用。 比如，u标签，就是给一个本文加下划线，但是这和HTML的本质有冲突，因为HTML最好是只负责语义，不要负责样式，而u这个下划线是样式。所以，在strict中是不能使用u标签的。<br>
+那怎么给文本增加下划线呢？今后将使用css属性来解决。<br>
+XHTML1.0更为严格，因为这个体系本身规定比如标签必须是小写字母、必须严格闭合标签、必须使用引号引起属性等等。</li>
+<li>Transitional：表示“普通的”，这种模式就是没有一些别的规范。</li>
+<li>Frameset：表示“框架”，在框架的页面使用。<br>
+<strong>在HTML5中极大的简化了DTD，也就是说HTML5中就没有XHTML了。HTML5的DTD（文档声明头）如下：</strong><br>
+<code>&lt;!DOCTYPE html&gt;</code></li>
+</ol>
+<h3 id="页面语言">页面语言</h3>
+<p>下面这行标签，用于指定页面的语言类型：<br>
+<code>&lt;html lang=&quot;en&quot;&gt;</code><br>
+最常见的语言类型有两种：<br>
+en：定义页面语言为英语。<br>
+zh-CN：定义页面语言为中文。</p>
+<h3 id="头标签">头标签</h3>
+<p>Html5比较完整的一个骨架：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=UTF-8&quot;&gt;
+	&lt;meta name=&quot;Author&quot; content=&quot;&quot;&gt;
+    &lt;meta name=&quot;Keywords&quot; content=&quot;厉害很厉害&quot; /&gt;
+    &lt;meta name=&quot;Description&quot; content=&quot;网易是中国领先的互联网技术公司，为用户提供免费邮箱、游戏、搜索引擎服务，开设新闻、娱乐、体育等30多个内容频道，及博客、视频、论坛等互动交流，网聚人的力量。&quot; /&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>头标签内部的常见标签如下：</p>
+<ul>
+<li><code>&lt;title&gt;</code>：指定整个网页的标题，在浏览器最上方显示。</li>
+<li><code>&lt;base&gt;</code>：为页面上的所有链接规定默认地址或默认目标。</li>
+<li><code>&lt;meta&gt;</code>：提供有关页面的基本信息</li>
+<li><code>&lt;body&gt;</code>：用于定义HTML文档所要显示的内容，也称为主体标签。我们所写的代码必须放在此标签內。</li>
+<li><code>&lt;link&gt;</code>：定义文档与外部资源的关系。</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Web和Web标准]]></title>
+        <id>https://merpyzf.github.io/post/web-he-web-biao-zhun/</id>
+        <link href="https://merpyzf.github.io/post/web-he-web-biao-zhun/">
+        </link>
+        <updated>2020-04-25T15:35:15.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="web-网页-浏览器">Web、网页、浏览器</h2>
+<h3 id="web">Web</h3>
+<p>Web（World Wide Web）即全球广域网，也称为万维网。<br>
+我们常说的Web端就是网页端。</p>
+<h3 id="网页">网页</h3>
+<p>网页是构成网站的基本元素。网页主要由文字、图像和超链接等元素构成。当然，除了这些元素，网页中还可以包含音频、视频以及Flash等。<br>
+我们在浏览器上输入网址后，打开的任何一个页面，都是属于网页。</p>
+<h3 id="浏览器">浏览器</h3>
+<p>浏览器是网页运行的平台，常见的浏览器有谷歌（Chrome）、Safari、火狐（Firefox）、IE、Edge、Opera等。</p>
+<h2 id="web标准">Web标准</h2>
+<h3 id="w3c组织">W3C组织</h3>
+<p>W3C：万维网联盟组织，用来制定web标准的机构（组织）。<br>
+W3C 万维网联盟是国际最著名的标准化组织。1994年成立后，至今已发布近百项相关万维网的标准，对万维网发展做出了杰出的贡献。<br>
+W3C 组织就类似于现实世界中的联合国。<br>
+为什么要遵循WEB标准呢？因为很多浏览器的浏览器内核不同，导致页面解析出来的效果可能会有差异，给开发者增加无谓的工作量。因此需要指定统一的标准。</p>
+<h3 id="web-标准">Web 标准</h3>
+<p>Web标准：制作网页要遵循的规范。<br>
+Web标准不是某一个标准，而是由W3C组织和其他标准化组织制定的一系列标准的集合。</p>
+<p>1、Web标准包括三个方面：</p>
+<ul>
+<li>结构标准（HTML）：用于对网页元素进行整理和分类。</li>
+<li>表现标准（CSS）：用于设置网页元素的版式、颜色、大小等外观样式。</li>
+<li>行为标准（JS）：用于定义网页的交互和行为。<br>
+根据上面的Web标准，可以将 Web前端分为三层，如下。</li>
+</ul>
+<p>2、Web前端分三层：</p>
+<ul>
+<li>HTML（HyperText Markup Language）：超文本标记语言。从语义的角度描述页面的结构。相当于人的身体组织结构。</li>
+<li>CSS（Cascading Style Sheets）：层叠样式表。从审美的角度美化页面的样式。相当于人的衣服和打扮。</li>
+<li>JS：JavaScript。从交互的角度描述页面的行为。相当于人的动作，让人有生命力。</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Flask-SQLAlchemy使用]]></title>
+        <id>https://merpyzf.github.io/post/flask-sqlalchemy-shi-yong/</id>
+        <link href="https://merpyzf.github.io/post/flask-sqlalchemy-shi-yong/">
+        </link>
+        <updated>2020-04-25T09:49:16.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="简介">简介</h3>
+<p>扩展Flask-SQLAlchemy集成了SQLAlchemy，它简化了连接数据库服务器、管理数据库会话等各类工作，同时也是一个ORM框架。</p>
+<h3 id="安装">安装</h3>
+<pre><code>pip install flask-sqlalchemy
+</code></pre>
+<h3 id="在flask环境下使用">在Flask环境下使用</h3>
+<pre><code>from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+db = SQLAlchemy()
+db.init_app(app)
+</code></pre>
+<p>如果未配置SQLALCHEMY_DATABASE_URI，则程序无法连接到数据库服务器，直接执行则会出错。</p>
+<h3 id="连接数据库服务器">连接数据库服务器</h3>
+<p>DBMS通常会提供一个数据库服务器在操作系统上。要连接数据库服务器。首先要为我们的程序制定一个URI。数据库URI是一个包含了各种属性的字符串。</p>
+<h4 id="常用的数据库连接uri">常用的数据库连接URI</h4>
+<ul>
+<li>PostgreSQL : postgresql+&lt;数据库驱动&gt;://username:password@host:port/databasename</li>
+<li>MySQL : mysql+&lt;数据库驱动&gt;://username:password@host:port/databasename</li>
+<li>Oracle : oracle+&lt;数据库驱动&gt;://username:password@host:port/databasename</li>
+<li>SQLite(UNIX) : sqlite:////dir/sqlite.db</li>
+<li>SQLite(Windows) : r'sqlite:///dir\sqlite.db'</li>
+</ul>
+<p>在Flask-SQLAlchemy中数据库连接uri通过SQLALCHEMY_DATABASE_URI进行配置。</p>
+<p>向Flask框架中添加配置:</p>
+<pre><code># app.config.update({'SQLALCHEMY_DATABASE_URI': 'mysql://root:wangke0310@127.0.0.1:3306/test'})
+or
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:wangke0310@127.0.0.1:3306/test'
+</code></pre>
+<h3 id="配置警告sqlalchemy_track_modifications">配置警告:SQLALCHEMY_TRACK_MODIFICATIONS</h3>
+<p>SQLALCHEMY_TRACK_MODIFICATIONS配置变量决定是否追踪对象的修改，这用于Flask-SQLAlchemy的事件通知系统。这个配置键的值默认为None,如果没有特殊要求，可以将其设置为False以关闭警告信息：</p>
+<pre><code>app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+</code></pre>
+<h3 id="定义模型类">定义模型类</h3>
+<p>用来映射到数据表的Python类通常被称为一个数据库模型（Model）一个数据库模型类对应数据库中的一张表。</p>
+<h4 id="使用sqlalchemy定义模型类">使用SQLAlchemy定义模型类</h4>
+<pre><code>Base = declarative_base()
+class User(Base):
+    __tablename__ = 'tab_users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(20))
+    fullname = Column(String(20))
+    password = Column(String(20))
+</code></pre>
+<p>在使用SQLAlchemy定义模型类时我们需要去继承一个由declarative_base()方法创建的一个基类。</p>
+<h4 id="使用flask-sqlalchemy定义模型类">使用Flask-SQLAlchemy定义模型类</h4>
+<pre><code>db = SQLAlchemy(app)
+</code></pre>
+<p>当我们通过Flask-SQLAlchemy来定义模型类时则不再需要向上面一样手动去通过declarative_base()方法去获取一个基类。我们只需要创建一个SQLAlchemy的实例即可，其内部会自动帮助我们创建。</p>
+<p>SQLAlchemy类的构造方法：</p>
+<pre><code>   def __init__(self, app=None, use_native_unicode=True, session_options=None,
+                 metadata=None, query_class=BaseQuery, model_class=Model):
+
+        self.use_native_unicode = use_native_unicode
+        self.Query = query_class
+        self.session = self.create_scoped_session(session_options)
+        self.Model = self.make_declarative_base(model_class, metadata)
+        self._engine_lock = Lock()
+        self.app = app
+        _include_sqlalchemy(self, query_class)
+
+        if app is not None:
+            self.init_app(app)
+
+</code></pre>
+<p><br>
+因此模型类直接继承db.Model即可：</p>
+<pre><code>from app import db
+
+Base = declarative_base()
+class User(db.model):
+    __tablename__ = 'tab_users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(20))
+    fullname = Column(String(20))
+    password = Column(String(20))
+</code></pre>
+<h3 id="类名到表名的生成规则">类名到表名的生成规则</h3>
+<p>类名到表名的转换关系如下：</p>
+<p>Message -&gt; message [单个单词转换为小写]</p>
+<p>ProposalCategory -&gt; proposal_category [多个单词转换为小写并使用下划线分割每一个单词]</p>
+<p>也可以通过{%raw%} <strong>tablename</strong>{%endraw%}  属性来自定义类所对应数据库中表的表名。</p>
+<pre><code>class Campus(Base):
+    __tablename__ = 'haha'
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    name = Column(String(24), nullable=False)
+    address = Column(String(254), nullable=True)
+
+</code></pre>
+<h3 id="常用字段类型">常用字段类型</h3>
+<ul>
+<li>Integer 整数</li>
+<li>String 字符串，指定length来设置所存放字符的最大长度</li>
+<li>Text 较长的Unicode文本</li>
+<li>Date 日期，存储Python的datetime.date对象</li>
+<li>Time 时间，存储Python的datetime.time对象</li>
+<li>DateTime 日期时间，存储Python的datetime对象</li>
+<li>Interval 时间间隔，存储Python的datetime.timedelta</li>
+<li>Float 浮点数</li>
+<li>Boolean 布尔值</li>
+<li>PickleType 存储Pickle序列化的Python对象</li>
+<li>LargeBinary 存储任意二进制文件</li>
+</ul>
+<h3 id="常用字段参数">常用字段参数</h3>
+<p>下面为实例化字段类时常用的字段参数：</p>
+<ul>
+<li>primary_key : 布尔类型，如果设为True则该字段为主键</li>
+<li>unique : 布尔类型，如果设为True则该字段不允许出现重复值</li>
+<li>index : 布尔类型，如果设为True则为该字字段创建索引，以提高查询效率</li>
+<li>nullable : 布尔类型，确定该字段是否可为空，默认为True</li>
+<li>default : 为当前字段设置一个默认值</li>
+</ul>
+<h3 id="类属性名到数据库表字段名生成规则">类属性名到数据库表字段名生成规则</h3>
+<p>字段名默认为类属性名，也可以通过字段类构造方法的第一个参数指定，或者使用关键字name。</p>
+<p>通过字段类构造方法第一个参数指定：</p>
+<pre><code>   name = Column('name', String(24), nullable=False)
+</code></pre>
+<p>通过使用关关键字name指定：</p>
+<pre><code>name = Column(String(24), nullable=False, name='new_name')
+</code></pre>
+<h3 id="创建表">创建表</h3>
+<p>可以通过调用db.create_all()来把已经定义好的模型类生成数据库中的表。</p>
+<p>需要注意有一下几点：</p>
+<ol>
+<li>
+<p>如果模型类是单独定义在别的模块中的，在调用db.create_all()前要导入相应的模块。确保其被加载到了内存。</p>
+</li>
+<li>
+<p>执行db.create_all()需要上下文环境，可以通过下面的方式创建一个上下文环境：</p>
+</li>
+</ol>
+<pre><code>with app.app_context():
+    db.create_all()
+</code></pre>
+<ol start="3">
+<li>使用db.create_all()只会创建和模型类相对应的表，而不会创建数据库。因此在调用此方法前需要确保要操作的数据库已经被创建。</li>
+</ol>
+<p>数据库和表一旦被创建模型类的改动就不会自动作用到实际的表中。比如在模型类中添加或删除了一个字段，修改字段的名称和类型。这时再次调用create_all()也不会更新表结构。如果想要数据库中的表结构能够生效则需要先调用db.drop_all()删除数据库中的所有表，再调用db.create_all()才会生效。</p>
+<p>在开发时，以删除表再重建的方式更新数据库简单直接，但是明显的缺陷就会丢掉已的数据。在生产环境中肯定是不以这样的。我们可以通过flask-migrate来帮我们实现数据库的迁移，数据库迁移工具可以在不破坏数据的情况下更新数据库表结构。</p>
+<h3 id="flask-migrate">flask-migrate</h3>
+<p><a href="https://alembic.sqlalchemy.org/en/latest/">Alembic文档</a></p>
+<p>扩展flask-migrate集成了Alembic(和SQLAlchemy是同一个作者)它提供了一些flask命令来简化我们的工作。</p>
+<p>将flask-migrate集成到我们的项目非常简单:</p>
+<pre><code> migrate = Migrate(app, db)
+</code></pre>
+<p>实例化Migrate类并传递两个参数即可。</p>
+<ul>
+<li>参数1: Flask实例对象</li>
+<li>参数2: SQLAlchemy实例对象</li>
+</ul>
+<p>配置好之后就可以通过flask命令还来执行数据库迁移工作。在使用命令前要确保FLASK_APP配置正确，否则命令无法执行。</p>
+<h4 id="数据库迁移命令">数据库迁移命令</h4>
+<ul>
+<li>创建迁移环境 : flask db init</li>
+<li>生成迁移脚本 : flask db migrate -m &quot;add column remark&quot;</li>
+<li>更新数据库 : flask db upgrade</li>
+<li>回退到上一个数据库版本 : flask db downgrade</li>
+</ul>
+<h3 id="简单数据库操作">简单数据库操作</h3>
+<p>下面关于简单数据库操作使用Campus类进行演示:</p>
+<pre><code>class Campus(Base):
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    # 校区名
+    name = Column(String(24), nullable=False)
+    # 校区地址
+    address = Column(String(254), nullable=True)
+</code></pre>
+<h4 id="查询操作">查询操作</h4>
+<p>一个完整的查询应该遵循下面的模式：</p>
+<p>&lt;模型类&gt;.query.&lt;过滤方法&gt;.&lt;查询方法&gt;</p>
+<p>或者:</p>
+<p>query(&lt;模型类&gt;).&lt;过滤方法&gt;.&lt;查询方法&gt;</p>
+<h5 id="all-查询所有的地址列表">all() 查询所有的地址列表</h5>
+<pre><code>list = Campus.query.all()
+or
+list = db.session.query(Campus).query.all()
+</code></pre>
+<h5 id="first-查询地址id为1的行">first() 查询地址id为1的行</h5>
+<pre><code>campus = Campus.query.filter(Campus.id == 1).first()
+</code></pre>
+<h5 id="count-查询记录总数">count() 查询记录总数</h5>
+<pre><code>count = Campus.query.count()
+</code></pre>
+<h5 id="常用查询方法">常用查询方法:</h5>
+<ul>
+<li>all() 返回包含所有查询记录的列表</li>
+<li>first() 返回查询的第一条记录，如果未找到返回None</li>
+<li>first_or_404() 返回查询的第一条记录，如果未找到则返回404响应给客户端</li>
+<li>one() 返回查询到的第一条记录，且整个查询到的记录数只允许为1，否则抛出错误</li>
+<li>one_or_none() 返回查询到的第一条记录，如果查询到的记录数不为1，则返回None</li>
+<li>get(ident) 传入主键作为参数，返回指定主键所对应的记录，如果未找到则返回None</li>
+<li>get_or_404(ident) 传入主键作为参数，返回指定主键所对应的记录，如果未找到返回一个404响应给客户端</li>
+<li>count() 返回查询结果的数量</li>
+<li>paginate() 返回一个paginate对象，可以对记录进行分页处理</li>
+</ul>
+<h5 id="常用的过滤方法">常用的过滤方法</h5>
+<ul>
+<li>filter() 使用指定的规则过滤，返回新的查询对象</li>
+<li>filter_by() 使用指定的规则过滤（以关键字表达式的形式），返回新产生的查询对象</li>
+<li>order_by() 根据指定的规则对查询到的结果进行排序，返回新产生的查询对象</li>
+</ul>
+<pre><code>list = Campus.query.order_by(Campus.id.desc()).all()
+</code></pre>
+<ul>
+<li>limit(limit) 使用指定的值限制原查询记录返回的数量，返回新产生的查询对象</li>
+<li>group_by() 根据指定条件对记录进行分组，返回新产生的查询对象</li>
+<li>offset(offset) 使用指定的值偏移原查询结果，返回新产生的查询对象</li>
+</ul>
+<h5 id="聚合操作">聚合操作</h5>
+<p>需要从： from sqlalchemy.sql import func 引入</p>
+<ul>
+<li>func.max() 根据参数指定的列取所有记录中最大的那个</li>
+</ul>
+<pre><code>max_id = db.session.query(func.max(Campus.id)).first()
+</code></pre>
+<ul>
+<li>func.sum() 对指定的列执行累加操作</li>
+</ul>
+<pre><code>  sum_id = db.session.query(func.sum(Campus.id)).first()
+</code></pre>
+<ul>
+<li>func.min() 根据参数指定的列取所有记录中最小的那个</li>
+</ul>
+<pre><code>  min_id = db.session.query(func.min(Campus.id)).first()
+</code></pre>
+<h5 id="filter常用的过滤操作">filter()常用的过滤操作：</h5>
+<ul>
+<li>== :</li>
+</ul>
+<pre><code>filter(Campus.id == 1)
+</code></pre>
+<ul>
+<li>!= :</li>
+</ul>
+<pre><code>filter(Campus.id != 1)
+</code></pre>
+<ul>
+<li>LIKE :</li>
+</ul>
+<pre><code>filter(Campus.address.like('%汊河%'))
+</code></pre>
+<ul>
+<li>IN :</li>
+</ul>
+<pre><code>filter(Campus.name.in_(['mingjia', 'zhihu']))
+</code></pre>
+<ul>
+<li>NOT IN :</li>
+</ul>
+<pre><code> filter(~Campus.name.in_(['mingjia', 'zhihu']))
+</code></pre>
+<ul>
+<li>AND :</li>
+</ul>
+<pre><code># 1.使用and_ 
+filter(and_(Campus.id == 1, Campus.name == 'zhihu'))
+#2. 直接在filter中添加多个表达式使用逗号分隔 
+filter(Campus.id == 1, Campus.name == 'zhihu')
+#3. 叠加使用对个filter或filter_by方法 
+filter(Campus.id == 1).filter(Campus.name == 'zhihu') 
+</code></pre>
+<ul>
+<li>OR :</li>
+</ul>
+<pre><code>filter(or_(Campus.id == 1, Campus.name == 'mingjia' ))
+</code></pre>
+<p><a href="http://docs.sqlalchemy.org/en/latest/core/sqlelement.html#sqlalchemy.sql.operators.ColumnOperators">完整的操作符列表</a></p>
+<h5 id="filter与filter_by的区别">filter与filter_by的区别</h5>
+<p>通过filter_by可以直接使用 关键字表达式 来指定过滤规则，而filter只需要通多传递参数的形式来指定过滤规则。</p>
+<p>使用filter和filter_by实现同样的查询功能：</p>
+<p>filter:</p>
+<pre><code>campus = Campus.query.filter(Campus.id == 1).first()
+</code></pre>
+<p>filter_by:</p>
+<pre><code>campus = Campus.query.filter_by(id = 1).first()
+</code></pre>
+<h4 id="更新操作">更新操作</h4>
+<p>直接赋值给模型类的字段属性就可以完成更新的操作</p>
+<pre><code>campus = Campus.query.get(1)
+campus.name = '四望亭校区'
+db.session.commit()
+</code></pre>
+<p>注意： 只有要插入新的记录或者将现有的记录添加到会话中才需要使用add,单纯的更新记录时只需要为属性赋新值，并提交修改。</p>
+<h4 id="删除操作">删除操作</h4>
+<pre><code>campus = Campus.query.filter_by(id &gt; 2).delete()
+db.session.commit()
+
+</code></pre>
+<h3 id="高级数据库操作">高级数据库操作</h3>
+<h4 id="执行原生sql">执行原生SQL</h4>
+<pre><code># 查询
+cursor = db.session.execute('select *from student')
+print(cursor.fetchall())
+
+# 插入
+db.session.execute('insert into student(name) values(:value)', params={'value': 'wangk1e'})
+db.session.commit()
+</code></pre>
+<h4 id="join查询">join查询</h4>
+<pre><code>data = db.session.query(Student).join(Guardian, isouter = True).all()
+</code></pre>
+<p>由于Student模型和Guardian模型之间存在主外键关系，因此可以不用指定任何条件就可以实现连接查询。<br>
+join中的isouter参数用于指定两张连接时是采用外连接还是内连接。</p>
+<p>也可以手动指定两个模型之间的关联条件:</p>
+<pre><code> data = db.session.query(Student).join(Guardian, Student.guardian_id == Guardian.id, isouter = False).all()
+</code></pre>
+<h5 id="多个模型关联查询">多个模型关联查询</h5>
+<pre><code>  query = db.session.query(Student).join(Student.guardian, isouter=True) \
+            .join(Student.local_school, isouter=True) \
+            .join(Student.course, isouter=True) \
+            .join(Student.category, isouter=True) \
+            .order_by(sort)
+</code></pre>
+<h5 id="内连接和外链接的区别">内连接和外链接的区别</h5>
+<ol>
+<li>
+<p>内连接： 从左表中取出一条记录去和右表中的所有记录根据条件进行匹配，只有匹配得上才会保留内容。也就是两张表根据某个条件取交集。</p>
+</li>
+<li>
+<p>外连接： 从左表中取出一条记录去和右表中的所有记录根据条件进行匹配，无论是否匹配得上都会保留内容。不能匹配的其他表中的内容为null。</p>
+</li>
+</ol>
+<h5 id="示例1">示例1</h5>
+<pre><code>            q = session.query(Address).select_from(User).\
+                            join(User.addresses).\
+                            filter(User.name == 'ed')
+    
+        Which will produce SQL similar to::
+
+            SELECT address.* FROM user
+                JOIN address ON user.id=address.user_id
+                WHERE user.name = :name_1
+</code></pre>
+<h5 id="示例2">示例2</h5>
+<pre><code>            address_subq = session.query(Address).\
+                            filter(Address.email_address == 'ed@foo.com').\
+                            subquery()
+
+            q = session.query(User).join(address_subq, User.addresses)
+
+        Producing SQL similar to::
+
+            SELECT user.* FROM user
+                JOIN (
+                    SELECT address.id AS id,
+                            address.user_id AS user_id,
+                            address.email_address AS email_address
+                    FROM address
+                    WHERE address.email_address = :email_address_1
+                ) AS anon_1 ON user.id = anon_1.user_id
+
+</code></pre>
+<h5 id="示例3">示例3</h5>
+<pre><code>            a_alias = aliased(Address)
+
+            q = session.query(User).\
+                    join(User.addresses).\
+                    join(a_alias, User.addresses).\
+                    filter(Address.email_address=='ed@foo.com').\
+                    filter(a_alias.email_address=='ed@bar.com')
+
+        Where above, the generated SQL would be similar to::
+
+            SELECT user.* FROM user
+                JOIN address ON user.id = address.user_id
+                JOIN address AS address_1 ON user.id=address_1.user_id
+                WHERE address.email_address = :email_address_1
+                AND address_1.email_address = :email_address_2
+</code></pre>
+<h3 id="func的使用">func的使用</h3>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[解决 adb 安装 apk 出现 Failure [INSTALL_FAILED_TEST_ONLY] 错误]]></title>
+        <id>https://merpyzf.github.io/post/jie-jue-adb-an-zhuang-apk-chu-xian-failure-install_failed_test_only-cuo-wu/</id>
+        <link href="https://merpyzf.github.io/post/jie-jue-adb-an-zhuang-apk-chu-xian-failure-install_failed_test_only-cuo-wu/">
+        </link>
+        <updated>2020-04-02T13:12:03.000Z</updated>
+        <content type="html"><![CDATA[<p>平台版本是android 7.0，在adb install *.apk 会提示下面的错误：<br>
+Failure INSTALL_FAILED_TEST_ONLY</p>
+<h2 id="方法1">方法1：</h2>
+<p>修改AndroidManifest.xml 中android:testOnly=&quot;true&quot; 改成 android:testOnly=&quot;false&quot;，或者直接去掉。</p>
+<h2 id="方法2">方法2：</h2>
+<p>adb push <em>.apk /tmp<br>
+adb shell pm install -t /tmp/</em>.apk</p>
+<h2 id="方法3">方法3：</h2>
+<p>adb install -t *.apk</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《JavaScript高级程序设计》读书笔记]]></title>
         <id>https://merpyzf.github.io/post/lesslessjavascript-gao-ji-cheng-xu-she-ji-greatergreater-du-shu-bi-ji/</id>
@@ -57,6 +667,12 @@ var url = location.href;
 <p>解决方法：<br>
 <img src="https://merpyzf.github.io/post-images/1584330103891.png" alt="" loading="lazy"><br>
 给以上截图中的两个index.js补充 <code>{&quot;observable&quot;: true }</code></p>
+<h3 id="2-pluginresultstatusok-设置插件结果返回的状态明明是ok最后回调却是error">2. PluginResult.Status.OK 设置插件结果返回的状态明明是OK最后回调却是error</h3>
+<pre><code>       PluginResult pr = new PluginResult(PluginResult.Status.OK, barcode);
+       pr.setKeepCallback(true);
+       barCodeCallbackContext.sendPluginResult(pr);
+</code></pre>
+<p>这个坑踩了一个上午！一个低级错误，<strong>注意检查插件的调用和插件中方法签名的声明是否一致！比如这里就漏掉了一个参数。</strong></p>
 ]]></content>
     </entry>
     <entry>
@@ -131,351 +747,6 @@ export class ZijinUtilPlugin extends IonicNativePlugin {
 <p>通过调用 npm run build <pluginName> 来完成对插件的编辑，最后编译的结果会生成到ionic-native/dist/@ionic-native/plugins目录。如果是使用的是MacOS系统进行的编译还有可能会出现如下的错误：<code>Error: ENOENT: no such file or directory, open '/Users/wangke/Workspace/CompanyProjects/ionic-native/dist/@ionic-native/plugins/.DS_Store/index.js'</code>。通过执行 find . -name '.DS_Store' -type f -delete 命令后即可解决上述问题。</p>
 </li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Cordova插件开发指南]]></title>
-        <id>https://merpyzf.github.io/post/cordova-cha-jian-kai-fa-zhi-nan/</id>
-        <link href="https://merpyzf.github.io/post/cordova-cha-jian-kai-fa-zhi-nan/">
-        </link>
-        <updated>2020-03-11T01:53:20.000Z</updated>
-        <content type="html"><![CDATA[<p>下文为对<a href="https://cordova.apache.org/docs/en/9.x/guide/hybrid/plugins">Cordova官网插件开发</a>的翻译。</p>
-<h3 id="简介">简介</h3>
-<p>插件是注入的代码包，可让Cordova Web视图在该视图中渲染应用程序并与其运行所在的本机平台进行通信。插件提供对通常基于Web的应用程序不可用的设备和平台功能的访问。 Cordova API的所有主要功能均作为插件实现，还有许多其他功能可启用诸如条形码扫描仪，NFC通信或定制日历界面等功能。</p>
-<p>插件包含一个JavaScript接口(插件www目录下的js文件)，以及每个受支持平台的相应本机代码库。本质上，这将各种本机代码实现隐藏在通用JavaScript接口的后面，您可以将其用作模型来构建更复杂的功能。本节讨论基本的插件结构和面向外部的JavaScript接口。</p>
-<figure data-type="image" tabindex="1"><img src="https://merpyzf.github.io/post-images/1583897837999.png" alt=" Cordova 应用程序体系结构" loading="lazy"></figure>
-<h3 id="向项目中添加插件">向项目中添加插件</h3>
-<p>应用程序开发人员使用CLI的plugin add命令将插件添加到项目中。该命令的参数是包含插件代码的git存储库的URL(也可以是插件所在的本地路径)。此示例实现了Cordova的设备API：</p>
-<pre><code>cordova plugin add https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git
-</code></pre>
-<p>存储在git上的插件存储库必须具有顶级的plugin.xml清单文件。有许多方法可以配置此文件，有关详细信息，请参见<a href="https://cordova.apache.org/docs/en/9.x/plugin_ref/spec.html">插件规范</a>。<br>
-👇这个简短的Device插件版本提供了一个简单的示例展示：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;plugin xmlns=&quot;http://apache.org/cordova/ns/plugins/1.0&quot;
-        id=&quot;cordova-plugin-device&quot; version=&quot;0.2.3&quot;&gt;
-    &lt;name&gt;Device&lt;/name&gt;
-    &lt;description&gt;Cordova Device Plugin&lt;/description&gt;
-    &lt;license&gt;Apache 2.0&lt;/license&gt;
-    &lt;keywords&gt;cordova,device&lt;/keywords&gt;
-    &lt;js-module src=&quot;www/device.js&quot; name=&quot;device&quot;&gt;
-        &lt;clobbers target=&quot;device&quot; /&gt;
-    &lt;/js-module&gt;
-    &lt;platform name=&quot;ios&quot;&gt;
-        &lt;config-file target=&quot;config.xml&quot; parent=&quot;/*&quot;&gt;
-            &lt;feature name=&quot;Device&quot;&gt;
-                &lt;param name=&quot;ios-package&quot; value=&quot;CDVDevice&quot;/&gt;
-            &lt;/feature&gt;
-        &lt;/config-file&gt;
-        &lt;header-file src=&quot;src/ios/CDVDevice.h&quot; /&gt;
-        &lt;source-file src=&quot;src/ios/CDVDevice.m&quot; /&gt;
-    &lt;/platform&gt;
-&lt;/plugin&gt;
-</code></pre>
-<p>顶级插件标签的id属性使用相同的反向域格式来标识插件包添加到他们的应用程序所能识别的插件包，js-module标记指定通用JavaScript接口（即与native层通信的js）的路径。在这种情况下，platform标签为ios平台指定了一组对应的本机代码（细化到每一个源代码文件的源文件位置和导出到平台后要放置的位置，以及引用的第三方库）。config-file标记封装了功能标记，该feature标记注入到特定于平台的config.xml文件中，以使平台知道其他的代码库。header-file和source-file标签指定头文件和源码文件的路径。</p>
-<h3 id="使用plugman验证插件">使用Plugman验证插件</h3>
-<p>您可以使用plugman实用程序来检查插件是否针对每个平台正确安装。使用以下节点命令安装plugman：</p>
-<pre><code>pm install -g plugman
-</code></pre>
-<p>然后运行以下命令来测试iOS依赖项是否正确加载：</p>
-<pre><code>plugman install --platform ios --project /path/to/my/project/www --plugin /path/to/my/plugin
-</code></pre>
-<h3 id="javascript接口">JavaScript接口</h3>
-<p>JavaScript接口提供了面向前端调用Native层功能的接口，使其成为插件中最重要的部分。您可以随意构建插件的JavaScript，但需要使用以下语法调用cordova.exec与Native层进行通信：</p>
-<pre><code>cordova.exec(function(winParam) {},
-             function(error) {},
-             &quot;service&quot;,
-             &quot;action&quot;,
-             [&quot;firstArgument&quot;, &quot;secondArgument&quot;, 42, false]);
-</code></pre>
-<p>👇介绍每个参数的工作原理：</p>
-<ul>
-<li>function(winParam) {}：成功的回调函数。假设您的exec调用成功完成，此函数将被执行并携带Native层传递的关于成功信息的参数。</li>
-<li>function(error) {}: 失败的回调函数。如果操作未成功完成，此函数将被执行并携带Native层传递的关于失败信息的参数。</li>
-<li>&quot;service&quot;：在Native端调用的服务名称。这对应于Native层的类.</li>
-<li>&quot;action&quot;: 在Native端调用的操作名称。这通常对应于Native层类中用于实现插件功能的方法名称。</li>
-<li>[/* arguments */]: 一个Json数组对象，作为参数传递到Native层的方法中。</li>
-</ul>
-<p>JavaScript插件调用示例：</p>
-<p>👇示例显示了一种实现调用插件JavaScript接口的方法：</p>
-<pre><code>window.echo = function(str, callback) {
-    cordova.exec(callback, function(err) {
-        callback('Nothing to echo.');
-    }, &quot;Echo&quot;, &quot;echo&quot;, [str]);
-};
-</code></pre>
-<p>在此示例中，插件将自身作为echo函数附加到window对象上，该插件将被用户按照以下方式调用：</p>
-<pre><code>window.echo(&quot;echome&quot;, function(echoValue) {
-    alert(echoValue == &quot;echome&quot;); // should alert true.
-});
-</code></pre>
-<h3 id="native层实现">Native层实现</h3>
-<p>为插件定义JavaScript接口后，至少需要使用一种本机实现对其进行补充。下面将介绍<br>
-Android层的实现（因为本人只熟悉Android平台的开发）。</p>
-<h4 id="android插件开发说明">Android插件开发说明</h4>
-<p>Android插件基于 Cordova-Android。它的作用是构建一座从WebView通向Native的桥梁。Android插件的Native部分至少要包含一个Java类，该类继承自CordovaPlugin类并重写父类的execute方法。</p>
-<h5 id="插件类映射">插件类映射</h5>
-<p>插件的JavaScript接口使用cordova.exec方法，如下所示：</p>
-<pre><code>exec(&lt;successFunction&gt;, &lt;failFunction&gt;, &lt;service&gt;, &lt;action&gt;, [&lt;args&gt;]);
-</code></pre>
-<p>这封装了从WebView到Android本机端的请求，完成了对service类上的action方法的调用，并向action方法中传递了args数组参数。</p>
-<p>无论您是以Java文件还是以自己的jar文件发布插件，必须在您的Cordova-Android应用程序的res / xml / config.xml文件中指定该插件。有关如何使用plugin.xml文件注入此功能元素的更多信息，请参见应用程序插件：</p>
-<pre><code> &lt;platform name=&quot;android&quot;&gt;
-        &lt;config-file parent=&quot;/*&quot; target=&quot;res/xml/config.xml&quot;&gt;
-            &lt;feature name=&quot;&lt;service_name&gt;&quot;&gt;
-                &lt;param name=&quot;android-package&quot; value=&quot;&lt;full_name_including_namespace&gt;&quot; /&gt;
-            &lt;/feature&gt;
-        &lt;/config-file&gt;
-        ...
-&lt;/platform&gt;
-</code></pre>
-<p>__service_name与JavaScript exec调用中使用的名称相匹配。value的值是继承了CordovaPlugin类的全路径。__如果配置有误，该插件虽然可能会通过编译，但Cordova仍无法完成插件调用。</p>
-<h5 id="插件初始化和生命周期">插件初始化和生命周期</h5>
-<p>在每个WebView的生存期内，都会创建一个插件对象的实例。但是默认情况下，插件不会跟随WebView一同创建，而是直到JavaScript调用首次引用插件时，才会实例化插件。除非在config.xml中将具有onload name属性的<param>设置为“ true”。例如，</p>
-<pre><code>&lt;!-- 设置跟随WebView初始化插件 --&gt;
-&lt;feature name=&quot;Echo&quot;&gt;
-    &lt;param name=&quot;android-package&quot; value=&quot;&lt;full_name_including_namespace&gt;&quot; /&gt;
-    &lt;param name=&quot;onload&quot; value=&quot;true&quot; /&gt;
-&lt;/feature&gt;
-</code></pre>
-<p>插件在启动时将会去回调initialize方法，可以在该方法内部做一些初始化工作。</p>
-<pre><code>@Override
-public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-    super.initialize(cordova, webView);
-    // your init code here
-}
-</code></pre>
-<p>插件还可以访问Android生命周期事件，并且可以通过实现父类CordovaPlugin提供的方法（onResume，onDestroy等）来处理它们。具有长时间运行的请求、后台活动(如媒体播放、侦听器或内部状态)的插件应该实现 onReset ()方法。 它在 WebView 导航到新页面或刷新时执行，这会重新加载 JavaScript。</p>
-<h5 id="编写一个android插件">编写一个Android插件</h5>
-<p>一个JavaScript调用将向Native层发出一个插件调用请求，并且相应的Java插件已正确映射到config.xml文件中，但是最终的Android Java Plugin类是什么样的？使用JavaScript的exec函数调用的插件回将所有的内容传递到插件类的execute 方法中。大多数执行实现如下所示：</p>
-<pre><code>@Override
-public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-    if (&quot;beep&quot;.equals(action)) {
-        this.beep(args.getLong(0));
-        callbackContext.success();
-        return true;
-    }
-    return false;  // Returning false results in a &quot;MethodNotFound&quot; error.
-}
-</code></pre>
-<p>可以通过action参数来分配本次调用需要执行的方法。<strong>当插件类的execute方法执行后如果最后返回的是false，则会在JS层抛出 &quot;MethodNotFound&quot; 的错误。</strong></p>
-<h5 id="线程">线程</h5>
-<p><strong>插件的JavaScript不在WebView界面的主线程中运行；相反，它与execute方法一样在WebCore线程上运行</strong>。如果需要与用户界面进行交互，则应使用Activity的runOnUiThread方法，如下所示：</p>
-<pre><code>@Override
-public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if (&quot;beep&quot;.equals(action)) {
-        final long duration = args.getLong(0);
-        cordova.getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.make(context, &quot;hi&quot;, Toast.LENGTH_SHORT).show();
-                callbackContext.success(); // Thread-safe.
-            }
-        });
-        return true;
-    }
-    return false;
-}
-</code></pre>
-<p>如果不需要在UI线程上运行，但是也不想阻塞WebCore线程，则应通过cordova.getThreadPool（）获得的Cordova的ExecutorService（Java中对线程池定义的一个接口）执行代码，如下所示：</p>
-<pre><code>@Override
-public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if (&quot;beep&quot;.equals(action)) {
-        final long duration = args.getLong(0);
-        cordova.getThreadPool().execute(new Runnable() {
-            public void run() {
-                ...
-                callbackContext.success(); // Thread-safe.
-            }
-        });
-        return true;
-    }
-    return false;
-}
-</code></pre>
-<h5 id="添加依赖库">添加依赖库</h5>
-<p>如果您的Android插件具有额外的依赖，则必须通过以下两种方式之一在plugin.xml中列出它们。</p>
-<h6 id="方法1">方法1:</h6>
-<p>使用 framework标记，<strong>以这种方式指定库允许通过Gradle的依赖管理逻辑对其进行解析。这允许多个插件使用通用库（例如gson，android-support-v4和google-play-services）而不会发生冲突。</strong><br>
-下面为通过framework标记引入依赖库的示例：</p>
-<pre><code>&lt;!-- Depend on latest version of GCM from play services --&gt;
-&lt;framework src=&quot;com.google.android.gms:play-services-gcm:+&quot; /&gt;
-&lt;!-- Depend on v21 of appcompat-v7 support library --&gt;
-&lt;framework src=&quot;com.android.support:appcompat-v7:21+&quot; /&gt;
-&lt;!-- Depend on library project included in plugin --&gt;
-&lt;framework src=&quot;relative/path/FeedbackLib&quot; custom=&quot;true&quot; /&gt;
-</code></pre>
-<p>Framework也可以用于将自定义.gradle文件包含在插件主项目的build.gradle文件中:</p>
-<figure data-type="image" tabindex="2"><img src="https://merpyzf.github.io/post-images/1583899538203.png" alt="" loading="lazy"></figure>
-<h6 id="方法2">方法2:</h6>
-<p>使用lib-file标记指定jar文件的位置,仅当您确定没有其他插件引用该库时才应使用此方法。（如果有多个插件通过lib-file标记引用了相同的jar，将会导致冲突发生）。否则，如果另一个插件添加相同的库，则可能会给插件的用户造成构建错误。</p>
-<h5 id="android整合">Android整合</h5>
-<p>Android具有Intent系统，该系统允许进程相互通信。插件可以访问CordovaInterface对象，该对象可以访问运行该应用程序的Android 。 CordovaInterface允许插件允许启动一个可以返回结果的Activity。从Cordova 2.0开始，插件不再可以直接访问Context，并且已弃用旧版ctx成员。所有ctx方法都存在于Context上，因此通过getContext（）和getActivity（）都可以返回所需的对象。</p>
-<h5 id="android静态权限">Android静态权限</h5>
-<p>对于在那些在安装时授权而非在运行时授权的权限，需要将这些在应用程序中使用层的权限添加到Android清单中。这可以通过使用config.xml将这些权限注入到AndroidManifest.xml文件来完成。下面为申请权限的示例：</p>
-<pre><code>    &lt;config-file target=&quot;AndroidManifest.xml&quot; parent=&quot;/manifest&quot;&gt;
-            &lt;uses-permission android:name=&quot;android.permission.BLUETOOTH&quot;/&gt;
-            &lt;uses-permission android:name=&quot;android.permission.BLUETOOTH_ADMIN&quot;/&gt;
-            &lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot; /&gt;
-        &lt;/config-file&gt;
-</code></pre>
-<h5 id="android运行时权限">Android运行时权限</h5>
-<p>Android 6.0“棉花糖”引入了新的权限模型，用户可以根据需要打开和关闭权限。这意味着应用程序必须处理这些权限更改，以确保时效性，这是Cordova-Android 5.0.0版本的重点。可以在<a href="http://developer.android.com/guide/topics/security/permissions.html#perm-groups">此处</a>的Android Developer文档中找到需要在运行时处理的权限。</p>
-<p>就插件而言，可以通过调用权限方法来请求权限。方法签名如下：</p>
-<pre><code>cordova.requestPermission(CordovaPlugin plugin, int requestCode, String permission);
-</code></pre>
-<p>为了减少冗长，通常的做法是将其分配给局部静态变量：</p>
-<pre><code>public static final String READ = Manifest.permission.READ_CONTACTS;
-</code></pre>
-<p>按照以下方式定义requestCode也是标准做法：</p>
-<pre><code>public static final int SEARCH_REQ_CODE = 0;
-</code></pre>
-<p>然后，在exec方法中，应检查权限：</p>
-<pre><code>if(cordova.hasPermission(READ))
-{
-    search(executeArgs);
-}
-else
-{
-    getReadPermission(SEARCH_REQ_CODE);
-}
-</code></pre>
-<p>在getReadPermission方法中通过调用requestPermission来申请权限：</p>
-<pre><code>protected void getReadPermission(int requestCode)
-{
-    cordova.requestPermission(this, requestCode, READ);
-}
-</code></pre>
-<p>执行上述语句后将会弹出权限授权弹窗，之后交由用户处理。当用户处理完成后，插件将会回调onRequestPermissionResult来返回对权限的授权结果。每个插件都应该重写此方法。下面是一个示例：</p>
-<pre><code>public void onRequestPermissionResult(int requestCode, String[] permissions,
-                                         int[] grantResults) throws JSONException
-{
-    for(int r:grantResults)
-    {
-        if(r == PackageManager.PERMISSION_DENIED)
-        {
-            this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, PERMISSION_DENIED_ERROR));
-            return;
-        }
-    }
-    switch(requestCode)
-    {
-        case SEARCH_REQ_CODE:
-            search(executeArgs);
-            break;
-        case SAVE_REQ_CODE:
-            save(executeArgs);
-            break;
-        case REMOVE_REQ_CODE:
-            remove(executeArgs);
-            break;
-    }
-}
-</code></pre>
-<p>除了为单个权限请求权限外，还可以通过定义权限数组来请求整个组的权限，就像使用Geolocation插件那样：</p>
-<pre><code>String [] permissions = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION };
-</code></pre>
-<p>然后在对组的权限进行申请时，需要进行如下操作：</p>
-<pre><code>cordova.requestPermissions(this, 0, permissions);
-</code></pre>
-<h5 id="启动其他活动">启动其他活动</h5>
-<p>待添加</p>
-<h3 id="发布插件">发布插件</h3>
-<p>您可以将插件发布到任何基于npmjs的注册表，但是推荐的插件是npm注册表。其他开发人员可以使用Plugman或Cordova CLI自动安装您的插件。</p>
-<p>要将插件发布到npm，您需要执行以下步骤：</p>
-<ol>
-<li>安装plugman命令行工具：<pre><code>$ npm install -g plugman
-</code></pre>
-</li>
-<li>为插件创建一个package.json文件<pre><code>$ plugman createpackagejson /path/to/your/plugin
-</code></pre>
-</li>
-<li>发布它：<pre><code>$ npm adduser # that is if you don't have an account yet
- $ npm publish /path/to/your/plugin
-</code></pre>
-</li>
-</ol>
-<!-- ### 指定Cordova依赖项
-Cordova 6.1.0添加了对指定插件的Cordova相关依赖项的支持，作为插件的package.json文件的一部分。插件可能会列出多个发行版的依赖关系，以在Cordova CLI选择要从npm获取的插件版本时向其提供指导。CLI将选择与本地项目的已安装平台和插件以及本地Cordova CLI版本兼容的最新版本的插件。如果没有兼容的插件版本，则CLI将警告用户有关失败的要求，并退回获取最新版本的旧行为。 -->
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[关于CallbackContext中的sendPluginResult方法的作用]]></title>
-        <id>https://merpyzf.github.io/post/guan-yu-callbackcontext-zhong-de-sendpluginresult-fang-fa-de-zuo-yong/</id>
-        <link href="https://merpyzf.github.io/post/guan-yu-callbackcontext-zhong-de-sendpluginresult-fang-fa-de-zuo-yong/">
-        </link>
-        <updated>2020-03-09T08:36:12.000Z</updated>
-        <content type="html"><![CDATA[<p>一般情况下我们编写的插件方法只需要返回一次结果值，比如对蓝牙可用性的判断：</p>
-<pre><code>  private void bluetoothEnable() {
-        if (bleAdapter.isEnabled()) {
-            callbackContext.success(&quot;蓝牙可用&quot;);
-        } else {
-            callbackContext.error(&quot;蓝牙不可用&quot;);
-        }
-    }
-</code></pre>
-<p>但是有一种情况需要注意，比如在做一个搜索附近蓝牙的插件，由于结果不是一次性给出的，可能每隔一会儿才能搜索到一个可用的蓝牙设备，需要把每一次搜索到的蓝牙设备信息传递给JS层，如果通过callbackContext.success()方法进行重复调用则会引发错误且无法完成结果的传递，通过查看源码可以发现：</p>
-<pre><code>  public void sendPluginResult(PluginResult pluginResult) {
-        synchronized (this) {
-            if (finished) {
-                LOG.w(LOG_TAG, &quot;Attempted to send a second callback for ID: &quot; + callbackId + &quot;\nResult was: &quot; + pluginResult.getMessage());
-                return;
-            } else {
-                finished = !pluginResult.getKeepCallback();
-            }
-        }
-        webView.sendPluginResult(pluginResult, callbackId);
-    }
-</code></pre>
-<p>当我们直接调用success或error方法返回结果给JS层时，最终调用的方法为sendPluginResult，pluginResult.getKeepCallback()方法获取的是keepCallback的值，它的默认值为false，因此通过以上方法只能实现一次结果的返回，当第二次调用的时keepCallback的值就已经被设置为true，继而会在控制台打印如下警告：Attempted to send a second callback for ID...并直接return。</p>
-<p>因此如果我们想要向JS层多次返回结果时就需要将keepCallback的值手动设置为true，通过以下方法可完成结果的多次返回操作：</p>
-<pre><code>PluginResult pluginResult = new PluginResult(PluginResult.Status.OK,&quot;message&quot;);
-pluginResult.setKeepCallback(true);
-callbackContext.sendPluginResult(pluginResult);
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[初识 Ionic Framework]]></title>
-        <id>https://merpyzf.github.io/post/zhe-shi-yi-pian-ce-shi-de-wen-zhang/</id>
-        <link href="https://merpyzf.github.io/post/zhe-shi-yi-pian-ce-shi-de-wen-zhang/">
-        </link>
-        <updated>2020-03-05T10:11:36.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="ionic框架">Ionic框架</h3>
-<h4 id="是什么">是什么？</h4>
-<p>Ionic Framework是一个开源UI工具包，通过使用Web技术（HTML，CSS和JavaScript）构建高性能，高质量的移动和桌面应用程序。</p>
-<p>Ionic Framework专注于前端用户体验或应用程序的UI交互（控件，交互，手势，动画）。并且可以与Angular等其他库或框架做到很好地集成，或者可以在没有前端框架的情况下独立使用。</p>
-<h4 id="目标">目标</h4>
-<ul>
-<li>
-<p><strong>跨平台</strong>：构建并部署可在多个平台（例如本机iOS，Android，桌面和网络）上运行的应用程序，作为渐进式Web应用程序-只需一个代码库即可。编写一次，即可在任何地方运行。</p>
-</li>
-<li>
-<p><strong>基于Web标准</strong>：Ionic Framework使用可靠的标准化Web技术（HTML，CSS和JavaScript）构建，并使用自定义元素和Shadow DOM等现代Web API。因此，Ionic组件具有稳定的API，并且不受单个平台供应商的追捧。</p>
-</li>
-<li>
-<p><strong>精美的设计</strong>：干净，简单且实用。 Ionic Framework旨在在所有平台上开箱即用地精美显示。从预先设计的组件，版式，交互式范例和华丽的（但仍可扩展的）基本主题开始。</p>
-</li>
-<li>
-<p><strong>简单</strong>：Ionic Framework的构建考虑到了简单性，因此创建Ionic应用程序非常有趣，易于学习，并且几乎所有具有Web开发技能的人都可以使用。</p>
-</li>
-</ul>
-<h4 id="核心概念">核心概念</h4>
-<ul>
-<li>
-<p><strong>UI组件</strong>：<strong>Ionic Framework是UI组件的库</strong>，UI组件是可重用的元素，它们充当应用程序的构建块。尽管这些组件是预先构建的，但它们的设计是完全可定制的，因此应用程序可以将每个组件制作为自己的组件，允许每个应用都有自己的外观。更具体地说，可以轻松地将Ionic组件设置为主题，以在整个应用程序中全局更改外观。</p>
-</li>
-<li>
-<p><strong>自适应样式</strong>：自适应样式是Ionic Framework的内置功能，它允许应用程序开发人员将相同的代码库用于多个平台。每个Ionic组件都会根据其运行该应用程序的平台调整其外观。例如，Apple设备（例如iPhone和iPad）使用Apple自己的iOS设计语言。例如，Apple设备（例如iPhone和iPad）使用Apple自己的iOS设计语言。同样，Android设备使用Google的称为Material Design的设计语言。通过在平台之间进行细微的设计更改，可以为用户提供熟悉的应用程序体验。从Apple的App Store下载的Ionic应用程序将获得iOS主题，而从Android的Play Store下载的Ionic应用程序将获得Material Design主题。对于从浏览器中视为渐进式Web应用程序（PWA）的应用程序，Ionic将默认使用Material Design主题。此外，决定在某些情况下使用哪个平台是完全可配置的。有关自适应样式的更多信息，请参见主题。</p>
-</li>
-<li>
-<p><strong>导航</strong>：传统的Web应用程序使用线性历史记录，这意味着用户可以向前导航到页面，并且可以单击“后退”按钮来向后导航。一个示例是在Wikipedia上单击，用户在浏览器的线性历史记录堆栈上来回移动。相反，移动应用程序通常利用并行的“非线性”导航。例如，选项卡式界面可以为每个选项卡具有单独的导航堆栈，以确保用户在导航和在选项卡之间切换时不会丢失自己的位置。Ionic应用程序采用了这种移动导航方法，不仅支持嵌套的并行导航历史记录，而且还保留了Web开发人员熟悉的浏览器式导航概念。对于使用Angular和@ ionic / angular构建的应用程序，我们建议为每个新的Ionic 4 Angular应用程序使用开箱即用的Angular Router。</p>
-</li>
-<li>
-<p><strong>本机访问</strong>：使用Web技术构建的应用程序（例如Ionic应用程序！）的一个惊人功能是，它几乎可以在任何平台上运行：台式计算机，电话，平板电脑，汽车，冰箱等！Ionic应用程序的相同代码库可以在许多平台上工作，因为它基于Web标准和在这些平台之间共享的通用API。Ionic的最常见用例之一是构建可从App Store和Play Store下载的应用程序。iOS和Android软件开发套件（SDK）均提供可呈现任何Ionic应用程序的Web视图，同时仍允许完整的Native SDK访问。通常使用诸如Capacitor和Cordova之类的项目为Ionic应用程序提供对Native SDK的访问权限。这意味着开发人员可以使用通用的Web开发工具快速构建应用程序，并且仍然可以访问设备的加速计，摄像头，GPS等本机功能。</p>
-</li>
-<li>
-<p><strong>主题</strong>：Ionic Framework的核心是使用CSS构建的，它使我们能够利用CSS属性（变量）提供的灵活性。这使得在遵循Web标准的同时设计美观的应用程序变得异常容易。我们提供了一组颜色，以便开发人员可以有一些很棒的默认设置，但是我们建议您覆盖它们以创建与品牌，公司或所需调色板匹配的设计。从应用程序的背景颜色到文本颜色的所有内容都是完全可定制的。有关应用程序主题的更多信息，请参见主题。</p>
-</li>
-</ul>
 ]]></content>
     </entry>
 </feed>

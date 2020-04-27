@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>关于Cordova&amp;IonicNative插件开发遇到的一些坑 | It&#39;s my life</title>
-<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1585413525244">
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1587958414258">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="关于Cordova&amp;IonicNative插件开发遇到的一些坑 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
@@ -24,7 +24,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://merpyzf.github.io">
-  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1585413525244" alt="">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1587958414258" alt="">
   </a>
   <h1 class="site-title">
     It&#39;s my life
@@ -109,6 +109,12 @@
 <p>解决方法：<br>
 <img src="https://merpyzf.github.io/post-images/1584330103891.png" alt="" loading="lazy"><br>
 给以上截图中的两个index.js补充 <code>{&quot;observable&quot;: true }</code></p>
+<h3 id="2-pluginresultstatusok-设置插件结果返回的状态明明是ok最后回调却是error">2. PluginResult.Status.OK 设置插件结果返回的状态明明是OK最后回调却是error</h3>
+<pre><code>       PluginResult pr = new PluginResult(PluginResult.Status.OK, barcode);
+       pr.setKeepCallback(true);
+       barCodeCallbackContext.sendPluginResult(pr);
+</code></pre>
+<p>这个坑踩了一个上午！一个低级错误，<strong>注意检查插件的调用和插件中方法签名的声明是否一致！比如这里就漏掉了一个参数。</strong></p>
 
               </div>
               <div class="toc-container">
@@ -119,6 +125,7 @@
 <ul>
 <li><a href="#1-%E5%9C%A8ionic-native%E4%B8%8B%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%E5%8C%85%E4%B8%AD%E7%9A%84js%E6%96%87%E4%BB%B6%E5%86%85%E4%BC%9A%E5%AF%B9cordova%E8%BF%9B%E8%A1%8C%E9%87%8D%E5%A4%8D%E5%BC%95%E7%94%A8">1. 在ionic-native下编译生成的类型声明包中的js文件内会对cordova进行重复引用：</a></li>
 <li><a href="#2-%E5%9C%A8%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6indexdts%E4%B8%AD%E4%B8%BA%E8%B0%83%E7%94%A8native%E5%B1%82%E5%8A%9F%E8%83%BD%E7%9A%84%E6%96%B9%E6%B3%95%E7%9A%84%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C%E6%8C%87%E5%AE%9A%E4%B8%BAobservable%E4%B8%8D%E7%94%9F%E6%95%88">2. 在类型声明文件index.d.ts中为调用Native层功能的方法的返回结果指定为Observable不生效：</a></li>
+<li><a href="#2-pluginresultstatusok-%E8%AE%BE%E7%BD%AE%E6%8F%92%E4%BB%B6%E7%BB%93%E6%9E%9C%E8%BF%94%E5%9B%9E%E7%9A%84%E7%8A%B6%E6%80%81%E6%98%8E%E6%98%8E%E6%98%AFok%E6%9C%80%E5%90%8E%E5%9B%9E%E8%B0%83%E5%8D%B4%E6%98%AFerror">2. PluginResult.Status.OK 设置插件结果返回的状态明明是OK最后回调却是error</a></li>
 </ul>
 </li>
 </ul>
