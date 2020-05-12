@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://merpyzf.github.io</id>
     <title>It&apos;s my life</title>
-    <updated>2020-04-27T05:33:33.695Z</updated>
+    <updated>2020-05-12T07:52:24.836Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://merpyzf.github.io"/>
     <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
@@ -10,6 +10,80 @@
     <logo>https://merpyzf.github.io/images/avatar.png</logo>
     <icon>https://merpyzf.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, It&apos;s my life</rights>
+    <entry>
+        <title type="html"><![CDATA[npm使用总结]]></title>
+        <id>https://merpyzf.github.io/post/npm-shi-yong-zong-jie/</id>
+        <link href="https://merpyzf.github.io/post/npm-shi-yong-zong-jie/">
+        </link>
+        <updated>2020-05-12T06:41:36.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="概述">概述</h3>
+<p>npm全称node package manager，即node的包管理工具。npm是JavaScript世界的包管理工具，并且是Node.js平台的默认包管理工具。通过npm可以安装、共享、分发代码，管理项目依赖关系。</p>
+<h3 id="packagejson">package.json</h3>
+<p>package.json是npm包的入口，涵盖了这个包的基本信息。通过使用<code>npm init</code>可以自动创建该文件。<br>
+一个创建的 package.json 文件如下：</p>
+<pre><code>{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;test &quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;jest&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;ramda&quot;: &quot;^0.25.0&quot;,
+    &quot;react&quot;: &quot;^16.0.0&quot;
+  },
+  &quot;repository&quot;: {
+    &quot;type&quot;: &quot;git&quot;,
+    &quot;url&quot;: &quot;test.git&quot;
+  },
+  &quot;keywords&quot;: [
+    &quot;some&quot;,
+    &quot;keywords&quot;
+  ],
+  &quot;author&quot;: &quot;Bob&quot;,
+  &quot;license&quot;: &quot;MIT&quot;
+}
+</code></pre>
+<ul>
+<li>其中 <code>main</code> 代表的是此包的入口文件，当别的包进行 <code>let foo = require('foo')</code>的时候，引用的其实就是这个<code>main</code>字段说指向的<code>index.js</code> 文件。</li>
+<li><code>scripts</code>代表这个 npm 包中运行的命令</li>
+<li><code>dependencies</code>代表这个 npm 包所依赖的别的包，当 <code>npm install foo</code>的时候，会将这个包所依赖的包也一同安装。</li>
+</ul>
+<h3 id="~与代表什么">～与^代表什么？</h3>
+<p>在 package.json 中的 dependencies JSON对象中会有这样的代码：</p>
+<pre><code>  &quot;dependencies&quot;: {
+        &quot;ramda&quot;: &quot;^0.25.0&quot;,
+        &quot;react&quot;: &quot;~16.0.0&quot; 
+  }
+</code></pre>
+<p><code>~</code> 代表在项目中更新包（npm update）的时候，可以更新到最新的一个patch版本即从<code>0.25.0 =&gt; 0.25.x</code>，但不包括 <code>0.26.x</code>。<br>
+<code>^</code> 代表在项目中更新包（npm update）的时候，可以更新到最新的一个minor版本(即第二位的版本号)，即从<code>16.0.0 =&gt; 16.x.x</code>，但不包括<code>17.x.x</code>。</p>
+<h3 id="常用命令">常用命令</h3>
+<h4 id="安装模块">安装模块</h4>
+<p>局部安装（在当前所在路径下安装）<br>
+<code>npm install &lt;module name&gt;</code><br>
+全局安装<br>
+<code>npm intall -g &lt;module name&gt;</code></p>
+<h4 id="卸载模块">卸载模块</h4>
+<p><code>npm uninstall &lt;module name&gt;</code></p>
+<h4 id="查看安装信息">查看安装信息</h4>
+<p>查看局部安装的模块<br>
+<code>npm list</code><br>
+查看全局安装的模块<br>
+<code>npm list -g</code></p>
+<h3 id="更改源">更改源</h3>
+<h4 id="全局更改">全局更改</h4>
+<p>设置淘宝源<br>
+<code>npm set registry https://registry.npm.taobao.org</code><br>
+设置官方源<br>
+<code>npm set registry http://registry.npmjs.org</code></p>
+<h4 id="局部更改在项目中使用">局部更改，在项目中使用</h4>
+<p>创建 .yarnrc 或者 .npmrc 文件，在文件中写入如下内容：<code>registry &quot;http://npm.xxx.com/&quot;</code></p>
+<h4 id="获取当前使用的源">获取当前使用的源</h4>
+<p><code>npm config get registry (npm get registry)</code></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Android Library 无法引用Libs目录下的jar包]]></title>
         <id>https://merpyzf.github.io/post/android-library-wu-fa-yin-yong-libs-mu-lu-xia-de-jar-bao/</id>
@@ -698,55 +772,6 @@ emulator-5554 offline
 <pre><code>adb -s &lt;device ID&gt; forward tcp:59900 tcp:59900
 </code></pre>
 <p>this will not get the error like &quot;more than one device/emulator&quot;</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[基于Cordova创建Ionic插件]]></title>
-        <id>https://merpyzf.github.io/post/ji-yu-cordova-chuang-jian-ionic-cha-jian/</id>
-        <link href="https://merpyzf.github.io/post/ji-yu-cordova-chuang-jian-ionic-cha-jian/">
-        </link>
-        <updated>2020-03-13T10:16:43.000Z</updated>
-        <content type="html"><![CDATA[<ol>
-<li>
-<p>克隆Github中的Ionic-Native的项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。</p>
-</li>
-<li>
-<p>进入ionic-native的根目录</p>
-</li>
-<li>
-<p>创建插件包</p>
-<pre><code>// 调用此命令，并将`PluginName`替换为希望添加的插件名称
-// 第一个字母一定要大写，使用大驼峰命名
-gulp plugin:create -n PluginName
-</code></pre>
-<p>执行完以上命令将会在src/@ionic-native/plugins目录下创建一个名称为PluginName的插件目录，里面有一个index.ts文件，后面Ionic插件的编写就是需要在这个文件中进行的。</p>
-</li>
-<li>
-<p>编写index.ts</p>
-<pre><code>@Plugin({
-pluginName: 'ZijinUtilPlugin',
-plugin: 'cordova-plugin-x-zijinutil', // npm package name, example: cordova-plugin-camera
-pluginRef: 'cordova.plugins.ZijinUtil', // the variable reference to call the plugin, example: navigator.geolocation
-platforms: ['Android'] // Array of platforms supported, example: ['Android', 'iOS']
-})
-@Injectable()
-export class ZijinUtilPlugin extends IonicNativePlugin {
-}
-</code></pre>
-</li>
-</ol>
-<p>这里需要重点指出的是 @Plugin装饰器中参数的添加：</p>
-<ol>
-<li>
-<p>pluginRef：指的是底层Cordova插件的应用方式，这个值和cordova插件中的plugin.xml下的clobbers节点值相同。</p>
-</li>
-<li>
-<p>plugin：值的是npm包的名称</p>
-</li>
-<li>
-<p>通过调用 npm run build <pluginName> 来完成对插件的编辑，最后编译的结果会生成到ionic-native/dist/@ionic-native/plugins目录。如果是使用的是MacOS系统进行的编译还有可能会出现如下的错误：<code>Error: ENOENT: no such file or directory, open '/Users/wangke/Workspace/CompanyProjects/ionic-native/dist/@ionic-native/plugins/.DS_Store/index.js'</code>。通过执行 find . -name '.DS_Store' -type f -delete 命令后即可解决上述问题。</p>
-</li>
-</ol>
 ]]></content>
     </entry>
 </feed>
