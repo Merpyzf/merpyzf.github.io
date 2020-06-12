@@ -2,19 +2,25 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | It&#39;s my life</title>
+<title>JavaScript中的函数 | It&#39;s my life</title>
 <link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1591968286459">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="JavaScript中的函数 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="月が綺麗ですね/今夜は月が綺麗ですね
+    <meta name="description" content="函数的定义方式
+函数声明方式（命名函数）
+function fn(){};
 
-..." />
-    <meta name="keywords" content="生活" />
+函数表达式（匿名函数）
+var fun = function(){};
+
+new Function()
+var fun = new Function('a', '..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -76,35 +82,116 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              JavaScript中的函数
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-05-18
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="https://merpyzf.github.io/tag/xmqTS15sN/" class="post-tag">
-                  # 生活
-                </a>
-              
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <center>月が綺麗ですね/今夜は月が綺麗ですね</center>
-<figure data-type="image" tabindex="1"><img src="https://merpyzf.github.io/post-images/1584365726491.JPG" alt="" loading="lazy"></figure>
+                <h3 id="函数的定义方式">函数的定义方式</h3>
+<h4 id="函数声明方式命名函数">函数声明方式（命名函数）</h4>
+<pre><code>function fn(){};
+</code></pre>
+<h4 id="函数表达式匿名函数">函数表达式（匿名函数）</h4>
+<pre><code>var fun = function(){};
+</code></pre>
+<h4 id="new-function">new Function()</h4>
+<pre><code>var fun = new Function('a', 'b','console.log(a + b)');
+fun(1,2) //3
+</code></pre>
+<h3 id="函数内this的指向">函数内this的指向</h3>
+<p>这些this的指向，是当我们调用函数的时候确定的。调用方式的不同决定了this的指向不同，一般指向我们的调用者。</p>
+<table>
+<thead>
+<tr>
+<th>一个普通标题</th>
+<th>一个普通标题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通函数调用</td>
+<td>window</td>
+</tr>
+<tr>
+<td>构造函数调用</td>
+<td>实例对象</td>
+</tr>
+<tr>
+<td>对象方法调用</td>
+<td>该方法所属对象</td>
+</tr>
+<tr>
+<td>事件绑定方法</td>
+<td>绑定事件对象</td>
+</tr>
+<tr>
+<td>定时器函数</td>
+<td>window</td>
+</tr>
+<tr>
+<td>立即执行函数</td>
+<td>window</td>
+</tr>
+</tbody>
+</table>
+<h3 id="几种改变函数内this指向的方式">几种改变函数内this指向的方式</h3>
+<h4 id="call">call</h4>
+<h4 id="apply">apply</h4>
+<h4 id="bind">bind</h4>
+<h3 id="高阶函数">高阶函数</h3>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F">函数的定义方式</a>
+<ul>
+<li><a href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E%E6%96%B9%E5%BC%8F%E5%91%BD%E5%90%8D%E5%87%BD%E6%95%B0">函数声明方式（命名函数）</a></li>
+<li><a href="#%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">函数表达式（匿名函数）</a></li>
+<li><a href="#new-function">new Function()</a></li>
+</ul>
+</li>
+<li><a href="#%E5%87%BD%E6%95%B0%E5%86%85this%E7%9A%84%E6%8C%87%E5%90%91">函数内this的指向</a></li>
+<li><a href="#%E5%87%A0%E7%A7%8D%E6%94%B9%E5%8F%98%E5%87%BD%E6%95%B0%E5%86%85this%E6%8C%87%E5%90%91%E7%9A%84%E6%96%B9%E5%BC%8F">几种改变函数内this指向的方式</a>
+<ul>
+<li><a href="#call">call</a></li>
+<li><a href="#apply">apply</a></li>
+<li><a href="#bind">bind</a></li>
+</ul>
+</li>
+<li><a href="#%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0">高阶函数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://merpyzf.github.io/post/javascript-de-mian-xiang-dui-xiang/">
+              <h3 class="post-title">
+                JavaScript的面向对象
+              </h3>
+            </a>
+          </div>
         
 
         

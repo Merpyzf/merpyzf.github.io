@@ -1,0 +1,246 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JavaScript的模块系统扫盲 | It&#39;s my life</title>
+<link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1591968286459">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="JavaScript的模块系统扫盲 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="现状
+伴随着移动互联的大潮，当今越来越多的网站已经从网页模式进化到了 Webapp 模式。它们运行在现代的高级浏览器里，使用 HTML5、 CSS3、 ES6 等更新的技术来开发丰富的功能，网页已经不仅仅是完成浏览的基本需求，并且webap..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://merpyzf.github.io">
+  <img class="avatar" src="https://merpyzf.github.io/images/avatar.png?v=1591968286459" alt="">
+  </a>
+  <h1 class="site-title">
+    It&#39;s my life
+  </h1>
+  <p class="site-description">
+    真正的光芒，需要一点点时间
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              JavaScript的模块系统扫盲
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-05-12
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="现状">现状</h3>
+<p>伴随着移动互联的大潮，当今越来越多的网站已经从网页模式进化到了 Webapp 模式。它们运行在现代的高级浏览器里，使用 HTML5、 CSS3、 ES6 等更新的技术来开发丰富的功能，网页已经不仅仅是完成浏览的基本需求，并且webapp通常是一个单页面应用，每一个视图通过异步的方式加载，这导致页面初始化和使用过程中会加载越来越多的 JavaScript 代码，这给前端开发的流程和资源组织带来了巨大的挑战。</p>
+<p>前端开发和其他开发工作的主要区别，首先是前端是基于多语言、多层次的编码和组织工作，其次前端产品的交付是基于浏览器，这些资源是通过增量加载的方式运行到浏览器端，如何在开发环境组织好这些碎片化的代码和资源，并且保证他们在浏览器端快速、优雅的加载和更新，就需要一个模块化系统，这个理想中的模块化系统是前端工程师多年来一直探索的难题。</p>
+<h3 id="已存在的模块系统">已存在的模块系统</h3>
+<h4 id="script标签"><script>标签</h4>
+<pre><code>&lt;script src=&quot;module1.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;module2.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;libraryA.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;module3.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>这是最原始的 JavaScript 文件加载方式，如果把每一个文件看做是一个模块，那么他们的接口通常是暴露在全局作用域下，也就是定义在 window 对象中，不同模块的接口调用都是一个作用域中，一些复杂的框架，会使用命名空间的概念来组织这些模块的接口，典型的例子如 YUI 库。</p>
+<p>这种原始的加载方式暴露了一些显而易见的弊端：</p>
+<ul>
+<li>全局作用域下容易造成变量冲突。</li>
+<li>文件智能按照<code>&lt;script&gt;</code>的书写顺序进行加载。</li>
+<li>开发人员必须主观解决模块和代码库的依赖关系。</li>
+<li>在大型项目中各种资源难以管理，长期积累的问题导致代码库混乱不堪。</li>
+</ul>
+<h3 id="commonjs">CommonJS</h3>
+<p>服务器端的 Node.js 遵循 CommonJS 规范，该规范的核心思想是允许模块通过 require 方法来同步加载所要依赖的其他模块，然后通过 exports 或 module.exports 来导出需要暴露的接口。</p>
+<pre><code>require(&quot;module&quot;);
+require(&quot;../file.js&quot;);
+exports.doStuff = function() {};
+module.exports = someValue;
+</code></pre>
+<p>优点：</p>
+<ul>
+<li>服务端模块便于重用。</li>
+<li>NPM中已经有将近20万个可以使用的模块包，生态好。</li>
+<li>简单并容易使用。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>同步的模块加载不适合在浏览器环境中，同步意味着阻塞加载，浏览器的资源是异步加载的。</li>
+<li>不能非阻塞的并行加载多个模块。</li>
+</ul>
+<p>实现：</p>
+<ul>
+<li>服务器端的 Node.js</li>
+<li>Browserify，浏览器端的 CommonJS 实现，可以使用 NPM 的模块，但是编译打包后的文件体积可能很大</li>
+</ul>
+<h3 id="amd">AMD</h3>
+<p>Asynchronous Module Definition 异步模块定义，规范其实只有一个主要接口<code>define(id?, dependencies?, factory)</code>,它要在声明模块的时候指定所有的依赖<code>dependencies</code>，并且还要当做形参传到 factory 中，对于依赖的模块提前执行，依赖前置。</p>
+<pre><code>define(&quot;module&quot;, [&quot;dep1&quot;, &quot;dep2&quot;], function(d1, d2) {
+  return someExportedValue;
+});
+require([&quot;module&quot;, &quot;../file&quot;], function(module, file) { /* ... */ });
+</code></pre>
+<p>优点：</p>
+<ul>
+<li>适合在浏览器环境中异步加载模块。</li>
+<li>可以并行加载多个模块。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>提高了开发成本，代码的阅读和书写比较困难，模块定义方式的语义不顺畅。</li>
+<li>不符合通用的模块化思维，是一种妥协的实现。</li>
+</ul>
+<p>实现：</p>
+<ul>
+<li>RequireJS</li>
+<li>curl</li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E7%8E%B0%E7%8A%B6">现状</a></li>
+<li><a href="#%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F">已存在的模块系统</a>
+<ul>
+<li><a href="#script%E6%A0%87%E7%AD%BE"><script>标签</a></li>
+</ul>
+</li>
+<li><a href="#commonjs">CommonJS</a></li>
+<li><a href="#amd">AMD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://merpyzf.github.io/post/npm-shi-yong-zong-jie/">
+              <h3 class="post-title">
+                npm使用总结
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://merpyzf.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
