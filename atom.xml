@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://merpyzf.github.io</id>
     <title>It&apos;s my life</title>
-    <updated>2020-06-18T06:08:28.207Z</updated>
+    <updated>2020-06-23T03:18:39.964Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://merpyzf.github.io"/>
     <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://merpyzf.github.io/images/avatar.png</logo>
     <icon>https://merpyzf.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, It&apos;s my life</rights>
+    <entry>
+        <title type="html"><![CDATA[使Git忽略文件模式( chmod ) 的更改？]]></title>
+        <id>https://merpyzf.github.io/post/shi-git-hu-lue-wen-jian-mo-shi-chmod-de-geng-gai/</id>
+        <link href="https://merpyzf.github.io/post/shi-git-hu-lue-wen-jian-mo-shi-chmod-de-geng-gai/">
+        </link>
+        <updated>2020-06-23T03:15:29.000Z</updated>
+        <content type="html"><![CDATA[<p>通过执行如下的命令即可👇</p>
+<pre><code>git config core.fileMode false
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[李志自传]]></title>
         <id>https://merpyzf.github.io/post/li-zhi-zi-chuan/</id>
@@ -938,108 +949,6 @@ require([&quot;module&quot;, &quot;../file&quot;], function(module, file) { /* .
 }
 </code></pre>
 <p>可以看到在 SingleInstanceTest 的构造函数中，将 context.getApplicationContext() 赋值给 mContext，此时单例引用的对象是 Application，而 Application 的生命周期本来就跟应用程序是一样的，也就不存在内存泄露。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[嗨！HTML]]></title>
-        <id>https://merpyzf.github.io/post/hai-html/</id>
-        <link href="https://merpyzf.github.io/post/hai-html/">
-        </link>
-        <updated>2020-04-25T15:42:16.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="什么是html">什么是HTML？</h2>
-<p>HTML 全称为 HyperText Markup Language，译为超文本标记语言。<br>
-HTML 不是一种编程语言，是一种描述性的标记语言。<br>
-作用：HTML是负责描述文档语义的语言。</p>
-<h3 id="关于超文本的理解">关于超文本的理解：</h3>
-<ol>
-<li>HTML可以描述图片、音频、视频、动画、多媒体等内容，超出了只能显示文本内容的限制。</li>
-<li>不仅如此，它还可以从一个文件跳转到另一个文件，与世界各地主机的文件进行连接。即：超级链接文本。</li>
-</ol>
-<h3 id="标记语言">标记语言</h3>
-<p>HTML不是一种编程语言，是一种描述性的标记语言。这主要有两层含义：</p>
-<ol>
-<li>标记语言是一套标记标签。比如：标签<code>&lt;a&gt;</code>表示超链接、标签<code>&lt;img&gt;</code>表示图片、标签<code>&lt;h1&gt;</code>表示一级标题等等，它们都是属于 HTML 标签。</li>
-<li>编程语言是有编译过程的，而标记语言没有编译过程，HTML标签是直接由浏览器解析执行。</li>
-</ol>
-<h3 id="负责描述文档的语义">负责描述文档的语义：</h3>
-<p>HTML 格式的文件是一个纯本文文件（就是用txt文件改名而成），用一些标签来描述语义，这些标签在浏览器页面上是无法直观看到的，所以称之为“超文本标记语言”。<br>
-HTML 中的很多“标签对儿”，这些“标签对儿”能够给文本不同的语义。<br>
-比如<h1> 标签，它可以给文本增加标题的语义。</p>
-<h3 id="html的专有名词">HTML的专有名词</h3>
-<ul>
-<li>网页 ：由各种标记组成的一个页面就叫网页。</li>
-<li>主页(首页) : 一个网站的起始页面或者导航页面。</li>
-<li>标记： 比如<p>称为开始标记 ，</p>称为结束标记，也叫标签。每个标签都规定好了特殊的含义。</li>
-<li>元素：比如<p>内容</p>称为元素.</li>
-<li>属性：给每一个标签所做的辅助信息。</li>
-<li>XHTML：符合XML语法标准的HTML。</li>
-<li>DHTML：dynamic，动态的。javascript + css + html合起来的页面就是一个 DHTML。</li>
-<li>HTTP：超文本传输协议。用来规定客户端浏览器和服务端交互时数据的一个格式。SMTP：邮件传输协议，- FTP：文件传输协议。</li>
-</ul>
-<h3 id="一个html页面的骨架">一个Html页面的骨架：</h3>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h3 id="文档声明头">文档声明头</h3>
-<p>任何一个标准的HTML页面，第一行一定是一个以<!DOCTYPE ……>开头的语句。这一行，就是文档声明头，即 DocType Declaration，简称DTD。<br>
-DTD可告知浏览器文档使用哪种 HTML 或 XHTML 规范。</p>
-<h4 id="html401有哪些规范呢">HTML4.01有哪些规范呢？</h4>
-<p>HTML4.01这个版本是IE6开始兼容的。HTML5是IE9开始兼容的。如今，手机、移动端的网页，就可以使用HTML5了，因为其兼容性更高。<br>
-说个题外话，html1 至 html3 是美国军方以及高等研究所用的，并未对外公开。<br>
-HTML4.01里面有两大种规范，每大种规范里面又各有3种小规范。所以一共6种规范。<br>
-HTML4.01里面规定了普通和XHTML两大种规范。HTML觉得自己有一些规定不严谨，比如，标签是否可以用大写字母呢？<code>&lt;H1&gt;&lt;/H1&gt;</code>所以，HTML就觉得，把一些规范严格的标准，又制定了一个XHTML1.0。在XHTML中的字母X，表示“严格的”。<br>
-总结一下，HTML4.01一共有6种DTD。说白了，HTML的第一行语句一共有6种情况：<br>
-下面对上图中的三种小规范进行解释：</p>
-<ol>
-<li>strict：表示“严格的”，这种模式里面的要求更为严格。这种严格体现在哪里？有一些标签不能使用。 比如，u标签，就是给一个本文加下划线，但是这和HTML的本质有冲突，因为HTML最好是只负责语义，不要负责样式，而u这个下划线是样式。所以，在strict中是不能使用u标签的。<br>
-那怎么给文本增加下划线呢？今后将使用css属性来解决。<br>
-XHTML1.0更为严格，因为这个体系本身规定比如标签必须是小写字母、必须严格闭合标签、必须使用引号引起属性等等。</li>
-<li>Transitional：表示“普通的”，这种模式就是没有一些别的规范。</li>
-<li>Frameset：表示“框架”，在框架的页面使用。<br>
-<strong>在HTML5中极大的简化了DTD，也就是说HTML5中就没有XHTML了。HTML5的DTD（文档声明头）如下：</strong><br>
-<code>&lt;!DOCTYPE html&gt;</code></li>
-</ol>
-<h3 id="页面语言">页面语言</h3>
-<p>下面这行标签，用于指定页面的语言类型：<br>
-<code>&lt;html lang=&quot;en&quot;&gt;</code><br>
-最常见的语言类型有两种：<br>
-en：定义页面语言为英语。<br>
-zh-CN：定义页面语言为中文。</p>
-<h3 id="头标签">头标签</h3>
-<p>Html5比较完整的一个骨架：</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=UTF-8&quot;&gt;
-	&lt;meta name=&quot;Author&quot; content=&quot;&quot;&gt;
-    &lt;meta name=&quot;Keywords&quot; content=&quot;厉害很厉害&quot; /&gt;
-    &lt;meta name=&quot;Description&quot; content=&quot;网易是中国领先的互联网技术公司，为用户提供免费邮箱、游戏、搜索引擎服务，开设新闻、娱乐、体育等30多个内容频道，及博客、视频、论坛等互动交流，网聚人的力量。&quot; /&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<p>头标签内部的常见标签如下：</p>
-<ul>
-<li><code>&lt;title&gt;</code>：指定整个网页的标题，在浏览器最上方显示。</li>
-<li><code>&lt;base&gt;</code>：为页面上的所有链接规定默认地址或默认目标。</li>
-<li><code>&lt;meta&gt;</code>：提供有关页面的基本信息</li>
-<li><code>&lt;body&gt;</code>：用于定义HTML文档所要显示的内容，也称为主体标签。我们所写的代码必须放在此标签內。</li>
-<li><code>&lt;link&gt;</code>：定义文档与外部资源的关系。</li>
-</ul>
 ]]></content>
     </entry>
 </feed>

@@ -2,21 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>《JavaScript高级程序设计》读书笔记 | It&#39;s my life</title>
+<title>使Git忽略文件模式( chmod ) 的更改？ | It&#39;s my life</title>
 <link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1592882313690">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="《JavaScript高级程序设计》读书笔记 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="使Git忽略文件模式( chmod ) 的更改？ | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="第三章
-with语句
-with语句的作用就是将代码的作用域设置到一个特定的对象中。
-定义with语句的主要目的主要是为了简化多次编写同一个对象的工作，如👇所示：
-var qs = location.search.substring(1);..." />
-    <meta name="keywords" content="JavaScript" />
+    <meta name="description" content="通过执行如下的命令即可👇
+git config core.fileMode false
+
+" />
+    <meta name="keywords" content="工具" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -78,52 +77,31 @@ var qs = location.search.substring(1);..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              《JavaScript高级程序设计》读书笔记
+              使Git忽略文件模式( chmod ) 的更改？
             </h2>
             <div class="post-info">
               <span>
-                2020-03-29
+                2020-06-23
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
-                <a href="https://merpyzf.github.io/tag/NotNXqW1Y/" class="post-tag">
-                  # JavaScript
+                <a href="https://merpyzf.github.io/tag/PE3ps6gyC/" class="post-tag">
+                  # 工具
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="第三章">第三章</h1>
-<h2 id="with语句">with语句</h2>
-<p>with语句的作用就是将代码的作用域设置到一个特定的对象中。<br>
-定义with语句的主要目的主要是为了简化多次编写同一个对象的工作，如👇所示：</p>
-<pre><code>var qs = location.search.substring(1);
-var hostname = location.hostname;
-var url = location.href;
+                <p>通过执行如下的命令即可👇</p>
+<pre><code>git config core.fileMode false
 </code></pre>
-<p>以上几行代码都涉及到对location对象的操作，如果使用with语句，可以把上面的代码改成如下所示：</p>
-<pre><code>with(location){
-    var qs = search.substring(1);
-    var hostname = hostname;
-    var url = href;
-}
-</code></pre>
-<p>在这个重写的例子中，使用with语句关联了location对象。这意味着在with语句中的代码块内部，每个变量首先会被认为是一个局部变量，而如果在局部环境中找不到该变量的定义，就会查找location对象中是否有同名的属性。如果发现了同名的属性，则以location对象的值作为变量中值。</p>
-<p>__ 严格模式下不允许使用with语句，否则将被视为语法错误🙅（大量的使用with语句会导致性能下降，也会给调试代码造成困难） __</p>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#%E7%AC%AC%E4%B8%89%E7%AB%A0">第三章</a>
-<ul>
-<li><a href="#with%E8%AF%AD%E5%8F%A5">with语句</a></li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
@@ -132,9 +110,9 @@ var url = location.href;
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://merpyzf.github.io/post/guan-yu-cordovaandionicnative-cha-jian-kai-fa-yu-dao-de-yi-xie-keng/">
+            <a href="https://merpyzf.github.io/post/li-zhi-zi-chuan/">
               <h3 class="post-title">
-                关于Cordova&amp;IonicNative插件开发遇到的一些坑
+                李志自传
               </h3>
             </a>
           </div>
