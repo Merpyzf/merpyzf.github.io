@@ -2,26 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>基于Cordova创建Ionic插件 | It&#39;s my life</title>
+<title>端午小记 | It&#39;s my life</title>
 <link rel="shortcut icon" href="https://merpyzf.github.io/favicon.ico?v=1593086781727">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://merpyzf.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="基于Cordova创建Ionic插件 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="端午小记 | It&#39;s my life - Atom Feed" href="https://merpyzf.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-
-克隆Github中的Ionic-Native的项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。
-
-
-进入ionic-native的根目录
-
-
-创建插件包
-// 调用此命令，并将`PluginName`替换为希望添加的插件名..." />
-    <meta name="keywords" content="Ionic" />
+    <meta name="description" content="6.25日 上海 天气阴 伴有小雨。
+刚吃完晚饭，感谢公司端午节的福利，两颗速食粽子，私自在没取得同事同意的前提下用他煮泡面的效果催熟了这两颗粽子，二百克加一盒伊利纯牛奶就是今天的晚饭了。反正只要能把我喂饱就一切OK了。
+回顾大学的那几年，..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -83,67 +76,26 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              基于Cordova创建Ionic插件
+              端午小记
             </h2>
             <div class="post-info">
               <span>
-                2020-03-13
+                2020-06-25
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
-              
-                <a href="https://merpyzf.github.io/tag/e0j3NgcuS/" class="post-tag">
-                  # Ionic
-                </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://merpyzf.github.io/post-images/ji-yu-cordova-chuang-jian-ionic-cha-jian.jpg" alt="">
-            
             <div class="post-content-wrapper">
               <div class="post-content">
-                <ol>
-<li>
-<p>克隆Github中的Ionic-Native的项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。</p>
-</li>
-<li>
-<p>进入ionic-native的根目录</p>
-</li>
-<li>
-<p>创建插件包</p>
-<pre><code>// 调用此命令，并将`PluginName`替换为希望添加的插件名称
-// 第一个字母一定要大写，使用大驼峰命名
-gulp plugin:create -n PluginName
-</code></pre>
-<p>执行完以上命令将会在src/@ionic-native/plugins目录下创建一个名称为PluginName的插件目录，里面有一个index.ts文件，后面Ionic插件的编写就是需要在这个文件中进行的。</p>
-</li>
-<li>
-<p>编写index.ts</p>
-<pre><code>@Plugin({
-pluginName: 'ZijinUtilPlugin',
-plugin: 'cordova-plugin-x-zijinutil', // npm package name, example: cordova-plugin-camera
-pluginRef: 'cordova.plugins.ZijinUtil', // the variable reference to call the plugin, example: navigator.geolocation
-platforms: ['Android'] // Array of platforms supported, example: ['Android', 'iOS']
-})
-@Injectable()
-export class ZijinUtilPlugin extends IonicNativePlugin {
-}
-</code></pre>
-</li>
-</ol>
-<p>这里需要重点指出的是 @Plugin装饰器中参数的添加：</p>
-<ol>
-<li>
-<p>pluginRef：指的是底层Cordova插件的应用方式，这个值和cordova插件中的plugin.xml下的clobbers节点值相同。</p>
-</li>
-<li>
-<p>plugin：值的是npm包的名称</p>
-</li>
-<li>
-<p>通过调用 npm run build <pluginName> 来完成对插件的编辑，最后编译的结果会生成到ionic-native/dist/@ionic-native/plugins目录。如果是使用的是MacOS系统进行的编译还有可能会出现如下的错误：<code>Error: ENOENT: no such file or directory, open '/Users/wangke/Workspace/CompanyProjects/ionic-native/dist/@ionic-native/plugins/.DS_Store/index.js'</code>。通过执行 find . -name '.DS_Store' -type f -delete 命令后即可解决上述问题。</p>
-</li>
-</ol>
+                <p>6.25日 上海 天气阴 伴有小雨。</p>
+<p>刚吃完晚饭，感谢公司端午节的福利，两颗速食粽子，私自在没取得同事同意的前提下用他煮泡面的效果催熟了这两颗粽子，二百克加一盒伊利纯牛奶就是今天的晚饭了。反正只要能把我喂饱就一切OK了。</p>
+<p>回顾大学的那几年，觉着独来独往是一件特别酷的事情，那个时候的眼睛里看谁都像是SB一样，我艹，那傻逼的听歌品味怎么这么差，那SB真特么舔狗，只觉着自己牛逼，MD用着小众的榔头手机，听着李B的摇滚民谣，各种吐槽这个社会的不好，现在再去回过头看但是的自己真特么是一个不折不扣的傻叉愤青！没错，这确实是从现在的我的嘴巴里讲出来的，不对，是特么盘腿坐在床上用我的mbp一个一个字的敲出来的。那个时候的自己真的学会和自己独处了么？</p>
+<p>这过去的半年，拥有亲密关系的这半年里我对这种关系产生了依赖，我越来越多的满足感开始源自于对方给我的满足。我希望我是可以被对方需要的。突然跌落成一个人的状态，未免对这个生活产生了许许多多的不习惯。如果遇到你的时间往后推一年结果会不会不同，还是现在的我不够成熟，我不会爱自己，我只会爱别人。</p>
+<p>过去抽了许多支烟，我只想通过它来寄托我在某一时刻悲伤的感觉，但从未从中体会到尼古丁的快感。但这段时间，抽烟寄托情感，和抽烟获取尼古丁的安慰已经开始各占一半，我感觉我开始变得越来越颓废，一个人生活想自律真的是太难了！在读大学的时候完全不会去考虑自己的以后，那个时候只想着多学点技术，让自己的能力变强，当然至今再去会看那段经历的时候也完全觉得是最正确抉择了。但现在，会考虑很多，比如自己的工资、买房子、结婚。写到这里突然觉着，以上列出来的并不是我真正所焦虑的点，我所想拥有的就是一段稳定的亲密关系。这种亲密关系我不希望是脆弱的，我只希望我能一直拥有，并且能够越来越牢固。</p>
+<p>过去的我，或者说是现在的我也是，一直活在过去的记忆当中，不会去珍惜当下所拥有的。你以为的永远不是你以为的。我对你失望透了！！！</p>
 
               </div>
               <div class="toc-container">
@@ -156,9 +108,9 @@ export class ZijinUtilPlugin extends IonicNativePlugin {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://merpyzf.github.io/post/cordova-cha-jian-kai-fa-zhi-nan/">
+            <a href="https://merpyzf.github.io/post/shi-git-hu-lue-wen-jian-mo-shi-chmod-de-geng-gai/">
               <h3 class="post-title">
-                Cordova插件开发指南
+                使Git忽略文件模式( chmod ) 的更改？
               </h3>
             </a>
           </div>

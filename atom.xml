@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://merpyzf.github.io</id>
     <title>It&apos;s my life</title>
-    <updated>2020-06-23T03:18:39.964Z</updated>
+    <updated>2020-06-25T12:06:29.025Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://merpyzf.github.io"/>
     <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
@@ -10,6 +10,20 @@
     <logo>https://merpyzf.github.io/images/avatar.png</logo>
     <icon>https://merpyzf.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, It&apos;s my life</rights>
+    <entry>
+        <title type="html"><![CDATA[端午小记]]></title>
+        <id>https://merpyzf.github.io/post/duan-wu-xiao-ji/</id>
+        <link href="https://merpyzf.github.io/post/duan-wu-xiao-ji/">
+        </link>
+        <updated>2020-06-25T11:39:35.000Z</updated>
+        <content type="html"><![CDATA[<p>6.25日 上海 天气阴 伴有小雨。</p>
+<p>刚吃完晚饭，感谢公司端午节的福利，两颗速食粽子，私自在没取得同事同意的前提下用他煮泡面的效果催熟了这两颗粽子，二百克加一盒伊利纯牛奶就是今天的晚饭了。反正只要能把我喂饱就一切OK了。</p>
+<p>回顾大学的那几年，觉着独来独往是一件特别酷的事情，那个时候的眼睛里看谁都像是SB一样，我艹，那傻逼的听歌品味怎么这么差，那SB真特么舔狗，只觉着自己牛逼，MD用着小众的榔头手机，听着李B的摇滚民谣，各种吐槽这个社会的不好，现在再去回过头看但是的自己真特么是一个不折不扣的傻叉愤青！没错，这确实是从现在的我的嘴巴里讲出来的，不对，是特么盘腿坐在床上用我的mbp一个一个字的敲出来的。那个时候的自己真的学会和自己独处了么？</p>
+<p>这过去的半年，拥有亲密关系的这半年里我对这种关系产生了依赖，我越来越多的满足感开始源自于对方给我的满足。我希望我是可以被对方需要的。突然跌落成一个人的状态，未免对这个生活产生了许许多多的不习惯。如果遇到你的时间往后推一年结果会不会不同，还是现在的我不够成熟，我不会爱自己，我只会爱别人。</p>
+<p>过去抽了许多支烟，我只想通过它来寄托我在某一时刻悲伤的感觉，但从未从中体会到尼古丁的快感。但这段时间，抽烟寄托情感，和抽烟获取尼古丁的安慰已经开始各占一半，我感觉我开始变得越来越颓废，一个人生活想自律真的是太难了！在读大学的时候完全不会去考虑自己的以后，那个时候只想着多学点技术，让自己的能力变强，当然至今再去会看那段经历的时候也完全觉得是最正确抉择了。但现在，会考虑很多，比如自己的工资、买房子、结婚。写到这里突然觉着，以上列出来的并不是我真正所焦虑的点，我所想拥有的就是一段稳定的亲密关系。这种亲密关系我不希望是脆弱的，我只希望我能一直拥有，并且能够越来越牢固。</p>
+<p>过去的我，或者说是现在的我也是，一直活在过去的记忆当中，不会去珍惜当下所拥有的。你以为的永远不是你以为的。我对你失望透了！！！</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[使Git忽略文件模式( chmod ) 的更改？]]></title>
         <id>https://merpyzf.github.io/post/shi-git-hu-lue-wen-jian-mo-shi-chmod-de-geng-gai/</id>
@@ -900,55 +914,6 @@ require([&quot;module&quot;, &quot;../file&quot;], function(module, file) { /* .
 }
 </code></pre>
 <p>重新编译之后就可以引用到所需要的jar了。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Android中内存泄漏出现的场景&解决方案]]></title>
-        <id>https://merpyzf.github.io/post/android-zhong-nei-cun-xie-lou-chu-xian-de-chang-jing-andjie-jue-fang-an/</id>
-        <link href="https://merpyzf.github.io/post/android-zhong-nei-cun-xie-lou-chu-xian-de-chang-jing-andjie-jue-fang-an/">
-        </link>
-        <updated>2020-04-26T01:49:08.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="单例模式造成的内存泄漏">单例模式造成的内存泄漏</h2>
-<p>单例模式是非常常用的设计模式，使用单例模式的类，只会产生一个对象，这个对象看起来像是一直占用着内存，但这并不意味着就是浪费了内存，内存本来就是拿来装东西的，只要这个对象一直都被高效的利用就不能叫做泄露。<br>
-但是过多的单例会让内存占用过多，而且单例模式__由于其静态特性，其生命周期和应用程序的生命周期一致__，不正确地使用单例模式也会造成内存泄露。</p>
-<p>一个Android中的单例：</p>
-<pre><code>public class SingleInstanceTest {
-
-    private static SingleInstanceTest sInstance;
-    private Context mContext;
-
-    private SingleInstanceTest(Context context){
-        this.mContext = context;
-    }
-
-    public static SingleInstanceTest newInstance(Context context){
-        if(sInstance == null){
-            sInstance = new SingleInstanceTest(context);
-        }
-        return sInstance;
-    }
-}
-</code></pre>
-<p>上面是一个比较简单的单例模式用法，需要外部传入一个 Context 来获取该类的实例，如果此时传入的 Context 是 Activity 的话，此时单例就有持有该 Activity 的强引用（直到整个应用生命周期结束）。这样的话，即使该 Activity 退出，该 Activity 的内存也不会被回收，这样就造成了内存泄露，特别是一些比较大的 Activity，甚至还会导致 OOM（Out Of Memory）。</p>
-<p>解决方法：在单例模式中引用和应用程序生命周期一致的上下文（Application）</p>
-<pre><code>public class SingleInstanceTest {
-
-    private static SingleInstanceTest sInstance;
-    private Context mContext;
-
-    private SingleInstanceTest(Context context){
-        this.mContext = context.getApplicationContext();
-    }
-
-    public static SingleInstanceTest newInstance(Context context){
-        if(sInstance == null){
-            sInstance = new SingleInstanceTest(context);
-        }
-        return sInstance;
-    }
-}
-</code></pre>
-<p>可以看到在 SingleInstanceTest 的构造函数中，将 context.getApplicationContext() 赋值给 mContext，此时单例引用的对象是 Application，而 Application 的生命周期本来就跟应用程序是一样的，也就不存在内存泄露。</p>
 ]]></content>
     </entry>
 </feed>
