@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://merpyzf.github.io</id>
     <title>It&apos;s my life</title>
-    <updated>2020-07-24T01:17:41.094Z</updated>
+    <updated>2020-07-28T03:08:44.351Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://merpyzf.github.io"/>
     <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
@@ -10,6 +10,28 @@
     <logo>https://merpyzf.github.io/images/avatar.png</logo>
     <icon>https://merpyzf.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, It&apos;s my life</rights>
+    <entry>
+        <title type="html"><![CDATA[git pull –rebase 理解]]></title>
+        <id>https://merpyzf.github.io/post/git-pull-rebase-li-jie/</id>
+        <link href="https://merpyzf.github.io/post/git-pull-rebase-li-jie/">
+        </link>
+        <updated>2020-07-28T03:04:35.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="这个命令做了以下内容">这个命令做了以下内容：</h3>
+<p><img src="https://merpyzf.github.io/post-images/1595905635608.png" alt="" loading="lazy"><br>
+a.把你 commit 到本地仓库的内容，取出来放到暂存区(stash)（这时你的工作区是干净的）<br>
+b.然后从远端拉取代码到本地，由于工作区是干净的，所以不会有冲突<br>
+c.从暂存区把你之前提交的内容取出来，跟拉下来的代码合并</p>
+<p>所以 rebase 在拉代码前要确保你本地工作区是干净的，如果你本地修改的内容没完全 commit 或者 stash，就会 rebase 失败。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="这个命令做了以下内容">这个命令做了以下内容：</h3>
+<p><img src="https://merpyzf.github.io/post-images/1595905635608.png" alt="" loading="lazy"><br>
+a.把你 commit 到本地仓库的内容，取出来放到暂存区(stash)（这时你的工作区是干净的）<br>
+b.然后从远端拉取代码到本地，由于工作区是干净的，所以不会有冲突<br>
+c.从暂存区把你之前提交的内容取出来，跟拉下来的代码合并</p>
+<p>所以 rebase 在拉代码前要确保你本地工作区是干净的，如果你本地修改的内容没完全 commit 或者 stash，就会 rebase 失败。</p>
+<!-- more -->
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[2014年李志在先锋书店的演讲]]></title>
         <id>https://merpyzf.github.io/post/2014-nian-li-zhi-zai-xian-feng-shu-dian-de-yan-jiang/</id>
@@ -1075,87 +1097,6 @@ require([&quot;module&quot;, &quot;../file&quot;], function(module, file) { /* .
 <li>RequireJS</li>
 <li>curl</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[npm使用总结]]></title>
-        <id>https://merpyzf.github.io/post/npm-shi-yong-zong-jie/</id>
-        <link href="https://merpyzf.github.io/post/npm-shi-yong-zong-jie/">
-        </link>
-        <updated>2020-05-12T06:41:36.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="概述">概述</h3>
-<p>npm全称node package manager，即node的包管理工具。npm是JavaScript世界的包管理工具，并且是Node.js平台的默认包管理工具。通过npm可以安装、共享、分发代码，管理项目依赖关系。</p>
-<h3 id="packagejson">package.json</h3>
-<p>package.json是npm包的入口，涵盖了这个包的基本信息。通过使用<code>npm init</code>可以自动创建该文件。<br>
-一个创建的 package.json 文件如下：</p>
-<pre><code>{
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;version&quot;: &quot;1.0.0&quot;,
-  &quot;description&quot;: &quot;test &quot;,
-  &quot;main&quot;: &quot;index.js&quot;,
-  &quot;scripts&quot;: {
-    &quot;test&quot;: &quot;jest&quot;
-  },
-  &quot;dependencies&quot;: {
-    &quot;ramda&quot;: &quot;^0.25.0&quot;,
-    &quot;react&quot;: &quot;^16.0.0&quot;
-  },
-  &quot;repository&quot;: {
-    &quot;type&quot;: &quot;git&quot;,
-    &quot;url&quot;: &quot;test.git&quot;
-  },
-  &quot;keywords&quot;: [
-    &quot;some&quot;,
-    &quot;keywords&quot;
-  ],
-  &quot;author&quot;: &quot;Bob&quot;,
-  &quot;license&quot;: &quot;MIT&quot;
-}
-</code></pre>
-<ul>
-<li>其中 <code>main</code> 代表的是此包的入口文件，当别的包进行 <code>let foo = require('foo')</code>的时候，引用的其实就是这个<code>main</code>字段说指向的<code>index.js</code> 文件。</li>
-<li><code>scripts</code>代表这个 npm 包中运行的命令</li>
-<li><code>dependencies</code>代表这个 npm 包所依赖的别的包，当 <code>npm install foo</code>的时候，会将这个包所依赖的包也一同安装。</li>
-</ul>
-<h3 id="~与代表什么">～与^代表什么？</h3>
-<p>在 package.json 中的 dependencies JSON对象中会有这样的代码：</p>
-<pre><code>  &quot;dependencies&quot;: {
-        &quot;ramda&quot;: &quot;^0.25.0&quot;,
-        &quot;react&quot;: &quot;~16.0.0&quot; 
-  }
-</code></pre>
-<p><code>~</code> 代表在项目中更新包（npm update）的时候，可以更新到最新的一个patch版本即从<code>0.25.0 =&gt; 0.25.x</code>，但不包括 <code>0.26.x</code>。<br>
-<code>^</code> 代表在项目中更新包（npm update）的时候，可以更新到最新的一个minor版本(即第二位的版本号)，即从<code>16.0.0 =&gt; 16.x.x</code>，但不包括<code>17.x.x</code>。</p>
-<h3 id="常用命令">常用命令</h3>
-<h4 id="安装模块">安装模块</h4>
-<p>局部安装（在当前所在路径下安装）</p>
-<p><code>npm install &lt;module name&gt;</code></p>
-<p>全局安装</p>
-<p><code>npm intall -g &lt;module name&gt;</code></p>
-<h4 id="卸载模块">卸载模块</h4>
-<p><code>npm uninstall &lt;module name&gt;</code></p>
-<h4 id="查看安装信息">查看安装信息</h4>
-<p>查看局部安装的模块</p>
-<p><code>npm list</code></p>
-<p>查看全局安装的模块</p>
-<p><code>npm list -g</code></p>
-<h3 id="更改源">更改源</h3>
-<h4 id="全局更改">全局更改</h4>
-<p>设置淘宝源</p>
-<p><code>npm set registry https://registry.npm.taobao.org</code></p>
-<p>设置官方源</p>
-<p><code>npm set registry http://registry.npmjs.org</code></p>
-<h4 id="局部更改在项目中使用">局部更改，在项目中使用</h4>
-<p>创建 .yarnrc 或者 .npmrc 文件，在文件中写入如下内容：``` registry &quot;http://npm.xxx.com/&quot;<br>
-注：rc (run control)</p>
-<pre><code>#### 获取当前使用的源
-``` npm config get registry (npm get registry)```
-
-
-
-
-
-</code></pre>
 ]]></content>
     </entry>
 </feed>
