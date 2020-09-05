@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://merpyzf.github.io</id>
     <title>It&apos;s my life</title>
-    <updated>2020-09-04T13:13:36.051Z</updated>
+    <updated>2020-09-05T06:48:23.681Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://merpyzf.github.io"/>
     <link rel="self" href="https://merpyzf.github.io/atom.xml"/>
@@ -17,7 +17,7 @@
         </link>
         <updated>2020-09-03T03:05:40.000Z</updated>
         <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/timg.jpeg" alt="" loading="lazy"></figure>
-<h2 id="前期准备">前期准备</h2>
+<h2 id="开始前准备">开始前准备</h2>
 <h3 id="1-所需开发环境">1. 所需开发环境</h3>
 <ol>
 <li>NodeJs : http://nodejs.cn/</li>
@@ -32,7 +32,7 @@
 <li>JavaScript 语法基础</li>
 <li>TypeScript 语法基础</li>
 <li>Java 语法基础</li>
-<li>Android SDK 基础使用</li>
+<li>Android SDK 基础用法</li>
 </ol>
 <h2 id="插件编写开发实践">插件编写开发实践</h2>
 <p>以调用 Android 原生 Toast 实现消息提示为例</p>
@@ -51,9 +51,9 @@
 <p>执行上述两个命令后将生成如下的结构：</p>
 <figure data-type="image" tabindex="2"><img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599105348815.png" alt="" loading="lazy"></figure>
 <h3 id="生成插件包中每个文件的作用">生成插件包中每个文件的作用：</h3>
-<h4 id="1-pluginxml">1. plugin.xml</h4>
+<h4 id="a-pluginxml">a. plugin.xml</h4>
 <p>plugin.xml 中定义了插件最后生成平台代码时的文件结构以及针对android平台的一些设置。</p>
-<p>🌰示例：</p>
+<p>一个例子：</p>
 <pre><code>&lt;?xml version='1.0' encoding='utf-8'?&gt;
 &lt;!-- id：即通过 plugman cli 创建插件包时配置的 pluginID --&gt;
 &lt;plugin id=&quot;com.zijin.toastplugin&quot; version=&quot;1.0.0&quot; xmlns=&quot;http://apache.org/cordova/ns/plugins/1.0&quot;
@@ -103,9 +103,9 @@
     &lt;/platform&gt;
 &lt;/plugin&gt;
 </code></pre>
-<h4 id="2-srcandroidtoastpluginjava">2. src/android/ToastPlugin.java</h4>
+<h4 id="b-srcandroidtoastpluginjava">b. src/android/ToastPlugin.java</h4>
 <p>ToastPlugin 类继承自 CordovaPlugin ，需要去重写 execute 方法，在此方法中根据 action 响应前端的方法调用，以实现对平台层功能的调用。</p>
-<h4 id="3-wwwtoastpluginjs">3. www/ToastPlugin.js</h4>
+<h4 id="c-wwwtoastpluginjs">c. www/ToastPlugin.js</h4>
 <p>向 Web 平台暴露插件所拥有的方法，为前端提供屏蔽原生平台（Android/iOS）的插件功能统一方法的调用。</p>
 <h3 id="命令参数含义">命令参数含义</h3>
 <pre><code>plugman create --name &lt;pluginName&gt; --plugin_id &lt;pluginID&gt; --plugin_version &lt;version&gt; [--path &lt;directory&gt;] 
@@ -138,7 +138,7 @@ exports.showToast = function (msgInfo, success, error) {
 <p>add 后面为插件包的路径地址，可以是相对路径或绝对路径。</p>
 <p>在安装插件时如果 Ionic 项目还没有集成 Cordova 平台，那么在执行安装插件的命令时 Ionic 的 CLI 将会自动为我们集成 Cordova 的环境。</p>
 <p>命令执行的运行图如下：</p>
-<figure data-type="image" tabindex="3"><img src="https://merpyzf.github.io/post-images/1599118069842.png" alt="" loading="lazy"></figure>
+ <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599118069842.png" width = "600" />
 <p>或在安装插件前就通过 <code>ionic integrations enable cordova</code> 命令提前启用 Cordova 环境。</p>
 <h3 id="3-编译生成平台代码">3. 编译生成平台代码</h3>
 <p>通过执行 <code>ionic cordova platform add android</code>  命令来生成 Android 平台的代码。</p>
@@ -152,20 +152,20 @@ exports.showToast = function (msgInfo, success, error) {
  <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599121248417.png" width = "600" />
 <p>⚠️ 在mac平台下，点击 open 后，如果出现如下 permission denied 错误提示，请使用 <code>sudo chmod -R 777 platforms/android</code>  为 android 下的所有文件追加权限。</p>
   <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599121474498.png" width = "600" />
-<p>⚠️ 导入后 AndroidStudio 将自动执行 Gradle 脚本来下载项目中依赖的三方库和构建项目，由于国内的网络环境，这里很可能会因为下载依赖时因网络超时而出错，如果出错，请大家开启科学上网工具后再进行构建。</p>
+<p>⚠️ 导入后 AndroidStudio 将自动执行 Gradle 脚本来下载项目中依赖的三方库并构建项目，由于国内的网络环境，这里很可能会因为网络连接而导致依赖下载出错，如果出错，请大家开启科学上网工具后再进行构建。</p>
 <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599121706643.png" width = "600" />
 <h3 id="c-gradle构建成功">c. Gradle构建成功</h3>
 <p>当Gradle完成项目构建后，AS 会以 Android 项目的目录结构进行展示，同时可以看到运行按钮。</p>
 <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599123505691.png" width = "600" />
 <p>在开发者选项中开启 Android 系统的调试模式后通过 USB 数据线连接上电脑 AS 即可识别到你的设备，如果手上没有 Android 真机，可以通过使用 AS 提供的模拟器来进行插件开发。</p>
-<p>关于模拟器的使用参考：https://developer.android.com/studio/run/emulator?hl=zh-cn</p>
+<p>关于模拟器的使用请参考：https://developer.android.com/studio/run/emulator?hl=zh-cn</p>
 <h3 id="d-运行项目到设备">d. 运行项目到设备</h3>
 <p>点击绿色运行按钮即可将 Ionic 的项目打包成 apk 运行到你连接的设备中。</p>
 <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599124013572.png" width = "300" />
 <h3 id="4-开始插件功能开发">4. 开始插件功能开发</h3>
 <p>打开 ionic 项目，示例项目的目录结构如下：</p>
 <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599185456217.png" width = "300" />
-<p>在 home.page.ts 来调用插件向前端暴露出的功能方法，代码如下：</p>
+<p>在 home.page.ts 来调用插件（ToastPlugin.js）向前端暴露出的功能方法，代码如下：</p>
 <pre><code>import {Component} from '@angular/core';
 // 1. 使用 declare 声明语句来定义 window 的类型，由于 window 是 JavaScript 中的对象，TypeScript中并不存在，为了能够通过编译，必须要进行声明。
 declare const window: any;
@@ -190,13 +190,14 @@ export class HomePage {
 }
 </code></pre>
 <p>此时当在前端点击 打印消息 的按钮时将会触发 Android 层下的 ToastPlugin 的 execute 方法。接下来将在 Android 层编写插件的功能代码。</p>
-<p>前端到 Android 插件层的参数传递的数据格式是通过JSON作为传输媒介，在插件开发中，我们往往需要对复杂格式的JSON数据进行解析，Android SDK 为我们提供了原生的JSON解析类，但解析需要手动的去取每一条的内容，为了能够快速方便的实现JSON的解析，这里我们引入Gson JSON 解析库来帮我们自动完成解析工作。</p>
+<p>Cordova 使用 JSON 作为前端到 Android 插件层的消息传递格式。在插件开发中，我们往往需要对复杂格式的JSON数据进行解析，Android SDK 为我们提供了原生的 JSON 解析类，但解析需要手动的去取每一条内容，为了能够快速方便的实现对 JSON 数据的解析，这里我们引入Gson 来帮我们自动完成数据的解析工作。</p>
 <p>以引入 Gson 库为例，介绍两种引入三方库的方式：</p>
 <ol>
 <li>通过向 src/main/libs 目录导入下载的 jar 或 aar 包完成对三方库的引入。</li>
 <li>通过 Gradle 完成对三方库的引入。</li>
 </ol>
-<p>🍭 推荐的方式： __ 尽可能去使用第2种方式来完成对三方库的引入 __  原因：由于我们的项目还会去引入别的三方插件，有些时候无可避免的会遇到别的插件引用了和你相同的三方库，如果通过手动下载 jar 包的方式去引入将会出现 jar 包冲突的错误。</p>
+<p>🍭 推荐的方式：尽可能去使用第2种方式来完成对三方库的引入。<br>
+原因：由于我们的项目还会去引入别的三方插件，有些时候无可避免的会遇到别的插件引用了和你相同的三方库，如果通过手动下载 jar 包的方式去引入将会出现 jar 包冲突的错误。</p>
 <p>下面通过向 app 下的 build.gradle 中的 dependencies 闭包中添加如下内容：</p>
 <pre><code>    implementation 'com.google.code.gson:gson:2.6.1'
 </code></pre>
@@ -235,24 +236,32 @@ export class HomePage {
 }
 </code></pre>
 <h3 id="关于上面的代码需要注意的几个点">关于上面的代码需要注意的几个点：</h3>
-<h4 id="1-对于要实现插件功能的类需要继承-cordovaplugin-并重写-execute-方法来处理前端对插件功能的调用">1. 对于要实现插件功能的类需要继承 CordovaPlugin 并重写 execute 方法来处理前端对插件功能的调用。</h4>
-<h4 id="2-execute-方法参数及返回值的作用">2. execute 方法参数及返回值的作用。</h4>
+<h4 id="a-对于要实现插件功能的类需要继承-cordovaplugin-并重写-execute-方法来处理前端对插件功能的调用">a. 对于要实现插件功能的类需要继承 CordovaPlugin 并重写 execute 方法来处理前端对插件功能的调用。</h4>
+<h4 id="b-execute-方法参数及返回值的作用">b. execute 方法参数及返回值的作用。</h4>
 <h5 id="execute-方法的三个参数的含义">execute 方法的三个参数的含义：</h5>
-<p>a. String action：action 为前端调用插件方法的名称，在插件开发中我们会通过 action 的值来判断前端调用的具体方法来去调用不同的功能方法。</p>
-<p>b. JSONArray args：args 为前端调用插件方法时传递的参数值，是一个 JSONArray 对象。</p>
-<p>c. CallbackContext callbackContext：callbackContext 为本次插件方法调用时的回调上下文对象，主要作用是进行插件到前端的消息传递。</p>
+<ol>
+<li>
+<p>String action：action 为前端调用插件的方法名称，在插件开发中我们会根据 action 的值的不同去实现不同的功能。</p>
+</li>
+<li>
+<p>JSONArray args：args 为前端调用插件方法时传递的参数值，是一个 JSONArray 对象。</p>
+</li>
+<li>
+<p>CallbackContext callbackContext：callbackContext 为本次插件方法调用时的回调上下文对象，主要功能是负责处理插件到前端的消息传递。</p>
+</li>
+</ol>
 <h5 id="execute-方法返回值的含义">execute 方法返回值的含义：</h5>
-<p>action 的值为前端调用插件功能方法的名称，即对应插件层的具体某一个功能。如果我们有与之匹配的功能实现时我们需要返回 true ，否则返回 false 告知前端调用者这是一个无效的动作。当返回 false 时， Cordova Framework 将会给前端返回一个 INVALID_ACTION 的失败状态。当返回 true 时需要我们自己通过 callbackContext 来返回消息。</p>
-<h4 id="3-callbackcontext-类的使用">3. CallbackContext 类的使用</h4>
-<p>对于返回单条还是多条消息需要根据插件要实现的功能来判断，加入我们需要编写一个获取设备信息的插件功能，那么只需要返回一条包含设备信息的消息就能完成此功能了。如果需要实现电子标签盘点此类的功能，那么插件则就需要不间断的向前端连续传递多条包含电子标签内容的消息。不管是传递单条消息还是多条消息我们都是通过 CallbackContext 类来实现的。</p>
-<h5 id="a-传递单条消息">a. 传递单条消息</h5>
+<p>action 的值为前端调用插件功能方法的名称，即对应插件层的具体某一个功能。如果我们有与之匹配的功能实现时我们需要返回 true ，否则返回 false 告知前端调用者这是一个无效的动作。当返回 false 时， Cordova Framework 会给前端返回一个 INVALID_ACTION 的失败消息。当返回 true 时需要我们自己通过 callbackContext 来返回消息。</p>
+<h4 id="c-callbackcontext-类的使用">c. CallbackContext 类的使用</h4>
+<p>对于是要返回单条还是多条消息需要根据插件实现的功能来判断。假如我们需要编写一个获取设备信息的插件功能，那么只需要返回一条包含设备信息的消息就可以了。如果需要实现电子标签盘点此类的功能，那么插件则就需要不间断的向前端连续传递多条包含电子标签内容的消息。不管是传递单条消息还是多条消息我们都是借助 CallbackContext 类来实现的。</p>
+<h5 id="1-传递单条消息">1. 传递单条消息</h5>
 <pre><code>      // 调用error方法将会触发前端的error方法回调的执行 
       callbackContext.error(&quot;error message.&quot;); 
       // 调用success方法将会触发前端success方法回调的执行
       callbackContext.success(&quot;success message.&quot;);
 </code></pre>
 <p>使用上述的消息传递方式，Cordova Framework 是默认只调用一次 callbackContext.error 或 success 后就不会再向前端继续传递消息。</p>
-<h5 id="b-连续传递多条消息">b. 连续传递多条消息</h5>
+<h5 id="2-连续传递多条消息">2. 连续传递多条消息</h5>
 <pre><code> PluginResult pr = new PluginResult(PluginResult.Status.OK, jsonArray.toString());
  // 一定要设置
  pr.setKeepCallback(true);
@@ -265,7 +274,7 @@ export class HomePage {
  callbackContext.sendPluginResult(pr);
 </code></pre>
 <h4 id="4-关于耗时任务的处理">4. 关于耗时任务的处理</h4>
-<p>我们在插件中开发的代码是运行在Android的主线程中的，如果在插件中我们需要做一些比较耗时的操作，比如文件读写、网络请求、音视频格式转换等，我们需要将这些耗时任务的处理放到子线程中去执行，否则阻塞主线程时间过长会导致出现ANR的发生。如果执行的任务耗时过长，Cordova Framework 也会给出我们如下提示，提示我们需要将这个任务移动到子线程中去完成。</p>
+<p>我们在插件中编写的代码是运行在 Android 的主线程中的，如果在插件中我们需要做一些比较耗时的操作，比如文件读写、网络请求、音视频格式转换等，我们需要将这些耗时任务的处理逻辑放到子线程中去执行，否则当耗时任务阻塞主线程的时间过长会导致 ANR 的发生。如果任务执行的耗时过长，Cordova Framework 也会给出我们如下提示，提示我们需要将这个任务放到子线程中去执行。</p>
 <pre><code>THREAD WARNING: exec() call to ToastPlugin.showToast blocked the main thread for 26ms. Plugin should use CordovaInterface.getThreadPool().
 </code></pre>
 <p>我们可以直接使用 Cordova Framework 封装好的线程池来启动线程。</p>
@@ -276,14 +285,14 @@ export class HomePage {
             }
         });
 </code></pre>
-<p>👹注意！不能在子线程中更新做任何和UI有关的操作，负责直接会导致程序崩溃。如果需要更新UI请使用Handler 或 getActivity().runOnUiThread() 切换到主线程后再执行与UI相关的操作。</p>
+<p>👹 注意：不能在子线程中做任何和 UI 有关的操作，否则会导致程序崩溃。如果需要更新 UI 请使用Handler 或 getActivity().runOnUiThread() 切换到主线程后再执行与UI相关的操作。</p>
 <h4 id="5-处理插件的生命周期事件">5. 处理插件的生命周期事件</h4>
 <h5 id="什么是生命周期">什么是生命周期？</h5>
-<p>当用户浏览、退出和返回到你的应用时，应用中的 Activity 的实例会在其生命周期的不同状态之间转换，Activity 类会提供许多回调方法梦，这些回调方法会让 Activity 知晓某个状态已经更改，系统正在创建、停止或恢复某个 Activity，或正在销毁该 Activity 所在的进程。Cordova Framework 会同步WebView所属的MainActivity的生命周期的状态到 CordovaPlugin。因此我们可以通过重写 CordovaPlugin 中的生命周期方法来让我们的插件能够响应不同的生命周期事件，以提升应用的稳定性和性能。</p>
-<p>下图为Android一个Activity的生命周期事件：</p>
-<figure data-type="image" tabindex="4"><img src="https://developer.android.com/guide/components/images/activity_lifecycle.png?hl=zh-cn" alt="" loading="lazy"></figure>
-<h5 id="cordovaplugin中的生命周期回调方法">CordovaPlugin中的生命周期回调方法</h5>
-<p>在编写插件时，一般我们只需要对下面的三个生命周期事件进行处理：</p>
+<p>当用户浏览、退出和返回到你的应用时，应用中的 Activity 的实例会在其生命周期的不同状态之间转换，Activity 类会提供许多回调方法，这些回调方法会让 Activity 知晓某个状态已经更改，系统正在创建、停止或恢复某个 Activity，或正在销毁该 Activity 所在的进程。Cordova Framework 会同步 WebView 所属的 Activity 的生命周期的状态到 CordovaPlugin。因此我们可以通过重写 CordovaPlugin 中的生命周期方法来让我们的插件能够响应不同的生命周期事件，以提升应用的稳定性和性能。</p>
+<p>下图为 Android 一个 Activity 的生命周期事件：</p>
+<figure data-type="image" tabindex="3"><img src="https://developer.android.com/guide/components/images/activity_lifecycle.png?hl=zh-cn" alt="" loading="lazy"></figure>
+<h5 id="cordovaplugin-中的生命周期回调方法">CordovaPlugin 中的生命周期回调方法</h5>
+<p>在编写插件时，一般我们只需要对下面三个生命周期方法进行处理：</p>
 <ol>
 <li>onPause：当应用由可见变为不可见时执行该回调，比如我们按home键返回主页时。一般我们需要在这个方法中暂停插件的执行，比如暂停插件对rfid标签的扫描功能。</li>
 <li>onResume：当应用由不可见变为可见时会执行该回调，比如我们点击应用图标重新回到应用中时。一般我们需要在这个方法中恢复被暂停的操作，比如恢复插件对rfid标签扫描的功能。</li>
@@ -291,14 +300,14 @@ export class HomePage {
 </ol>
 <h3 id="5-将开发好的功能抽取为单独的插件包">5. 将开发好的功能抽取为单独的插件包</h3>
 <p>这一步比较重要，也是比较容易出错的一步。我们在开发插件功能时需要特别关注在插件开发的过程中添加的源代码文件、资源文件、引入的三方库，因为在抽取为单独的插件包时我们需要将开发这个功能时添加的所有内容拷贝到第一步我们创建的插件包中，并根据 platforms/android 中的目录结构来配置 plugin.xml。</p>
-<p>在抽取前我们再复盘下为了实现这个插件功能添加了哪些内容：</p>
+<p>在抽取前我们再来检查下为了实现这个插件功能添加了哪些内容：</p>
 <ol>
 <li>MsgInfo.java</li>
 <li>ToastPlugin.java</li>
 <li>通过 Gradle 版本构建工具引入了 Gson</li>
 </ol>
-<p>第一步：拷贝新增文件到插件包中，我们可以根据源代码的功能来组织文件的存放位置。源代码存放在src/android 下。</p>
-<figure data-type="image" tabindex="5"><img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599207991027.png" alt="" loading="lazy"></figure>
+<p>第一步：拷贝新增文件到插件包中，我们可以根据源代码的功能来组织文件的存放位置。源代码存放在 src/android 下。</p>
+<figure data-type="image" tabindex="4"><img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599207991027.png" alt="" loading="lazy"></figure>
 <p>第二步：编写 plugin.xml 文件。</p>
 <pre><code>&lt;?xml version='1.0' encoding='utf-8'?&gt;
 &lt;plugin id=&quot;com.zijin.toastplugin&quot; version=&quot;1.0.0&quot; xmlns=&quot;http://apache.org/cordova/ns/plugins/1.0&quot;
@@ -321,18 +330,18 @@ export class HomePage {
     &lt;/platform&gt;
 &lt;/plugin&gt;
 </code></pre>
-<p>在文章的一开始就已经介绍过关于 plugin.xml 中标签的作用。这里要强调的是，source-file 标签中 src 属性的值需要根据插件包里自定的存放路径来填写，但 target-dir 就一定需要严格按照之前我们在Android 层实现功能的目录结构来添加。</p>
-<figure data-type="image" tabindex="6"><img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599208949155.png" alt="" loading="lazy"></figure>
+<p>在文章的一开始就已经介绍过关于 plugin.xml 中标签的作用。这里要强调 source-file 标签中 src 属性的值为文件在插件包中的路径，但 target-dir 就一定需要严格按照之前我们在Android 层实现功能的目录结构来添加。</p>
+<figure data-type="image" tabindex="5"><img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599208949155.png" alt="" loading="lazy"></figure>
 <p>通过使用 framework 标签在 src 属性中填写 Gson 对应的依赖地址来来完成对 Gson 库的引入。</p>
 <p>关于 plugin.xml 的详细配置说明请参考：https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html</p>
-<p>当我们完成上面的几步配置后，重新安装插件包再运行app来测试插件包的抽取是否成功。</p>
+<p>当我们完成上面的几步配置后，重新安装插件包再运行 app 来测试插件包的抽取是否成功。</p>
 <h3 id="6-为我们编写的插件创建-ionic-native-包装">6. 为我们编写的插件创建 Ionic Native 包装</h3>
-<p>通过以上五步我们已经完成了一个 Cordova 插件的编写，但基于 Cordova 编写的插件暴露给前端调用的代码是通过 JavaScript 语言编写的（www/ToastPlugin.js），而 Ionic 是基于 TypeScript 语言的，为了能够在 Ionic 端实现更容易和统一的功能调用，我们需要通过 Ionic Native 来对已经编写好的 Cordova 插件进行一层包装。Ionic Native 将插件中方法的成功或失败的回调包装在 Promise 或 Observable 中，为所有插件提供通用接口。</p>
+<p>通过以上五步我们已经完成了一个 Cordova 插件的编写，但基于 Cordova 编写的插件暴露给前端调用的代码是通过 JavaScript 语言编写的（www/ToastPlugin.js），而 Ionic 基于 TypeScript ，为了能够在 Ionic 端实现更容易和统一的功能调用，我们需要通过 Ionic Native 来对已经编写好的 Cordova 插件进行一层包装。Ionic Native 将插件中方法的成功或失败的回调包装在 Promise 或 Observable 中，为所有插件提供通用接口。</p>
 <h4 id="编写一个-ionic-native-包装的步骤">编写一个 Ionic Native 包装的步骤：</h4>
 <ol>
 <li>
-<p>从Github克隆 ionic-native 项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。<br>
-地址：https://github.com/ionic-team/ionic-native</p>
+<p>从 Github 克隆 ionic-native 项目到本地，后面命令的执行和插件文件模版的生成需要依赖此环境。</p>
+<p>地址：https://github.com/ionic-team/ionic-native</p>
 </li>
 <li>
 <p>进入克隆下来的 ionic-native 的根目录</p>
@@ -369,10 +378,11 @@ export class ZijinUtilPlugin extends IonicNativePlugin {
 </ol>
 <h4 id="根据上述步骤为-toastplugin-插件创建-ionic-native-包装">根据上述步骤为 ToastPlugin 插件创建 Ionic Native 包装</h4>
 <ol>
-<li>通过如下命令创建 ToastPlugin 的 index.ts 文件，在 /src/@ionic-native/plugins/toast-plugin-wrapper/ 下可以找到该文件。</li>
-</ol>
-<p><code>gulp plugin:create -n ToastPluginWrapper</code></p>
-<ol>
+<li>
+<p>通过如下命令创建 ToastPlugin 的 index.ts 文件，在 /src/@ionic-native/plugins/toast-plugin-wrapper/ 下可以找到该文件。</p>
+<pre><code> gulp plugin:create -n ToastPluginWrapper 
+</code></pre>
+</li>
 <li>
 <p>编写 index.ts 文件</p>
 <pre><code>import { Injectable } from '@angular/core';
@@ -399,25 +409,25 @@ msg: string;
 showLength: string;
 }
 </code></pre>
-<p>⚠️ 注意 index.ts 文件中声明插件中方法的返回值的类型需要根据 Android 层实现的插件功能是向前端发送了一次消息还是多次。</p>
+<p>⚠️ 注意 index.ts 文件中声明插件方法的返回值的类型需要根据 Android 层实现的插件功能是要向前端发送一次消息还是多次。</p>
 <ol>
 <li>
-<p>向前端只发送了一次消息：使用 Promise 作为插件方法的返回值类型</p>
+<p>向前端只发送一次消息：使用 Promise 作为插件方法的返回值类型</p>
 </li>
 <li>
-<p>向前端发送了多次消息： 使用 Observable 作为插件方法的返回值类型</p>
+<p>向前端发送多次消息： 使用 Observable 作为插件方法的返回值类型</p>
 </li>
 </ol>
 </li>
 <li>
-<p>通过在 ionic-native的根路径下使用<code>npm run build</code> 命令编译源码来生成 ionic 包装文件，生成包装文件的位置 /dist/@ionic-native/plugins/<br>
+<p>通过在 ionic-native 的根路径下使用<code>npm run build</code> 命令编译源码来生成 ionic 包装文件，生成包装文件的位置 /dist/@ionic-native/plugins/<br>
 <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599217663066.png" alt="" loading="lazy"></p>
 </li>
 </ol>
-<h4 id="可能会遇到到一些坑">👹可能会遇到到一些坑</h4>
+<h4 id="可能会遇到到一些坑">👹 可能会遇到到一些坑</h4>
 <ol>
 <li>
-<p>在ionic-native下编译生成的类型声明包中的 JavaScript 文件内会对 cordova 进行重复引用：</p>
+<p>在 ionic-native 下编译生成的类型声明包中的 JavaScript 文件内会对 cordova 进行重复引用：</p>
 <p><img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599219722709.png" alt="" loading="lazy"><br>
 解决方法：删除多余引入的 cordova 模块</p>
 </li>
@@ -434,7 +444,7 @@ return;
 给以上截图中的两个index.js补充 {&quot;observable&quot;: true }</p>
 </li>
 <li>
-<p>如果需要为Cordova插件写一个IonicNative包装时，需要注意将传递的参数写在最前面。</p>
+<p>如果需要为 Cordova 插件写一个 IonicNative 包装时，需要注意将传递的参数写在最前面。</p>
 <pre><code>// 🙆🏻‍♂️正确
 exports.startService = function (interval, success, error) {
     exec(success, error, 'BackgroundTask', 'startService', [interval]);
@@ -448,14 +458,21 @@ exports.startService = function (success, error，interval) {
 </ol>
 <h3 id="7-在项目中通过-ionic-native-包装调用-cordova-插件功能">7. 在项目中通过 Ionic Native 包装调用 Cordova 插件功能</h3>
 <ol>
-<li>首先我们需要将上一步生成的 toast-plugin-wrapper 文件夹拷贝到项目下。<br>
-<img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599219056901.png" alt="" loading="lazy"></li>
-<li>在 appModule 中的 NgModule 元数据中将该服务提供出去，以允许外部通过依赖注入的方式实例化该插件。<br>
-<img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599219176283.png" alt="" loading="lazy"></li>
-<li>调用插件的功能。<br>
-<img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599219523194.png" alt="" loading="lazy"></li>
+<li>
+<p>首先我们需要将上一步生成的 toast-plugin-wrapper 文件夹拷贝到项目下。</p>
+<img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599219056901.png" width = "600" />
+</li>
+<li>
+<p>在 appModule 中的 NgModule 元数据中将该服务提供出去，以允许外部通过依赖注入的方式实例化该插件。</p>
+<img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599219176283.png" width = "600" />
+</li>
+<li>
+<p>调用插件的功能。</p>
+ <img src="https://blog-1252413502.cos.ap-shanghai.myqcloud.com/1599219523194.png" width = "600" />
+</li>
 </ol>
 <h3 id="结束">🎊结束</h3>
+<p>示例代码地址：https://github.com/Merpyzf/PluginPractice</p>
 ]]></content>
     </entry>
     <entry>
@@ -744,20 +761,6 @@ c.从暂存区把你之前提交的内容取出来，跟拉下来的代码合并
 但是不管如何，我还是坚信我跟诸位是平等的。</p>
 <p>你们消费我一定要理性，我消费你们我也很理性，我们一定要是一个理性的认真的态度去对待外面的世界。我希望我能够尽性，有一天找到做音乐的乐趣，或者我能够找到一个新的乐趣让我去转行。</p>
 <p>这差不多就是我今天要讲的东西。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[端午小记]]></title>
-        <id>https://merpyzf.github.io/post/duan-wu-xiao-ji/</id>
-        <link href="https://merpyzf.github.io/post/duan-wu-xiao-ji/">
-        </link>
-        <updated>2020-06-25T11:39:35.000Z</updated>
-        <content type="html"><![CDATA[<p>6.25日 上海 天气阴 伴有小雨。</p>
-<p>刚吃完晚饭，感谢公司端午节的福利，两颗速食粽子，私自在没取得同事同意的前提下用他煮泡面的效果催熟了这两颗粽子，二百克加一盒伊利纯牛奶就是今天的晚饭了。反正只要能把我喂饱就一切OK了。</p>
-<p>回顾大学的那几年，觉着独来独往是一件特别酷的事情，那个时候的眼睛里看谁都像是SB一样，我艹，那傻逼的听歌品味怎么这么差，那SB真特么舔狗，只觉着自己牛逼，MD用着小众的榔头手机，听着李B的摇滚民谣，各种吐槽这个社会的不好，现在再去回过头看但是的自己真特么是一个不折不扣的傻叉愤青！没错，这确实是从现在的我的嘴巴里讲出来的，不对，是特么盘腿坐在床上用我的mbp一个一个字的敲出来的。那个时候的自己真的学会和自己独处了么？</p>
-<p>这过去的半年，拥有亲密关系的这半年里我对这种关系产生了依赖，我越来越多的满足感开始源自于对方给我的满足。我希望我是可以被对方需要的。突然跌落成一个人的状态，未免对这个生活产生了许许多多的不习惯。如果遇到你的时间往后推一年结果会不会不同，还是现在的我不够成熟，我不会爱自己，我只会爱别人。</p>
-<p>过去抽了许多支烟，我只想通过它来寄托我在某一时刻悲伤的感觉，但从未从中体会到尼古丁的快感。但这段时间，抽烟寄托情感，和抽烟获取尼古丁的安慰已经开始各占一半，我感觉我开始变得越来越颓废，一个人生活想自律真的是太难了！在读大学的时候完全不会去考虑自己的以后，那个时候只想着多学点技术，让自己的能力变强，当然至今再去会看那段经历的时候也完全觉得是最正确抉择了。但现在，会考虑很多，比如自己的工资、买房子、结婚。写到这里突然觉着，以上列出来的并不是我真正所焦虑的点，我所想拥有的就是一段稳定的亲密关系。这种亲密关系我不希望是脆弱的，我只希望我能一直拥有，并且能够越来越牢固。</p>
-<p>过去的我，或者说是现在的我也是，一直活在过去的记忆当中，不会去珍惜当下所拥有的。你以为的永远不是你以为的。我对你失望透了！！！</p>
 ]]></content>
     </entry>
     <entry>
@@ -1474,6 +1477,77 @@ foo.call({
         </link>
         <updated>2020-05-13T04:13:54.000Z</updated>
         <content type="html"><![CDATA[<p>巴拉巴拉</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript的模块系统扫盲]]></title>
+        <id>https://merpyzf.github.io/post/javascript-de-mo-kuai-xi-tong/</id>
+        <link href="https://merpyzf.github.io/post/javascript-de-mo-kuai-xi-tong/">
+        </link>
+        <updated>2020-05-12T08:05:46.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="现状">现状</h3>
+<p>伴随着移动互联的大潮，当今越来越多的网站已经从网页模式进化到了 Webapp 模式。它们运行在现代的高级浏览器里，使用 HTML5、 CSS3、 ES6 等更新的技术来开发丰富的功能，网页已经不仅仅是完成浏览的基本需求，并且webapp通常是一个单页面应用，每一个视图通过异步的方式加载，这导致页面初始化和使用过程中会加载越来越多的 JavaScript 代码，这给前端开发的流程和资源组织带来了巨大的挑战。</p>
+<p>前端开发和其他开发工作的主要区别，首先是前端是基于多语言、多层次的编码和组织工作，其次前端产品的交付是基于浏览器，这些资源是通过增量加载的方式运行到浏览器端，如何在开发环境组织好这些碎片化的代码和资源，并且保证他们在浏览器端快速、优雅的加载和更新，就需要一个模块化系统，这个理想中的模块化系统是前端工程师多年来一直探索的难题。</p>
+<h3 id="已存在的模块系统">已存在的模块系统</h3>
+<h4 id="script标签"><script>标签</h4>
+<pre><code>&lt;script src=&quot;module1.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;module2.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;libraryA.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;module3.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>这是最原始的 JavaScript 文件加载方式，如果把每一个文件看做是一个模块，那么他们的接口通常是暴露在全局作用域下，也就是定义在 window 对象中，不同模块的接口调用都是一个作用域中，一些复杂的框架，会使用命名空间的概念来组织这些模块的接口，典型的例子如 YUI 库。</p>
+<p>这种原始的加载方式暴露了一些显而易见的弊端：</p>
+<ul>
+<li>全局作用域下容易造成变量冲突。</li>
+<li>文件智能按照<code>&lt;script&gt;</code>的书写顺序进行加载。</li>
+<li>开发人员必须主观解决模块和代码库的依赖关系。</li>
+<li>在大型项目中各种资源难以管理，长期积累的问题导致代码库混乱不堪。</li>
+</ul>
+<h3 id="commonjs">CommonJS</h3>
+<p>服务器端的 Node.js 遵循 CommonJS 规范，该规范的核心思想是允许模块通过 require 方法来同步加载所要依赖的其他模块，然后通过 exports 或 module.exports 来导出需要暴露的接口。</p>
+<pre><code>require(&quot;module&quot;);
+require(&quot;../file.js&quot;);
+exports.doStuff = function() {};
+module.exports = someValue;
+</code></pre>
+<p>优点：</p>
+<ul>
+<li>服务端模块便于重用。</li>
+<li>NPM中已经有将近20万个可以使用的模块包，生态好。</li>
+<li>简单并容易使用。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>同步的模块加载不适合在浏览器环境中，同步意味着阻塞加载，浏览器的资源是异步加载的。</li>
+<li>不能非阻塞的并行加载多个模块。</li>
+</ul>
+<p>实现：</p>
+<ul>
+<li>服务器端的 Node.js</li>
+<li>Browserify，浏览器端的 CommonJS 实现，可以使用 NPM 的模块，但是编译打包后的文件体积可能很大</li>
+</ul>
+<h3 id="amd">AMD</h3>
+<p>Asynchronous Module Definition 异步模块定义，规范其实只有一个主要接口<code>define(id?, dependencies?, factory)</code>,它要在声明模块的时候指定所有的依赖<code>dependencies</code>，并且还要当做形参传到 factory 中，对于依赖的模块提前执行，依赖前置。</p>
+<pre><code>define(&quot;module&quot;, [&quot;dep1&quot;, &quot;dep2&quot;], function(d1, d2) {
+  return someExportedValue;
+});
+require([&quot;module&quot;, &quot;../file&quot;], function(module, file) { /* ... */ });
+</code></pre>
+<p>优点：</p>
+<ul>
+<li>适合在浏览器环境中异步加载模块。</li>
+<li>可以并行加载多个模块。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>提高了开发成本，代码的阅读和书写比较困难，模块定义方式的语义不顺畅。</li>
+<li>不符合通用的模块化思维，是一种妥协的实现。</li>
+</ul>
+<p>实现：</p>
+<ul>
+<li>RequireJS</li>
+<li>curl</li>
+</ul>
 ]]></content>
     </entry>
 </feed>
